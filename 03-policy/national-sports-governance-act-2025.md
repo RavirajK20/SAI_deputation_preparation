@@ -39,61 +39,40 @@ This is therefore fundamentally a **governance and institutional framework**, no
 
 The notification itself is important because Section 1(2) permits different provisions to commence on different dates.
 
-### 12 January 2026
-**[OFFICIAL — PRIMARY]** National Sports Governance (National Sports Bodies) Rules, 2026 were notified.
-
 ### 8 January 2026
 **[OFFICIAL — PRIMARY]** National Sports Board (Search-cum-Selection Committee) Rules, 2026 were notified.
+
+### 12 January 2026
+**[OFFICIAL — PRIMARY]** National Sports Governance (National Sports Bodies) Rules, 2026 were notified.
 
 ### 12 May 2026
 **[OFFICIAL — PRIMARY]** A second set of select provisions of the Act was notified by the Central Government. The Ministry hosts the notification separately on its NSGA page.
 
-### 22 May 2026 / 26 May 2026 publication cycle
+### May 2026
 **[OFFICIAL — PRIMARY]** National Sports Board Rules, 2026 and National Sports Tribunal Rules, 2026 were notified.
 
 ### June–August 2026
-**[OFFICIAL — CURRENT IMPLEMENTATION]** The Ministry began/continued processes for selection of the National Sports Board Chairperson/Members and National Sports Tribunal Members, including extensions of application deadlines.
+**[OFFICIAL — CURRENT IMPLEMENTATION]** The Ministry published processes for selection of the National Sports Board Chairperson/Members and National Sports Tribunal Members, with subsequent extensions of application deadlines.
 
 **Interview lesson:** Never answer simply "the Act came into force on 1 January 2026" without qualification. The Act uses **phased commencement**.
 
 ## 3. Structure of the Act
 
-India Code lists 38 sections organised into 11 chapters:
+**[OFFICIAL — PRIMARY]** India Code lists the Act as containing 38 sections organised across 11 chapters. The safe interview approach is to learn the chapter themes and the key sections rather than reproduce a condensed chapter/section table from memory.
 
-### Chapter I — Preliminary
-Sections 1–2
+The key statutory architecture is:
 
-### Chapter II — National Sports Bodies
-Sections 3–4
+- **Sections 1–2:** preliminary matters, including commencement and definitions.
+- **Sections 3–4:** National Sports Bodies and specified governance/compliance requirements.
+- **Sections 5–11:** National Sports Board and associated powers/functions/administrative mechanisms.
+- **Sections 12–13:** ethics and Safe Sports Policy/grievance framework.
+- **Sections 14–15:** privileges and duties of recognised sports organisations.
+- **Section 16:** National Sports Election Panel and electoral officers.
+- **Sections 17–26:** National Sports Tribunal and related jurisdiction, powers, appeals and execution.
+- **Section 27:** national names and insignia.
+- **Sections 28–38:** fund, accounts/audit, promotion/development measures, rule-making/regulation-making and miscellaneous provisions.
 
-### Chapter III — National Sports Board
-Sections 5–11
-
-### Chapter IV — Governance of Recognised Sports Organisations
-Section 12
-
-### Chapter V — Code of Ethics
-Section 12 in the India Code section listing is associated with the Act's ethics framework; consult the bare Act for exact clause placement when quoting.
-
-### Chapter VI — Safe Sports Policy and Grievance Redressal
-Section 13
-
-### Chapter VII — Privileges and Duties of Recognised Sports Organisations
-Sections 14–15
-
-### Chapter VIII — National Sports Election Panel
-Section 16
-
-### Chapter IX — National Sports Tribunal
-Sections 17–26
-
-### Chapter X — Use of National Names and Insignia
-Section 27
-
-### Chapter XI — Miscellaneous
-Sections 28–38
-
-**Note:** For exact statutory section-to-heading mapping, use the bare Act/India Code rather than relying on condensed notes.
+For any precise statutory quotation, use the bare Act/India Code rather than relying on these study notes.
 
 ## 4. National Sports Bodies
 
@@ -148,7 +127,7 @@ The Board consists of a **Chairperson and two Members**, appointed by the Centra
 
 ## 8. National Sports Tribunal
 
-**[OFFICIAL — PRIMARY]** Chapter IX establishes the National Sports Tribunal and provides a statutory dispute-resolution mechanism.
+**[OFFICIAL — PRIMARY]** Sections 17–26 establish the National Sports Tribunal and provide a statutory dispute-resolution mechanism.
 
 The Act addresses:
 - constitution of the Tribunal;
@@ -305,13 +284,15 @@ And remember the institutional boundary:
 
 ## Source discipline
 
-For interview answers, distinguish four dates/events:
+For interview answers, distinguish these stages:
 
 **18 Aug 2025:** Act enacted.
 
+**31 Dec 2025:** first commencement notification issued.
+
 **1 Jan 2026:** first selected provisions commenced.
 
-**12 Jan 2026:** National Sports Bodies Rules notified.
+**Jan 2026 onward:** governance/search-selection rules and National Sports Bodies Rules were notified.
 
 **May–June 2026:** further provisions/rules and institutional selection processes advanced.
 
