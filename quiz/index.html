@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SAI AD — Recall Bench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12151A;
+    --surface:#1B2027;
+    --surface-2:#20262F;
+    --line:#2E353F;
+    --text:#EDEAE2;
+    --text-dim:#9AA3AD;
+    --gold:#C79A3D;
+    --gold-dim:#8E6E2B;
+    --green:#3F7A5D;
+    --red:#B5493F;
+    --radius:4px;
+    --maxw:480px;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--bg); color:var(--text);
+    font-family:'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;}
+  body{ -webkit-font-smoothing:antialiased;}
+  h1,h2,h3, .num, .btn, .tag{font-family:'Barlow Condensed', 'Arial Narrow', sans-serif;}
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
+
+  #app{max-width:var(--maxw); margin:0 auto; min-height:100vh; display:flex; flex-direction:column;}
+
+  header.top{
+    padding:18px 18px 14px; border-bottom:1px solid var(--line);
+    display:flex; align-items:baseline; justify-content:space-between;
+  }
+  header.top .brand{font-size:22px; font-weight:600; letter-spacing:0.2px;}
+  header.top .brand small{display:block; font-family:'Source Sans 3'; font-size:12px; color:var(--text-dim); font-weight:400; margin-top:2px;}
+  .scoreboard{display:flex; gap:14px; align-items:baseline;}
+  .scoreboard .num{font-size:26px; color:var(--gold); line-height:1;}
+  .scoreboard .lbl{font-size:11px; color:var(--text-dim); text-transform:lowercase;}
+
+  main{flex:1; padding:16px 18px 40px;}
+
+  .rule{border:none; border-top:2px solid var(--gold); width:36px; margin:0 0 14px;}
+
+  /* Home grid */
+  .modes{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;}
+  .mode-tile{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:14px 12px; text-align:left; cursor:pointer; color:var(--text);
+  }
+  .mode-tile:active{background:var(--surface-2);}
+  .mode-tile .t{font-size:19px; font-weight:600; line-height:1.05;}
+  .mode-tile .d{font-size:12px; color:var(--text-dim); margin-top:6px; font-family:'Source Sans 3'; line-height:1.35;}
+  .mode-tile .count{font-size:11px; color:var(--gold-dim); margin-top:8px;}
+
+  section.intro{margin-bottom:6px;}
+  section.intro p{color:var(--text-dim); font-size:13.5px; line-height:1.5; margin:0 0 4px;}
+
+  /* Session view */
+  .session-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;}
+  .back{background:none; border:none; color:var(--text-dim); font-family:'Source Sans 3'; font-size:13px; cursor:pointer; padding:6px 0;}
+  .progress{font-size:12px; color:var(--text-dim); font-family:'Source Sans 3';}
+
+  .timerwrap{margin-bottom:16px;}
+  .timerbar{height:3px; background:var(--line); border-radius:2px; overflow:hidden;}
+  .timerbar > div{height:100%; background:var(--gold); width:100%; transform-origin:left;}
+  .timernum{font-size:34px; color:var(--gold); margin-top:6px;}
+
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px 18px;}
+  .card .tag{font-size:12px; color:var(--gold-dim); margin-bottom:8px; display:block;}
+  .card .prompt{font-size:19px; line-height:1.35; font-family:'Source Sans 3'; font-weight:500;}
+  .card .answer{margin-top:16px; padding-top:16px; border-top:1px dashed var(--line);}
+  .card .answer .a-main{font-size:20px; color:var(--gold); font-family:'Barlow Condensed'; font-weight:600; margin-bottom:6px;}
+  .card .answer .a-detail{font-size:13.5px; color:var(--text-dim); line-height:1.5;}
+
+  .mcq-options{display:flex; flex-direction:column; gap:8px; margin-top:16px;}
+  .mcq-opt{
+    background:var(--surface-2); border:1px solid var(--line); border-radius:var(--radius);
+    padding:11px 13px; font-size:14.5px; color:var(--text); text-align:left; cursor:pointer; font-family:'Source Sans 3';
+  }
+  .mcq-opt.correct{border-color:var(--green); background:rgba(63,122,93,0.18);}
+  .mcq-opt.wrong{border-color:var(--red); background:rgba(181,73,63,0.18);}
+  .mcq-opt:disabled{opacity:0.6;}
+
+  .actions{display:flex; gap:10px; margin-top:18px;}
+  .btn{
+    flex:1; padding:13px 10px; border-radius:var(--radius); border:1px solid var(--line);
+    background:var(--surface-2); color:var(--text); font-size:16px; font-weight:600; cursor:pointer;
+  }
+  .btn.primary{background:var(--gold); color:#1a1408; border-color:var(--gold);}
+  .btn.got{border-color:var(--green); color:var(--green); background:rgba(63,122,93,0.1);}
+  .btn.missed{border-color:var(--red); color:var(--red); background:rgba(181,73,63,0.1);}
+
+  /* Summary */
+  .summary .num{font-size:52px; color:var(--gold); line-height:1;}
+  .summary .sub{color:var(--text-dim); font-size:13px; margin-top:2px;}
+  .sumrow{display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--line); font-size:14px;}
+  .sumrow .k{color:var(--text-dim);}
+  .review-list{margin-top:14px;}
+  .review-item{padding:10px 0; border-bottom:1px solid var(--line); font-size:13.5px;}
+  .review-item .rp{color:var(--text-dim); font-size:12px; margin-top:2px;}
+
+  .empty{color:var(--text-dim); font-size:14px; padding:20px 0; line-height:1.5;}
+
+  footer.note{padding:12px 18px 24px; color:var(--text-dim); font-size:11px; text-align:center; border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="top">
+    <div class="brand">Recall Bench<small>SAI Assistant Director — interview prep</small></div>
+    <div class="scoreboard">
+      <div><div class="num" id="hdrStreak">0</div><div class="lbl">streak</div></div>
+      <div><div class="num" id="hdrTotal">0</div><div class="lbl">reviewed</div></div>
+    </div>
+  </header>
+  <main id="main"></main>
+  <footer class="note">Data sourced from 08-reference — verified vs. secondary vs. unconfirmed provenance preserved. This tool tests recall; it is not a source of new facts.</footer>
+</div>
+
+<script>
+/* ============ DATA ============
+   Drawn directly from the verified 08-reference files already in this repo.
+   No new facts introduced here — only recall framing of existing material.
+*/
+
+const FACTS = [
+  {id:'f1', cat:'Stats', q:'Total number of SAI centres across all schemes', a:'187', d:'SAI Key Statistics page (verified).'},
+  {id:'f2', cat:'Stats', q:'Total athletes across all SAI promotional schemes', a:'9,432', d:'SAI Key Statistics page.'},
+  {id:'f3', cat:'Stats', q:'Number of NCOEs approved', a:'24', d:'But only 22 were operational in 2023-24 — approved ≠ operational.'},
+  {id:'f4', cat:'Stats', q:'Number of NCOEs actually operational (AR 2023-24)', a:'22', d:'Cooch Behar and Zirakpur were not yet operational.'},
+  {id:'f5', cat:'Stats', q:'Number of SAI Training Centres (STCs)', a:'69', d:'3,899 athletes, ages 10–18.'},
+  {id:'f6', cat:'Stats', q:'Number of Extension Centres', a:'26', d:'426 athletes; up to 20 adopted per school/college.'},
+  {id:'f7', cat:'Stats', q:'Number of NSTC regular schools', a:'9', d:'Age group 8–14.'},
+  {id:'f8', cat:'Stats', q:'Number of IGMA centres', a:'9', d:'Indigenous Games & Martial Arts.'},
+  {id:'f9', cat:'Stats', q:'Number of Akharas', a:'50', d:'Part of the NSTC-family sub-schemes.'},
+  {id:'f10', cat:'Governance', q:'SAI General Body member count', a:'36', d:'Reconstituted 16.11.2022, chaired by the Union Minister.'},
+  {id:'f11', cat:'Governance', q:'SAI Governing Body member count', a:'28', d:'Reconstituted 01.09.2023.'},
+  {id:'f12', cat:'HR', q:'Total SAI coaches as of 31.03.2024', a:'814', d:'476 regular + 308 contract + 30 on deputation.'},
+  {id:'f13', cat:'Finance', q:'SAI Equipment Support procurement total, FY 2023-24', a:'₹38.75 crore', d:'Includes physiotherapy equipment, STC sports kits, medical insurance contract.'},
+  {id:'f14', cat:'Finance', q:'Combined revenue of SAI\'s 5 Delhi stadia, FY 2023-24', a:'₹21.8 crore', d:'From Come & Play fees, space licensing, bookings, hostel boarding.'},
+  {id:'f15', cat:'Oversight', q:'SAI-wide sanctioned-post vacancy rate (Parliamentary Committee, 2025)', a:'~45%', d:'Committee recommended filling within 6 months. Do not confuse with the 56% KISCE figure below.'},
+  {id:'f16', cat:'Oversight', q:'National average KISCE manpower fill rate (NIPFP, 2026)', a:'56%', d:'Bihar as low as 12%; some states at 100%. A different population than SAI-wide vacancy.'},
+  {id:'f17', cat:'Policy', q:'Khelo India\'s share of the Department of Sports\' FY25-26 budget', a:'~67% (~₹1,000 crore)', d:'NIPFP evaluation.'},
+  {id:'f18', cat:'Policy', q:'Number of Khelo India Centres notified', a:'1,067 (991 operational)', d:'NIPFP evaluation.'},
+  {id:'f19', cat:'Policy', q:'Khelo India infrastructure projects sanctioned / % complete', a:'328 sanctioned, 74% complete', d:'241 of 328 complete; 78 in progress; 9 at nil progress.'},
+  {id:'f20', cat:'History', q:'MYAS Office Memorandum number that created the NCOE structure', a:'K-11020/4/2019-Sports-V', d:'Dated 18.09.2019.'},
+  {id:'f21', cat:'History', q:'Date SAI RC Kandivali (Mumbai) was renamed to SABV NCOE Mumbai', a:'13.07.2020', d:'Shri Atal Bihari Vajpayee National Centre of Excellence, Mumbai.'},
+  {id:'f22', cat:'History', q:'Date SAI was established', a:'25.01.1984', d:'Resolution No. 1-1/83/SAI, following the 1982 Asian Games.'},
+  {id:'f23', cat:'History', q:'Date SNIPES (incl. NSNIS Patiala) merged into SAI', a:'01.05.1987', d:''},
+];
+
+const DATES = [
+  {id:'d1', cat:'Dates', q:'01.07.2025', a:'Khelo Bharat Niti-2025 launched', d:'Corrected from an earlier wrongly-cited 10.07.2025.'},
+  {id:'d2', cat:'Dates', q:'18.08.2025', a:'National Sports Governance Act, 2025 enacted', d:''},
+  {id:'d3', cat:'Dates', q:'20.08.2025', a:'369th Parliamentary Standing Committee report presented', d:'Review of SAI and Khelo India functioning.'},
+  {id:'d4', cat:'Dates', q:'31.12.2025', a:'First NSGA-2025 commencement notification', d:'Selected provisions.'},
+  {id:'d5', cat:'Dates', q:'01.01.2026', a:'Selected NSGA-2025 provisions commence', d:'Not the whole Act — staged commencement.'},
+  {id:'d6', cat:'Dates', q:'12.05.2026', a:'Second NSGA-2025 commencement notification', d:'Further provisions/rules.'},
+  {id:'d7', cat:'Dates', q:'29.07.2026', a:'SAI Assistant Director vacancy notification issued', d:'F.No. 01-04001(03)/1/2026-66/411.'},
+  {id:'d8', cat:'Dates', q:'16.11.2022', a:'SAI General Body reconstituted', d:''},
+  {id:'d9', cat:'Dates', q:'01.09.2023', a:'SAI Governing Body reconstituted', d:''},
+];
+
+const PERSONS = [
+  {id:'p1', cat:'Persons', q:'Union Minister, Youth Affairs & Sports', a:'Dr. Mansukh Mandaviya', d:'Confirmed 21.08.2026.'},
+  {id:'p2', cat:'Persons', q:'Minister of State, Youth Affairs & Sports', a:'Raksha Khadse', d:''},
+  {id:'p3', cat:'Persons', q:'Secretary, Youth Affairs', a:'Sunil Paliwal, IAS', d:''},
+  {id:'p4', cat:'Persons', q:'Secretary, Sports', a:'Hari Ranjan Rao, IAS', d:'Not DG SAI — a common mix-up to avoid.'},
+];
+
+const ABBR = [
+  {id:'a1', cat:'Abbrev', q:'MYAS', a:'Ministry of Youth Affairs & Sports', d:'Parent Ministry.'},
+  {id:'a2', cat:'Abbrev', q:'SAI', a:'Sports Authority of India', d:'The employer.'},
+  {id:'a3', cat:'Abbrev', q:'NSGA', a:'National Sports Governance Act, 2025', d:'New statutory governance framework.'},
+  {id:'a4', cat:'Abbrev', q:'NSB', a:'National Sports Board', d:'Standards/regulatory body under NSGA.'},
+  {id:'a5', cat:'Abbrev', q:'NST', a:'National Sports Tribunal', d:'Dispute-resolution body under NSGA.'},
+  {id:'a6', cat:'Abbrev', q:'NSFs', a:'National Sports Federations', d:'Sport-specific governing bodies.'},
+  {id:'a7', cat:'Abbrev', q:'NADA', a:'National Anti-Doping Agency', d:'Testing/enforcement.'},
+  {id:'a8', cat:'Abbrev', q:'NDTL', a:'National Dope Testing Laboratory', d:''},
+  {id:'a9', cat:'Abbrev', q:'NSDF', a:'National Sports Development Fund', d:'Blended public/CSR funding; primary TOPS financing. Flagged by the Parliamentary Committee for fund-utilisation concerns.'},
+  {id:'a10', cat:'Abbrev', q:'NCOE', a:'National Centre of Excellence', d:'High-performance training hub.'},
+  {id:'a11', cat:'Abbrev', q:'STC', a:'SAI Training Centre', d:'Junior-level development, ages 10–18.'},
+  {id:'a12', cat:'Abbrev', q:'NSTC', a:'National Sports Talent Contest', d:'School-based scouting, ages 8–14.'},
+  {id:'a13', cat:'Abbrev', q:'TOPS', a:'Target Olympic Podium Scheme', d:'Elite medal-prospect support.'},
+  {id:'a14', cat:'Abbrev', q:'TEAMS', a:'Training of Elite Athletes & Management Support', d:''},
+  {id:'a15', cat:'Abbrev', q:'TAGG', a:'Target Asian Games Group', d:''},
+  {id:'a16', cat:'Abbrev', q:'KIC', a:'Khelo India Centre', d:''},
+  {id:'a17', cat:'Abbrev', q:'KISCE', a:'Khelo India State Centre of Excellence', d:''},
+  {id:'a18', cat:'Abbrev', q:'NSRS', a:'National Sports Repository System', d:"SAI's central athlete/data platform, run by the IT Division."},
+  {id:'a19', cat:'Abbrev', q:'SPARROW', a:'Smart Performance Appraisal Report Recording Online Window', a2:'APAR system', d:''},
+  {id:'a20', cat:'Abbrev', q:'GFR', a:'General Financial Rules', d:'Governs Government procurement/expenditure.'},
+  {id:'a21', cat:'Abbrev', q:'GeM', a:'Government e-Marketplace', d:'Procurement platform.'},
+  {id:'a22', cat:'Abbrev', q:'CVC', a:'Central Vigilance Commission', d:''},
+  {id:'a23', cat:'Abbrev', q:'APAR', a:'Annual Performance Appraisal Report', d:'Successor to ACR.'},
+  {id:'a24', cat:'Abbrev', q:'UC', a:'Utilisation Certificate', d:'Recurring theme in NIPFP findings — proof of how a grant was spent.'},
+  {id:'a25', cat:'Abbrev', q:'MOC', a:'Mission Olympic Cell', d:'Administers TOPS; chaired by DG SAI.'},
+  {id:'a26', cat:'Abbrev', q:'HPD', a:'High Performance Director', d:'Senior technical role at NCOEs.'},
+];
+
+const DIVISIONS = [
+  {id:'v1', cat:'Divisions', q:'TEAMS', a:'Preps national teams for international events with NSFs, on behalf of MYAS', d:''},
+  {id:'v2', cat:'Divisions', q:'TOPS', a:'Targeted support for identified Olympic/Paralympic medal prospects, funded via NSDF', d:''},
+  {id:'v3', cat:'Divisions', q:'IT', a:"NSRS, Khelo India app, e-Office, SPARROW, and SAI's data-analytics/AI-ML function", d:''},
+  {id:'v4', cat:'Divisions', q:'Sports Science', a:'Physiology, biomechanics, nutrition, psychology support', d:''},
+  {id:'v5', cat:'Divisions', q:'Stadia', a:"Runs/maintains SAI's 5 Delhi stadia", d:'JNS, IGSC, SPMSPC, MDCNS, KSSR.'},
+  {id:'v6', cat:'Divisions', q:'Engineering', a:'Sports infrastructure planning, construction, maintenance', d:''},
+  {id:'v7', cat:'Divisions', q:'Finance', a:'Budgeting, fund release, GFR compliance, PFMS', d:''},
+  {id:'v8', cat:'Divisions', q:'Coordination', a:'Nodal point for MYAS liaison, Parliament questions, RTI', d:''},
+  {id:'v9', cat:'Divisions', q:'GAD & Procurement', a:'Goods/services procurement, contracts, vendor management', d:''},
+  {id:'v10', cat:'Divisions', q:'Vigilance', a:'Integrity/vigilance matters', d:''},
+  {id:'v11', cat:'Divisions', q:'Rajbhasha', a:'Official Language Act implementation', d:'8 Parliamentary Committee inspections in 2023-24 alone.'},
+  {id:'v12', cat:'Divisions', q:'Khelo India', a:'KICs, KISCEs, talent ID, academy accreditation, funding/UCs', d:''},
+  {id:'v13', cat:'Divisions', q:'Operations', a:'Runs the NCOE/STC/Extension Centre/NSTC scheme machinery day to day', d:''},
+  {id:'v14', cat:'Divisions', q:'HR', a:'Recruitment, service matters, deputation', d:''},
+  {id:'v15', cat:'Divisions', q:'Policy/Research & Innovation', a:'Research, evaluation, systemic-gap analysis, benchmarking', d:''},
+];
+
+const MODULES = [
+  {id:'m1', cat:'Module', q:'Module 1 — Governance Architecture', a:'MYAS sets policy/funds; SAI implements; States co-implement; NSFs govern competition; NSB/NST regulate/adjudicate under NSGA.',
+    d:'Facts: SAI has 19 divisions · IT runs NSRS + AI/ML · NSDF blends Govt+CSR funding.\nDate: 25.01.1984 (SAI founded).\nProblem: n/a at this level — see Modules 4/7.\nAD relevance: the "authority vs function" test resolves most scenario questions.'},
+  {id:'m2', cat:'Module', q:'Module 2 — Khelo Bharat Niti-2025', a:'Sport as a nation-building instrument across 5 pillars — not just a medals policy.',
+    d:'Facts: Vision = "Sports for Nation Building" · 12 objectives · Union sets standards, States implement.\nDate: launched 01.07.2025.\nProblem: Task Force flagged lack of a professional administrator cadre.\nAD relevance: explains why a generalist administrator is wanted, not a sports specialist.'},
+  {id:'m3', cat:'Module', q:'Module 3 — NSGA-2025', a:'New statutory governance/regulatory framework for sports bodies, phased into force.',
+    d:'Facts: enacted 18.08.2025 · created NSB + NST · staged commencement.\nDates: 31.12.2025, then 12.05.2026.\nProblem: too new for implementation evaluation yet.\nAD relevance: NSF governance disputes route through NSB/NST, not SAI.'},
+  {id:'m4', cat:'Module', q:'Module 4 — SAI Organisation/Machinery', a:'SAI is a major autonomous institution with its own finance, schemes and governance — not a passive execution arm.',
+    d:'Facts: 19 divisions · DBT portal exists for scheme delivery · NIPFP evaluated implementation Jan 2026.\nNumber: 56% avg KISCE manpower fill rate.\nProblem: NSRS load issues; Make-in-India procurement constraints.\nAD relevance: pitch understanding/strengthening existing systems, not introducing new ones.'},
+  {id:'m5', cat:'Module', q:'Module 5 — NCOE/STC/TOPS', a:'A talent pipeline: NSTC (scout) → STC (develop) → NCOE (specialise) → TOPS (elite support).',
+    d:'Facts: NCOE traces to 18.09.2019 OM · MOC handles proposal→sanction→review · SABV NCOE Mumbai.\nNumber: 24 approved NCOEs.\nProblem: "MOC meets weekly" is unconfirmed — never state it.\nAD relevance: even elite support runs an administrative cycle mapping to AD duties.'},
+  {id:'m6', cat:'Module', q:'Module 6 — SAI Annual Report 2023-24', a:'What SAI actually did in a real year, with numbers.',
+    d:'Facts: ₹38.75cr procurement · 814 coaches · ₹21.8cr stadia revenue.\nNumber: 24 approved vs 22 operational NCOEs.\nProblem: no 2024-25 report could be located — 2023-24 is the latest verified.\nAD relevance: shows the real administrative texture of the job at scale.'},
+  {id:'m7', cat:'Module', q:'Module 7 — 369th Parliamentary Committee', a:'Independent legislative oversight, separate from SAI\'s or NIPFP\'s own accounts.',
+    d:'Facts: recommended converting SAI to a statutory body with its own cadre · ~45% SAI-wide vacancy · recommended SAI (not IOA) run the National Games.\nDate: report presented 20.08.2025.\nProblem: NSDF fund diversion finding — handle carefully, don\'t editorialise.\nAD relevance: the likely source of realistic scenario questions.'},
+];
+
+// Fact-trap judgment questions — true MCQ, options are our own composed judgment choices, not new facts.
+const TRAPS = [
+  {id:'t1', q:'A board member says: "So Manjeet Singh Chahal reached the national level in hockey too?" What\'s the safest response?',
+    opts:['Agree politely to keep the conversation moving','Correct it — he\'s a national-level track athlete (800m/1500m), not hockey','Say you\'re not sure which sport','Change the subject'], correct:1},
+  {id:'t2', q:'Asked: "How many Regional Centres does SAI have?"',
+    opts:['State confidently: 12','State confidently: 10','Acknowledge SAI\'s own materials show different figures depending on source/date, and offer to verify precisely','Avoid answering entirely'], correct:2},
+  {id:'t3', q:'Asked about the NSDF fund-utilisation issue the Parliamentary Committee flagged.',
+    opts:['Speculate about corruption','State plainly that the Committee recommended stricter NSDF regulation, without editorialising','Deny any such finding exists','Say nothing and move on'], correct:1},
+  {id:'t4', q:'Asked: "Who is the current DG of SAI?"',
+    opts:['Guess a plausible name confidently','Say you\'d want to verify the current office-holder before answering with confidence','State Hari Ranjan Rao (he\'s actually Secretary, Sports)','Avoid the question entirely'], correct:1},
+  {id:'t5', q:'Asked whether the Mission Olympic Cell meets weekly.',
+    opts:['Confirm yes','Say the meeting frequency isn\'t something you\'ve confirmed from a primary source','Guess "monthly"','Refuse to discuss TOPS'], correct:1},
+  {id:'t6', q:'Asked whether NSGA-2025 fully came into force on 1 January 2026.',
+    opts:['Yes, entirely, on that date','No — selected provisions commenced then, with further provisions/rules notified later, including May 2026','It has not come into force at all','Not sure'], correct:1},
+  {id:'t7', q:'Asked about SAI\'s "2024-25 Annual Report."',
+    opts:['Cite figures as if from a 2024-25 report','Say the latest report you\'ve verified is 2023-24','Say no SAI annual reports exist','Guess at likely figures'], correct:1},
+  {id:'t8', q:'Asked why you think these Assistant Director posts were created now.',
+    opts:['Confidently say it\'s because of Khelo Bharat Niti-2025 / NSGA-2025','Say that causal link can\'t be established from the vacancy circular, but the duties clearly match current sports-administration priorities','Say you have no idea','Say it\'s just a routine annual vacancy, with certainty'], correct:1},
+  {id:'t9', q:'Asked what you\'d bring on the technology side.',
+    opts:['"I can bring data-driven administration to SAI" (implying it lacks this)','"SAI already has NSRS and AI/ML-based analytics; I could work effectively within that existing system"','"I don\'t really know anything about SAI\'s IT setup"','"I\'d replace their current systems"'], correct:1},
+];
+
+const ALL_RECALL = [...FACTS, ...DATES, ...PERSONS, ...ABBR, ...DIVISIONS];
+
+const BOARD_QS = [
+  {id:'b1', q:'Your CV says "Nil" for sports administration. Why should we select you?', pts:['Acknowledge the gap honestly — don\'t dodge it','Ten years of Central Govt admin: files, coordination, compliance','Cricket team: real, practical sports-organising experience, just not on paper','Close with: transferable competence + genuine willingness to learn the domain fast']},
+  {id:'b2', q:'You are a tax officer. Why do you think you can work in SAI?', pts:['The AD post itself is administrative, not sports-technical — the circular\'s own 11 duties prove this','File examination, finance, HR, procurement, coordination — same skillset, different subject matter','Genuine personal sports connection (cricket, team-building) closes the credibility gap']},
+  {id:'b3', q:'You have no formal sports-management qualification. What do you bring?', pts:['Govt administrative competence','Technology/analytics background (real projects, not just a claim)','Personal sports organising experience (the cricket team)','Willingness to learn the domain deliberately, not pretend to already know it']},
+  {id:'b4', q:'What exactly did you do when you formed the cricket team?', pts:['Brought your own bat, posted recruitment calls yourself','Personally requested permission from the Commissioner, did the paperwork','Bought gear personally before asking for contributions','Captained it 2016–2021 through Times Shield (C→A) and CRSB','Team still runs today, years after you stepped back']},
+  {id:'b5', q:'Tell us one administrative failure in SAI and what you would do about it.', pts:['Use a documented finding, not a guess — e.g. NCOE approved-vs-operational gap, or KISCE manpower gap','Describe a realistic AD-level response: monitor, escalate, coordinate — not a sweeping fix','Show judgement, not blame']},
+  {id:'b6', q:'What would you do if your superior rejected your recommendation?', pts:['Understand the reasoning first, don\'t assume you were right','Government hierarchy: recommendation vs decision-making authority are different things','Re-examine if new information changes the recommendation; otherwise, respect the decision post-explanation']},
+  {id:'b7', q:'How would you handle an athlete/coach/NSF demanding something outside the rules?', pts:['Acknowledge the request seriously, don\'t dismiss it','Explain the rule/compliance boundary clearly','Escalate through proper channel if there\'s a genuine gap worth raising, rather than bending the rule']},
+  {id:'b8', q:'Why deputation to SAI at this stage of your career?', pts:['Genuine test of responsibility in a new domain','Mission-facing framing: contributing to athletes\' outcomes, not personal convenience','Avoid location-preference or personal-lifestyle reasoning out loud']},
+  {id:'b9', q:'If selected, what would you need to learn first?', pts:['SAI\'s actual operating environment before trusting your own judgement on sports-specific calls','Specific domain gaps: sports science, coaching structures, scheme mechanics','Frame as deliberate, bounded learning — not open-ended uncertainty']},
+];
+
+/* ============ STATE / STORAGE ============ */
+const STORE_KEY = 'sai_recall_v1';
+function loadStore(){
+  try{ return JSON.parse(localStorage.getItem(STORE_KEY)) || {items:{}, totalReviewed:0, streak:0, lastDay:null}; }
+  catch(e){ return {items:{}, totalReviewed:0, streak:0, lastDay:null}; }
+}
+function saveStore(s){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(s)); }catch(e){} }
+let store = loadStore();
+
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function bumpStreak(){
+  const t = todayStr();
+  if(store.lastDay === t) return;
+  const y = new Date(Date.now()-86400000).toISOString().slice(0,10);
+  store.streak = (store.lastDay === y) ? store.streak+1 : 1;
+  store.lastDay = t;
+}
+function recordItem(id, gotIt){
+  if(!store.items[id]) store.items[id] = {attempts:0, misses:0};
+  store.items[id].attempts++;
+  if(!gotIt) store.items[id].misses++;
+  store.totalReviewed++;
+  bumpStreak();
+  saveStore(store);
+  renderHeader();
+}
+function missRate(id){
+  const it = store.items[id];
+  if(!it || it.attempts===0) return 0;
+  return it.misses/it.attempts;
+}
+function renderHeader(){
+  document.getElementById('hdrStreak').textContent = store.streak||0;
+  document.getElementById('hdrTotal').textContent = store.totalReviewed||0;
+}
+
+/* ============ SESSION ENGINE ============ */
+let session = null; // {items, idx, results:[], mode, timerSeconds}
+
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function startSession(mode, items, opts={}){
+  session = {mode, items: shuffle(items).slice(0, opts.limit||items.length), idx:0, results:[], timerSeconds: opts.timerSeconds||null};
+  renderSession();
+}
+
+function weakestItems(pool, n){
+  return [...pool].sort((a,b)=> missRate(b.id)-missRate(a.id) || (store.items[b.id]?.attempts||0)-(store.items[a.id]?.attempts||0)).slice(0,n);
+}
+
+function renderSession(){
+  const main = document.getElementById('main');
+  if(session.idx >= session.items.length){ renderSummary(); return; }
+  const item = session.items[session.idx];
+  const isTrap = TRAPS.includes(item);
+  const isTimed = session.timerSeconds != null;
+
+  let html = `<div class="session-top">
+    <button class="back" onclick="goHome()">← modes</button>
+    <div class="progress">${session.idx+1} / ${session.items.length}</div>
+  </div>`;
+
+  if(isTimed){
+    html += `<div class="timerwrap"><div class="timernum" id="timerNum">${session.timerSeconds}</div>
+      <div class="timerbar"><div id="timerFill"></div></div></div>`;
+  }
+
+  html += `<div class="card">
+    <span class="tag">${item.cat || 'Board Pressure'}</span>
+    <div class="prompt">${item.q}</div>`;
+
+  if(isTrap){
+    html += `<div class="mcq-options" id="mcqWrap">`;
+    item.opts.forEach((o,i)=>{
+      html += `<button class="mcq-opt" onclick="answerTrap(${i})">${o}</button>`;
+    });
+    html += `</div>`;
+  } else if(item.pts){
+    // Board pressure / open recall
+    html += `<div class="answer" id="answerBox" style="display:none;">
+      <div class="a-detail">${item.pts.map(p=>'• '+p).join('<br>')}</div>
+    </div>
+    <div class="actions" id="revealActions">
+      <button class="btn primary" onclick="revealOpen()">Reveal expected points</button>
+    </div>
+    <div class="actions" id="gradeActions" style="display:none;">
+      <button class="btn got" onclick="gradeOpen(true)">I covered this</button>
+      <button class="btn missed" onclick="gradeOpen(false)">I missed points</button>
+    </div>`;
+  } else {
+    html += `<div class="answer" id="answerBox" style="display:none;">
+      <div class="a-main">${item.a}</div>
+      ${item.d ? `<div class="a-detail">${item.d}</div>` : ''}
+    </div>
+    <div class="actions" id="revealActions">
+      <button class="btn primary" onclick="revealOpen()">Show answer</button>
+    </div>
+    <div class="actions" id="gradeActions" style="display:none;">
+      <button class="btn got" onclick="gradeOpen(true)">Got it</button>
+      <button class="btn missed" onclick="gradeOpen(false)">Missed it</button>
+    </div>`;
+  }
+  html += `</div>`;
+  main.innerHTML = html;
+
+  if(isTimed) startTimer(session.timerSeconds);
+}
+
+let timerInterval = null;
+function startTimer(seconds){
+  clearInterval(timerInterval);
+  let remaining = seconds;
+  const numEl = document.getElementById('timerNum');
+  const fillEl = document.getElementById('timerFill');
+  fillEl.style.transition = `transform ${seconds}s linear`;
+  requestAnimationFrame(()=>{ fillEl.style.transform = 'scaleX(0)'; });
+  timerInterval = setInterval(()=>{
+    remaining--;
+    if(numEl) numEl.textContent = Math.max(remaining,0);
+    if(remaining<=0){ clearInterval(timerInterval); }
+  },1000);
+}
+
+function revealOpen(){
+  clearInterval(timerInterval);
+  document.getElementById('answerBox').style.display='block';
+  document.getElementById('revealActions').style.display='none';
+  document.getElementById('gradeActions').style.display='flex';
+}
+function gradeOpen(gotIt){
+  const item = session.items[session.idx];
+  recordItem(item.id, gotIt);
+  session.results.push({id:item.id, gotIt});
+  session.idx++;
+  renderSession();
+}
+function answerTrap(choiceIdx){
+  const item = session.items[session.idx];
+  const buttons = document.querySelectorAll('#mcqWrap .mcq-opt');
+  buttons.forEach((b,i)=>{
+    b.disabled = true;
+    if(i===item.correct) b.classList.add('correct');
+    else if(i===choiceIdx) b.classList.add('wrong');
+  });
+  const gotIt = choiceIdx===item.correct;
+  recordItem(item.id, gotIt);
+  session.results.push({id:item.id, gotIt});
+  setTimeout(()=>{ session.idx++; renderSession(); }, 1100);
+}
+
+function renderSummary(){
+  const main = document.getElementById('main');
+  const got = session.results.filter(r=>r.gotIt).length;
+  const total = session.results.length;
+
+  // strong/weak by category
+  const byCat = {};
+  session.items.forEach((item,i)=>{
+    const cat = item.cat || 'Board Pressure';
+    if(!byCat[cat]) byCat[cat] = {got:0, total:0};
+    byCat[cat].total++;
+    if(session.results[i] && session.results[i].gotIt) byCat[cat].got++;
+  });
+  const catRates = Object.entries(byCat).map(([cat,v])=>({cat, rate:v.got/v.total}));
+  catRates.sort((a,b)=>b.rate-a.rate);
+  const strong = catRates.slice(0,2).map(c=>c.cat).join(', ') || '—';
+  const weak = catRates.slice(-2).map(c=>c.cat).join(', ') || '—';
+
+  const missed = session.items.filter((item,i)=> session.results[i] && !session.results[i].gotIt);
+
+  let html = `<div class="session-top"><button class="back" onclick="goHome()">← modes</button><div></div></div>
+  <div class="summary">
+    <div class="num">${got}/${total}</div>
+    <div class="sub">this session</div>
+    <div class="sumrow"><span class="k">Strong</span><span>${strong}</span></div>
+    <div class="sumrow"><span class="k">Weak</span><span>${weak}</span></div>
+  </div>`;
+
+  if(missed.length){
+    html += `<div class="review-list"><h3 style="font-size:16px; margin-bottom:4px;">Review these ${missed.length} tomorrow</h3>`;
+    missed.forEach(item=>{
+      html += `<div class="review-item">${item.q}<div class="rp">${item.a || (item.opts ? item.opts[item.correct] : '')}</div></div>`;
+    });
+    html += `</div>`;
+  } else {
+    html += `<div class="empty">Clean sweep — nothing flagged for review from this set.</div>`;
+  }
+
+  html += `<div class="actions" style="margin-top:20px;"><button class="btn primary" onclick="goHome()">Done</button></div>`;
+  main.innerHTML = html;
+}
+
+/* ============ HOME ============ */
+function goHome(){
+  clearInterval(timerInterval);
+  session = null;
+  renderHome();
+}
+
+function renderHome(){
+  const main = document.getElementById('main');
+  const weakCount = ALL_RECALL.filter(i=>missRate(i.id) > 0.34 && (store.items[i.id]?.attempts||0) >= 1).length;
+
+  main.innerHTML = `
+    <hr class="rule">
+    <section class="intro"><p>Pick a mode. Every mode works the same way: recall it in your head (or aloud), then reveal and grade yourself honestly — the point is testing retrieval, not browsing answers.</p></section>
+    <div class="modes">
+      <button class="mode-tile" onclick="modeQuick10()">
+        <div class="t">Quick 10</div>
+        <div class="d">Five-minute mixed drill across everything.</div>
+        <div class="count">10 items</div>
+      </button>
+      <button class="mode-tile" onclick="modeCategory('Facts')">
+        <div class="t">Facts Recall</div>
+        <div class="d">Numbers, statistics, figures.</div>
+        <div class="count">${FACTS.length} items</div>
+      </button>
+      <button class="mode-tile" onclick="modeCategory('Abbrev')">
+        <div class="t">Abbreviation Drill</div>
+        <div class="d">Full form + why it matters.</div>
+        <div class="count">${ABBR.length} items</div>
+      </button>
+      <button class="mode-tile" onclick="modeCategory('Divisions')">
+        <div class="t">SAI Divisions</div>
+        <div class="d">Function ↔ division recognition.</div>
+        <div class="count">${DIVISIONS.length} items</div>
+      </button>
+      <button class="mode-tile" onclick="modeModules()">
+        <div class="t">Module Recall</div>
+        <div class="d">What / why / how / broken / AD fit — for each module.</div>
+        <div class="count">${MODULES.length} modules</div>
+      </button>
+      <button class="mode-tile" onclick="modeTraps()">
+        <div class="t">Fact Traps</div>
+        <div class="d">Judgment calls on unresolved or risky claims.</div>
+        <div class="count">${TRAPS.length} items</div>
+      </button>
+      <button class="mode-tile" onclick="modeWeak()">
+        <div class="t">Weak Areas</div>
+        <div class="d">Auto-picks what you keep missing.</div>
+        <div class="count">${weakCount} flagged</div>
+      </button>
+      <button class="mode-tile" onclick="modeBoardPressure()">
+        <div class="t">Board Pressure</div>
+        <div class="d">Timed. No multiple choice. Real board questions.</div>
+        <div class="count">${BOARD_QS.length} scenarios</div>
+      </button>
+      <button class="mode-tile" onclick="modeExplainAloud()">
+        <div class="t">Explain It Aloud</div>
+        <div class="d">30–60s to answer verbally before reveal.</div>
+        <div class="count">${MODULES.length + FACTS.length} topics</div>
+      </button>
+    </div>
+  `;
+  renderHeader();
+}
+
+function modeQuick10(){ startSession('quick10', shuffle([...ALL_RECALL, ...TRAPS]), {limit:10}); }
+function modeCategory(catKey){
+  const map = {Facts:FACTS, Abbrev:ABBR, Divisions:DIVISIONS};
+  startSession('cat', map[catKey]);
+}
+function modeModules(){ startSession('modules', MODULES); }
+function modeTraps(){ startSession('traps', TRAPS); }
+function modeWeak(){
+  const pool = ALL_RECALL.filter(i => (store.items[i.id]?.attempts||0) >= 1);
+  const weak = weakestItems(pool.length? pool : ALL_RECALL, 10);
+  startSession('weak', weak);
+}
+function modeBoardPressure(){ startSession('board', BOARD_QS, {timerSeconds:45}); }
+function modeExplainAloud(){ startSession('explain', shuffle([...MODULES]), {timerSeconds:45}); }
+
+/* ============ INIT ============ */
+renderHome();
+</script>
+</body>
+</html>
