@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>The Long Run — A Sports Administration Story</title>
+<style>
+  :root{
+    --paper:#FAF7F0; --paper-panel:#F1ECDF; --ink:#1B2A41; --ink-soft:#4A5568; --line:#D8CFB8;
+    --gold:#B8863B; --gold-soft:#E9D9B8;
+    --night:#12151A; --night-surface:#1B2027; --night-line:#2E353F; --night-text:#EDEAE2;
+    --c-govt:#1B2A41; --c-sai:#B8863B; --c-prog:#2E6E62; --c-gov2:#7A2E2E;
+    --c-fin:#3F7A3F; --c-over:#5B6470; --c-ext:#5A4E8C; --c-ad:#C9420B;
+    --maxw:760px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0; padding:0; background:var(--night); color:var(--night-text); font-family:Georgia,'Liberation Serif',serif;}
+  h1,h2,h3,h4{font-family:-apple-system,'Liberation Sans',Arial,sans-serif; margin:0;}
+  #app{max-width:var(--maxw); margin:0 auto; min-height:100vh; background:var(--paper); color:var(--ink); position:relative;}
+
+  header.top{background:var(--night); color:var(--night-text); padding:14px 18px; position:sticky; top:0; z-index:20; display:flex; justify-content:space-between; align-items:center; font-family:-apple-system,sans-serif;}
+  header.top .brand{font-size:15px; font-weight:700;}
+  header.top .brand small{display:block; font-weight:400; font-size:10.5px; color:#9AA3AD;}
+  header.top button{background:none; border:1px solid var(--night-line); color:var(--night-text); border-radius:4px; padding:6px 10px; font-size:11px; cursor:pointer; font-family:-apple-system,sans-serif;}
+  .progressbar{height:3px; background:var(--night-line);}
+  .progressbar > div{height:100%; background:var(--gold);}
+
+  main{padding:24px 22px 60px;}
+
+  /* SCENE (narrative prose) */
+  .scene{margin-bottom:20px;}
+  .scene .chnum{font-family:-apple-system,sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); font-weight:700;}
+  .scene h2{font-size:26px; margin:6px 0 4px; line-height:1.2;}
+  .scene .motif{display:inline-block; font-family:-apple-system,sans-serif; font-size:10.5px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; background:var(--gold-soft); color:#6B5230; padding:3px 10px; border-radius:10px; margin-bottom:12px;}
+  .scene p{font-size:16.5px; line-height:1.75; margin:0 0 14px;}
+  .scene p.char{font-family:-apple-system,sans-serif; font-size:13px; color:var(--ink-soft); font-style:italic; margin-bottom:16px;}
+
+  /* LESSON (institutional interlude — dark register, deliberately distinct) */
+  .lesson{background:var(--night); color:var(--night-text); border-radius:8px; padding:20px 20px 16px; margin:22px 0; font-family:-apple-system,sans-serif;}
+  .lesson .lbl{font-size:10.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:8px;}
+  .lesson h4{color:#fff; font-size:16px; margin-bottom:8px;}
+  .lesson p{font-size:13px; line-height:1.65; color:#C7CCD3; margin:0 0 10px;}
+  .lesson .tags{margin-bottom:10px;}
+  .tag{display:inline-block; font-size:9px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; padding:2px 7px; border-radius:3px; margin-right:4px;}
+  .tag-fact{background:#2C4A2C; color:#B7E0B7;}
+  .tag-fict{background:#3A3220; color:#E0C98A;}
+  .tag-illus{background:#2C3A4A; color:#A9C6E0;}
+  .tag-inf{background:#3A3A3A; color:#C9C9C9;}
+  .tag-parl{background:#4A2C2C; color:#E0B0B0;}
+
+  /* TAKEAWAY */
+  .takeaway{border-left:4px solid var(--c-ad); background:#FBEBE2; padding:12px 16px; margin:16px 0; font-family:-apple-system,sans-serif; font-size:12.5px; border-radius:0 6px 6px 0;}
+  .takeaway .lbl{font-size:10px; letter-spacing:1px; text-transform:uppercase; font-weight:700; color:var(--c-ad); margin-bottom:4px;}
+
+  /* DIAGRAM WRAP */
+  .diagwrap{background:var(--night); border-radius:8px; padding:16px; margin:18px 0;}
+  .diagwrap .cap{font-family:-apple-system,sans-serif; font-size:10.5px; color:#9AA3AD; margin-top:8px; text-align:center;}
+  svg text{font-family:-apple-system,Arial,sans-serif;}
+
+  /* CAST CARDS */
+  .castgrid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px 0;}
+  .castcard{background:var(--paper-panel); border:1px solid var(--line); border-radius:6px; padding:10px 12px; font-family:-apple-system,sans-serif;}
+  .castcard .n{font-size:13px; font-weight:700; color:var(--ink);}
+  .castcard .r{font-size:10.5px; color:var(--gold); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:4px;}
+  .castcard .d{font-size:11.5px; color:var(--ink-soft); line-height:1.4;}
+
+  /* nav */
+  .navrow{display:flex; justify-content:space-between; gap:10px; margin-top:30px; font-family:-apple-system,sans-serif;}
+  .navbtn{flex:1; padding:14px; text-align:center; border-radius:6px; border:1px solid var(--line); background:var(--paper-panel); color:var(--ink); font-size:13px; font-weight:700; cursor:pointer;}
+  .navbtn.primary{background:var(--night); color:#fff; border-color:var(--night);}
+
+  /* home */
+  .home-hero{padding:10px 0 20px;}
+  .home-hero h1{font-size:32px; line-height:1.2; margin-bottom:8px;}
+  .home-hero p{font-family:-apple-system,sans-serif; font-size:13.5px; color:var(--ink-soft); line-height:1.6;}
+  .chlist{display:flex; flex-direction:column; gap:8px; margin-top:18px;}
+  .chrow{background:var(--paper-panel); border:1px solid var(--line); border-radius:6px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-family:-apple-system,sans-serif;}
+  .chrow .ct{font-size:14px; font-weight:700;}
+  .chrow .cs{font-size:11px; color:var(--ink-soft); margin-top:2px;}
+  .chrow .done{color:#2C7A2C; font-size:16px;}
+
+  /* modal */
+  .modal-backdrop{position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:100; display:none; align-items:flex-end; justify-content:center;}
+  .modal-backdrop.show{display:flex;}
+  .modal{background:var(--paper); width:100%; max-width:var(--maxw); max-height:80vh; overflow-y:auto; border-radius:14px 14px 0 0; padding:20px;}
+  .modal .close{float:right; background:none; border:none; font-size:20px; cursor:pointer; color:var(--ink-soft);}
+
+  .quizlink{display:block; text-align:center; margin-top:20px; padding:12px; border:1px solid var(--gold); border-radius:6px; color:var(--gold); text-decoration:none; font-family:-apple-system,sans-serif; font-weight:700; font-size:13.5px;}
+
+  @keyframes movealong{ to { offset-distance: 100%; } }
+  .token{offset-rotate:0deg; animation:movealong 3.5s linear infinite;}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="top">
+    <div class="brand">The Long Run<small>An interactive story of the Indian sports system</small></div>
+    <button onclick="openCast()">Cast &amp; Terms</button>
+  </header>
+  <div class="progressbar"><div id="progFill" style="width:0%"></div></div>
+  <main id="main"></main>
+</div>
+
+<div class="modal-backdrop" id="castModal">
+  <div class="modal">
+    <button class="close" onclick="closeCast()">&times;</button>
+    <h3 style="font-family:-apple-system,sans-serif;">Cast &amp; Institutions</h3>
+    <p style="font-family:-apple-system,sans-serif; font-size:12px; color:var(--ink-soft);">Tap any time to refresh who's who. Characters are fictional; institutions are real and source-tagged where they first appear in the story.</p>
+    <div id="castContent"></div>
+  </div>
+</div>
+
+<script>
+/* ================= CAST (fictional characters) ================= */
+const CAST = [
+  {n:'Arjun Toppo', r:'Protagonist', d:'14 at the story\'s start, from a small town in Jharkhand. A natural middle-distance runner discovered at a school meet.'},
+  {n:'Meena Ekka', r:'PE Teacher / Talent Scout', d:'Notices Arjun\'s times and enters him for an NSTC trial.'},
+  {n:'Vikram Solanki', r:'Coach', d:'Senior coach who trains Arjun through STC and later NCOE.'},
+  {n:'Ritu Bhargava', r:'Assistant Director, SAI', d:'The reader\'s second thread through the story — a Government officer on deputation, examining files and coordinating across divisions. Not a coach; not a super-authority.'},
+  {n:'D. K. Ramesh', r:'Centre Administrator', d:'Runs day-to-day operations at Arjun\'s NCOE — Ritu\'s point of contact on the ground.'},
+  {n:'The State Sports Department', r:'Institution', d:'Co-implements Khelo India infrastructure and grassroots schemes alongside SAI, with its own funding role.'},
+  {n:'"The Federation"', r:'Institution (generic)', d:'A stand-in for whichever National Sports Federation governs Arjun\'s sport — deliberately unnamed so no real federation\'s conduct is implied.'},
+];
+
+/* ================= STORY DATA ================= */
+/* Section types: scene, lesson, takeaway, diagram (svg string), cast (mini inline cards) */
+
+const CHAPTERS = [
+{
+  id:'ch0', title:'The Cast & The Map', motif:null,
+  sections:[
+    {type:'scene', html:`
+      <div class="chnum">Prologue</div>
+      <h2>Before We Begin</h2>
+      <p class="char">A note before the story starts.</p>
+      <p>This is a made-up story about a made-up runner. Every character in it — Arjun, Meena, Vikram, Ritu, D.K. Ramesh — is fictional. But every institution they walk into, every rule they follow, every rupee that moves, and every office that signs off is real, and drawn from the same verified material as the rest of this preparation project.</p>
+      <p>Read it the way you'd read a well-made documentary drama: enjoy the story, but trust the institutional facts as facts. Wherever the story invents something for convenience — a name, a date, a specific number — it's flagged <span class="tag tag-fict">FICTIONAL</span>. Wherever it states how the system actually works, it's flagged <span class="tag tag-fact">OFFICIAL FACT</span>, <span class="tag tag-parl">PARLIAMENTARY</span>, or <span class="tag tag-inf">INFERENCE</span> if it's a reasonable but unconfirmed connection.</p>
+      <p>Two threads run through the whole story. One is <b>Arjun's</b> — follow the athlete. The other is <b>Ritu's</b> — an Assistant Director at SAI, and the character who turns eleven generic vacancy-circular duties into things you'll actually watch someone do.</p>
+    `},
+    {type:'cast'},
+    {type:'takeaway', html:`<div class="lbl">Why this exists</div>By the end, you should be able to take any real interview question — "who funds Khelo India," "where does an NSF fit," "what can an AD actually decide" — and answer it by picturing a scene in this story rather than recalling an isolated fact.`}
+  ]
+},
+{
+  id:'ch1', title:'A Time at the District Meet', motif:'FOLLOW THE ATHLETE',
+  sections:[
+    {type:'scene', html:`
+      <div class="chnum">Chapter 1</div>
+      <h2>A Time at the District Meet</h2>
+      <p class="char">Jharkhand, a district athletics meet. Fictional setting, fictional event.</p>
+      <p>Arjun Toppo ran the 800 metres the way he always did — too fast for the first lap, and somehow still fastest at the end. His school didn't have a proper track. He trained on a flattened stretch of red mud behind the football field, timed by his PE teacher's phone. When the results were called, his time was good enough that Meena Ekka, who had seen three hundred district meets and rarely got excited, wrote his name down twice — once for the school record book, and once on a form she'd been given at a teachers' briefing two months earlier.</p>
+      <p>The form was for the <b>National Sports Talent Contest</b> — <span class="tag tag-fact">OFFICIAL FACT</span> a real SAI scheme that scouts talent directly from schools, in Arjun's age bracket. Meena didn't fully understand the acronym chain that followed — NSTC, STC, SAI — she just knew that filling out the form was the only door she could open for a boy who trained on red mud with no coach.</p>
+    `},
+    {type:'lesson', html:`
+      <div class="lbl">What Just Happened <span class="tag tag-fact">Official Fact</span></div>
+      <h4>The System's First Door: NSTC</h4>
+      <p>The National Sports Talent Contest (NSTC) is SAI's school-based scouting mechanism, aimed at the 8–14 age group. It exists specifically because talent like Arjun's — real, but with no structured pathway around it — needs a formal entry point into the system, not just a lucky scout.</p>
+      <p>This is the first rung of a four-stage pipeline you'll see the rest of the story build on: <b>NSTC (scout) → STC (develop) → NCOE (specialise) → TOPS (elite support)</b>. Each stage is run differently, funded differently, and staffed differently — which is exactly why an administrator, not just a coach, is needed to keep athletes moving between them.</p>
+    `},
+    {type:'diagram', svg:`
+      <svg viewBox="0 0 700 120" style="width:100%;">
+        <circle cx="60" cy="60" r="30" fill="var(--c-prog)"/><text x="60" y="65" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Arjun</text>
+        <line x1="90" y1="60" x2="180" y2="60" stroke="var(--gold)" stroke-width="2.5" marker-end="url(#a1)"/>
+        <rect x="180" y="35" width="150" height="50" rx="6" fill="var(--c-sai)"/><text x="255" y="65" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">NSTC trial</text>
+        <line x1="330" y1="60" x2="420" y2="60" stroke="var(--gold)" stroke-width="2.5" marker-end="url(#a1)" stroke-dasharray="4 3"/>
+        <text x="375" y="45" text-anchor="middle" fill="#9AA3AD" font-size="9">next chapter</text>
+        <rect x="420" y="35" width="150" height="50" rx="6" fill="#333"/><text x="495" y="65" text-anchor="middle" fill="#9AA3AD" font-size="11">STC?</text>
+        <defs><marker id="a1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--gold)"/></marker></defs>
+      </svg>`, caption:'One trial. One form. The first institutional door in a long chain.'}
+  ]
+},
+{
+  id:'ch2', title:'Selection', motif:'FOLLOW THE FILE',
+  sections:[
+    {type:'scene', html:`
+      <div class="chnum">Chapter 2</div>
+      <h2>Selection</h2>
+      <p class="char">Six weeks later. A State Sports Department office, and a very different kind of room.</p>
+      <p>Arjun's NSTC result didn't get him a phone call. It got him a line item on a spreadsheet that a State Sports Department official reviewed alongside forty other names, cross-checked against available seats at the nearest <b>SAI Training Centre</b>, and forwarded with a covering note. <span class="tag tag-fact">Official fact</span> STCs run junior-level development for ages 10–18, and admission follows placement criteria — competition rankings, not open enrolment — which is why the paperwork mattered as much as the stopwatch.</p>
+      <p>Three states away, in an office that smelled of paper and instant coffee, an Assistant Director named Ritu Bhargava was reading a different file entirely — a quarterly report on STC seat utilisation across her assigned region. Arjun's name wasn't on it yet. But the seat he was about to fill was one of the numbers she'd been tracking for months, because an empty STC seat in a state with real athletic talent was, to her, a small administrative failure waiting to be explained.</p>
+    `},
+    {type:'lesson', html:`
+      <div class="lbl">What Just Happened <span class="tag tag-fact">Official Fact</span> <span class="tag tag-illus">Illustrative Scenario</span></div>
+      <h4>Two Institutions, Same Athlete</h4>
+      <p>State Sports Departments are not SAI. They're separate government bodies that co-implement — especially at the grassroots and infrastructure level. Arjun's placement genuinely involves both: the State reviews and forwards; SAI's Operations Division ultimately administers the STC itself.</p>
+      <p>Ritu's "seat utilisation report" is <span class="tag tag-illus">illustrative</span> — a plausible example of the monitoring and reporting duty in the AD's vacancy circular, not a document we've verified exists in that exact form. But the underlying fact is real: SAI's own Annual Report shows real STC capacity numbers (69 centres, thousands of athletes) that someone has to track against actual enrolment.</p>
+    `},
+    {type:'takeaway', html:`<div class="lbl">Interview takeaway</div>If asked "how does an athlete actually enter an STC," the honest answer isn't just "SAI selects them" — it's a State-level review feeding into an SAI-administered seat, which is exactly the kind of two-institution coordination an AD spends real time on.`}
+  ]
+},
+{
+  id:'ch3', title:'The Centre', motif:'FOLLOW THE ATHLETE',
+  sections:[
+    {type:'scene', html:`
+      <div class="chnum">Chapter 3</div>
+      <h2>The Centre</h2>
+      <p class="char">Arjun's first week at the STC.</p>
+      <p>The STC had a real track — Arjun's first — and a coach, Vikram Solanki, who ran a training log more rigorous than anything Arjun had known. Within a year, Vikram was telling anyone who'd listen that the boy had a genuine shot at something bigger. Within two, the paperwork agreed with him: Arjun's times qualified him for assessment at a <b>National Centre of Excellence</b>.</p>
+      <p><span class="tag tag-fact">Official fact</span> NCOEs aren't simply "better STCs." They're SAI's high-performance layer — specialised training, sports-science backup, individualised nutrition, and multiple concurrent layers of prospective athletes so the national pool has depth, not just a single favourite. SAI's own materials describe 24 NCOEs as approved nationally; a separate Annual Report shows that in one recent year, only 22 were actually operational — a distinction Vikram, who'd coached at one of the non-operational ones early in his career, understood better than most people writing about sport ever would.</p>
+    `},
+    {type:'diagram', svg:`
+      <svg viewBox="0 0 700 100" style="width:100%;">
+        <rect x="0" y="30" width="150" height="40" rx="6" fill="var(--c-prog)"/><text x="75" y="55" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">NSTC</text>
+        <line x1="150" y1="50" x2="185" y2="50" stroke="var(--gold)" stroke-width="2.5" marker-end="url(#a2)"/>
+        <rect x="185" y="20" width="150" height="60" rx="6" fill="var(--c-prog)" opacity="0.9"/><text x="260" y="40" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">STC</text><text x="260" y="58" text-anchor="middle" fill="#fff" font-size="9">Arjun is here</text>
+        <line x1="335" y1="50" x2="370" y2="50" stroke="var(--gold)" stroke-width="2.5" marker-end="url(#a2)"/>
+        <rect x="370" y="10" width="150" height="80" rx="6" fill="var(--c-ad)"/><text x="445" y="45" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">NCOE</text><text x="445" y="62" text-anchor="middle" fill="#fff" font-size="9">assessment next</text>
+        <defs><marker id="a2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--gold)"/></marker></defs>
+      </svg>`, caption:'Two years, two rungs up the pipeline.'},
+    {type:'takeaway', html:`<div class="lbl">Interview takeaway</div>"Approved" and "operational" are not the same word. If a board asks how many NCOEs exist, the sharper answer distinguishes the two — 24 approved, 22 operational in the one year we can verify — rather than reciting a single confident number.`}
+  ]
+},
+{
+  id:'ch4', title:'The ₹50 Lakh Problem', motif:'FOLLOW THE FILE · FOLLOW THE MONEY',
+  sections:[
+    {type:'scene', html:`
+      <div class="chnum">Chapter 4</div>
+      <h2>The ₹50 Lakh Problem</h2>
+      <p class="char">Arjun's NCOE. A cracked force-plate, and a coach's frustration.</p>
+      <p>The NCOE's biomechanics lab had one force-plate system, and it had just failed a calibration check for the third time. Vikram, now training four athletes at national-junior level including Arjun, filed a technical requirement note: they needed a replacement system, and the one they wanted wasn't manufactured in India.</p>
+      <p><span class="tag tag-illus">Illustrative scenario</span> The note went to D.K. Ramesh, the centre's administrator, who forwarded it as a formal proposal to SAI's Operations Division. From there it reached Ritu Bhargava's desk — not because she knew anything about force-plates, but because examining exactly this kind of file, checking budget heads, and flagging what needed to go where was, in the plainest terms, her job.</p>
+      <p>Ritu's examination turned up two real complications. First, <span class="tag tag-fact">official fact</span> the Make-in-India requirement in Government procurement can restrict buying specialised equipment when no suitable domestic, BIS-certified product exists — which appeared to be the case here, and needed to be documented, not assumed. Second, the number itself — <span class="tag tag-fict">fictional</span> a shade over fifty lakh rupees — sat well above what the NCOE administrator could sanction alone, which meant Finance and GAD & Procurement both had a say before anyone placed an order.</p>
+    `},
+    {type:'lesson', html:`
+      <div class="lbl">What Just Happened <span class="tag tag-illus">Illustrative Scenario</span> <span class="tag tag-fact">Official Fact</span></div>
+      <h4>Where the Assistant Director Actually Sits</h4>
+      <p>Notice what Ritu did <i>not</i> do: she didn't decide whether the force-plate was needed (a technical/coaching call), and she didn't personally approve the money (a Finance/delegated-authority call). What she did was the file-examination and coordination the vacancy circular actually describes — checking the proposal, flagging the Make-in-India issue, and routing it to the right divisions.</p>
+    `},
+    {type:'diagram', svg:`
+      <svg viewBox="0 0 720 220" style="width:100%;">
+        <rect x="0" y="10" width="120" height="36" rx="5" fill="var(--c-prog)"/><text x="60" y="32" text-anchor="middle" fill="#fff" font-size="9.5">Coach's note</text>
+        <line x1="120" y1="28" x2="150" y2="28" stroke="var(--gold)" stroke-width="2" marker-end="url(#a3)"/>
+        <rect x="150" y="10" width="120" height="36" rx="5" fill="var(--c-prog)" opacity="0.85"/><text x="210" y="32" text-anchor="middle" fill="#fff" font-size="9.5">Centre admin.</text>
+        <line x1="270" y1="28" x2="300" y2="28" stroke="var(--gold)" stroke-width="2" marker-end="url(#a3)"/>
+        <rect x="300" y="0" width="140" height="56" rx="5" fill="var(--c-ad)"/><text x="370" y="24" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">Assistant Director</text><text x="370" y="40" text-anchor="middle" fill="#fff" font-size="8.5">examines, routes</text>
+        <line x1="370" y1="56" x2="230" y2="90" stroke="var(--c-fin)" stroke-width="2" stroke-dasharray="4 3"/>
+        <line x1="370" y1="56" x2="500" y2="90" stroke="var(--c-fin)" stroke-width="2" stroke-dasharray="4 3"/>
+        <rect x="130" y="90" width="200" height="36" rx="5" fill="var(--c-fin)"/><text x="230" y="112" text-anchor="middle" fill="#fff" font-size="10">GAD &amp; Procurement · GFR/GeM</text>
+        <rect x="400" y="90" width="200" height="36" rx="5" fill="var(--c-fin)" opacity="0.85"/><text x="500" y="112" text-anchor="middle" fill="#fff" font-size="10">Finance · sanction</text>
+        <line x1="230" y1="126" x2="230" y2="150" stroke="#999" stroke-width="1.5"/>
+        <line x1="500" y1="126" x2="500" y2="150" stroke="#999" stroke-width="1.5"/>
+        <rect x="130" y="150" width="200" height="30" rx="5" fill="none" stroke="var(--c-over)"/><text x="230" y="170" text-anchor="middle" font-size="9.5" fill="#9AA3AD">Vendor, install</text>
+        <rect x="400" y="150" width="200" height="30" rx="5" fill="none" stroke="var(--c-over)"/><text x="500" y="170" text-anchor="middle" font-size="9.5" fill="#9AA3AD">NSRS asset record</text>
+        <line x1="230" y1="180" x2="365" y2="200" stroke="#999" stroke-width="1.5"/>
+        <line x1="500" y1="180" x2="365" y2="200" stroke="#999" stroke-width="1.5"/>
+        <rect x="265" y="200" width="200" height="18" rx="9" fill="var(--c-over)"/><text x="365" y="213" text-anchor="middle" fill="#fff" font-size="9">Monitoring · eventual audit</text>
+        <defs><marker id="a3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--gold)"/></marker></defs>
+      </svg>`, caption:'Same chain the Systems Handbook mapped abstractly — now with faces on it.'},
+    {type:'takeaway', html:`<div class="lbl">Interview takeaway</div>"A procurement is stuck because no domestic vendor meets a technical spec — what do you do?" is a real, likely question. Ritu's scene is the answer: identify the gap, document it, route it through GFR flexibility provisions rather than freezing or overriding the rule.`}
+  ]
+},
+{
+  id:'ch5', title:'The Data That Follows You', motif:'FOLLOW THE FILE',
+  sections:[
+    {type:'scene', html:`
+      <div class="chnum">Chapter 5</div>
+      <h2>The Data That Follows You</h2>
+      <p class="char">Eight months later. A dashboard, and a number that worried Vikram.</p>
+      <p>Every session Arjun ran was now logged — splits, heart-rate recovery, force-plate output once the new system finally arrived — into <b>NSRS</b>, SAI's central sports data platform. <span class="tag tag-fact">Official fact</span> NSRS isn't just a filing cabinet; SAI's IT Division runs a genuine data-analytics and AI/ML function on top of it — athlete tracking, performance benchmarking, dashboards.</p>
+      <p>It was that dashboard, not a coach's instinct, that first flagged something: Arjun's recovery numbers had quietly worsened over six weeks. Sports Science stepped in before Vikram would have noticed on his own. <span class="tag tag-illus">Illustrative</span> A minor training-load adjustment, not a crisis — but a real demonstration of what "digital infrastructure" concretely buys an athlete.</p>
+    `},
+    {type:'lesson', html:`
+      <div class="lbl">What Just Happened <span class="tag tag-fact">Official Fact</span></div>
+      <h4>Don't Say SAI Lacks Digital Infrastructure — It Doesn't</h4>
+      <p>This scene exists specifically to counter a tempting but wrong interview answer: "I'd bring data-driven administration to SAI." SAI already runs it. The credible position — the one Arjun's story just demonstrated — is understanding and strengthening a system that's already catching real problems.</p>
+      <p><span class="tag tag-inf">Inference</span> NIPFP's 2026 evaluation separately found that NSRS has real load/performance issues and a user-awareness gap in places — so "already exists" doesn't mean "already perfect." Both things are true at once.</p>
+    `}
+  ]
+},
+{
+  id:'ch6', title:'Podium Track', motif:'FOLLOW THE MONEY',
+  sections:[
+    {type:'scene', html:`
+      <div class="chnum">Chapter 6</div>
+      <h2>Podium Track</h2>
+      <p class="char">Arjun, now nineteen, after a strong result at a national meet.</p>
+      <p>A national medal changes the paperwork faster than it changes anything else. Within weeks, Vikram was helping prepare a proposal for <b>TOPS</b> — the Target Olympic Podium Scheme — Arjun's file moving to the <b>Mission Olympic Cell</b>, chaired by the Director General of SAI, for review alongside proposals for a dozen other athletes across sports.</p>
+      <p><span class="tag tag-fact">Official fact</span> The MOC's actual functions are concrete: approve a customised training programme, recommend financial disbursement, monitor progress, and keep the paperwork straight. That disbursement, when it came, was financed in part through the <b>National Sports Development Fund</b> — a blend of Government money and private/CSR contributions, not a pure Government budget line.</p>
+      <p><span class="tag tag-inf">Unconfirmed, deliberately not stated as fact</span> Nobody in this story claims the MOC meets on any particular schedule — because no verified source says so, and Ritu, watching the file move past her desk on its way upward, wouldn't have guessed either.</p>
+    `},
+    {type:'diagram', svg:`
+      <svg viewBox="0 0 700 140" style="width:100%;">
+        <rect x="0" y="50" width="140" height="40" rx="6" fill="var(--c-ad)"/><text x="70" y="75" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Arjun's proposal</text>
+        <line x1="140" y1="70" x2="180" y2="70" stroke="var(--gold)" stroke-width="2.5" marker-end="url(#a4)"/>
+        <rect x="180" y="30" width="160" height="80" rx="6" fill="var(--c-sai)"/><text x="260" y="60" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Mission Olympic Cell</text><text x="260" y="80" text-anchor="middle" fill="#fff" font-size="9">chaired by DG, SAI</text>
+        <line x1="340" y1="70" x2="380" y2="70" stroke="var(--c-fin)" stroke-width="2.5" stroke-dasharray="5 3" marker-end="url(#a4)"/>
+        <rect x="380" y="50" width="150" height="40" rx="6" fill="var(--c-fin)"/><text x="455" y="75" text-anchor="middle" fill="#fff" font-size="10">NSDF disbursement</text>
+        <line x1="530" y1="70" x2="570" y2="70" stroke="var(--gold)" stroke-width="2.5" marker-end="url(#a4)"/>
+        <rect x="570" y="50" width="130" height="40" rx="6" fill="var(--c-over)"/><text x="635" y="75" text-anchor="middle" fill="#fff" font-size="10">Progress review</text>
+        <defs><marker id="a4" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--gold)"/></marker></defs>
+      </svg>`, caption:'Even elite athlete support runs on an administrative cycle.'}
+  ]
+},
+{
+  id:'ch7', title:'A Federation Under Question', motif:'FOLLOW THE ACCOUNTABILITY',
+  sections:[
+    {type:'scene', html:`
+      <div class="chnum">Chapter 7</div>
+      <h2>A Federation Under Question</h2>
+      <p class="char">A governance story that has nothing to do with Arjun's training, and everything to do with whether he'll get to compete.</p>
+      <p><span class="tag tag-fict">Fictional scenario</span> "The Federation" governing Arjun's sport had, for over a year, failed to hold the elections its own constitution required. Athletes were starting to ask whether a national team selected under a lapsed governance structure would even be recognised internationally.</p>
+      <p>This is where the story deliberately leaves SAI's building entirely. <span class="tag tag-fact">Official fact</span> under the <b>National Sports Governance Act, 2025</b>, "the Federation" is what the Act calls a <b>National Sports Body</b> — a defined category covering the National Olympic Committee, National Paralympic Committee, NSFs, and Regional Sports Federations. Recognition, suspension, and governance standards for these bodies are the <b>National Sports Board's</b> job, not SAI's.</p>
+      <p>Ritu heard about the situation the way most SAI staff would — secondhand, through athlete concern, not through any file on her desk. It genuinely wasn't hers to fix. <span class="tag tag-illus">Illustrative</span> If the Federation's recognition were suspended, SAI's own athlete-support schemes for that sport could be affected indirectly — but the actual governance dispute belonged entirely to a different regulatory chain.</p>
+    `},
+    {type:'lesson', html:`
+      <div class="lbl">What Just Happened <span class="tag tag-fact">Official Fact</span></div>
+      <h4>Two Chains, Still Not Merged</h4>
+      <p>This is the single most commonly confused relationship in the whole subject, restated through a scene instead of a diagram: SAI trains and supports athletes. The National Sports Board governs and recognises the federations. They intersect — an athlete's competition eligibility can depend on both — but neither runs the other.</p>
+    `},
+    {type:'takeaway', html:`<div class="lbl">Interview takeaway</div>"NSGA-2025 doesn't replace or absorb SAI. It's a separate statutory governance layer for National Sports Bodies — the Federation in this story is exactly that kind of body. The two chains only intersect where a body's governance status could affect its athletes' SAI-linked programmes."`}
+  ]
+},
+{
+  id:'ch8', title:'Who Is Watching', motif:'FOLLOW THE ACCOUNTABILITY',
+  sections:[
+    {type:'scene', html:`
+      <div class="chnum">Chapter 8</div>
+      <h2>Who Is Watching</h2>
+      <p class="char">A Parliamentary Committee report lands on desks nobody expected it to reach.</p>
+      <p><span class="tag tag-fact">Official fact</span> The 369th Parliamentary Standing Committee report on SAI and Khelo India — a real document, presented in August 2025 — found roughly 45% of SAI's sanctioned posts vacant nationally, and recommended filling them within six months. It also raised concerns about how National Sports Development Fund money had, in some instances, been used.</p>
+      <p>None of this was about Arjun, or his NCOE, or Ritu's desk specifically. But <span class="tag tag-illus">illustrative</span> Ritu's own division received a circular the following month asking every Regional Centre to report current staffing against sanctioned strength — a plausible, if invented, downstream effect of exactly this kind of oversight finding.</p>
+      <p>A separate, independent evaluation — NIPFP's, from January 2026 — had already found something related but distinct: state-by-state manpower gaps at Khelo India State Centres of Excellence, averaging 56% filled nationally, with wide variation between states. <span class="tag tag-inf">Discipline point</span> These are two different numbers, from two different bodies, measuring two different things. The story keeps them separate on purpose.</p>
+    `},
+    {type:'takeaway', html:`<div class="lbl">Interview takeaway</div>Don't merge the Parliamentary Committee's ~45% SAI-wide vacancy figure with NIPFP's 56% KISCE fill-rate figure under pressure — they're genuinely different populations, and conflating them is an easy, avoidable mistake.`}
+  ]
+},
+{
+  id:'ch9', title:"Ritu's Desk", motif:'FOLLOW THE DECISION',
+  sections:[
+    {type:'scene', html:`
+      <div class="chnum">Chapter 9</div>
+      <h2>Ritu's Desk</h2>
+      <p class="char">An ordinary Tuesday. Not Arjun's story anymore — just Ritu's, in full.</p>
+      <p><span class="tag tag-illus">Illustrative, composite day</span> By mid-morning, three files were open on Ritu's desk. One was a staffing report responding to the Parliamentary Committee's finding. One was a coordination request from a State Sports Department about a Khelo India Centre's delayed infrastructure grant. One was a routine APAR she needed to complete for a subordinate Section Officer.</p>
+      <p>None of them required her to know anything about biomechanics, or middle-distance pacing, or force-plates. All three asked the same underlying questions, in different clothes: <i>What exactly is the issue? Which division or function owns it? What rules apply? What evidence is on file? Who else needs consulting? Is this mine to decide, or does it need to go up?</i></p>
+      <p>The infrastructure grant, she could clear herself — the delay was a documentation gap, not a policy question, and resolving it was squarely within what she'd been delegated. The staffing report, she couldn't decide alone; she wrote a recommendation and sent it up with the numbers attached, clearly labelled as a recommendation, not a decision. The APAR, she simply did, because supervision was not a special event — it was Tuesday.</p>
+    `},
+    {type:'lesson', html:`
+      <div class="lbl">What Just Happened <span class="tag tag-illus">Illustrative, but structurally accurate</span></div>
+      <h4>The Eleven Duties, Lived In</h4>
+      <p>Every one of the vacancy circular's eleven duties just happened in one invented morning: policy implementation (acting on the Committee's finding), supervision (the APAR), file examination and decision support (all three files), coordination (the State liaison), monitoring and reporting (the staffing numbers), and the constant, quiet judgment call of knowing which of those is actually hers to decide.</p>
+    `},
+    {type:'takeaway', html:`<div class="lbl">Interview takeaway</div>"What would you do in your first 90 days?" doesn't need a grand plan as an answer. It needs this: learn which of these three-file mornings looks like, in this specific organisation, before trusting your own judgment on anything sport-specific.`}
+  ]
+},
+{
+  id:'ch10', title:'The Whole Map', motif:null,
+  sections:[
+    {type:'scene', html:`
+      <div class="chnum">Final Chapter</div>
+      <h2>The Whole Map</h2>
+      <p>Arjun never met Ritu. He never will — that's realistic, not a plot gap. But every stage of his story ran through a system she was one small, real part of administering: NSTC brought him in; a State Department and SAI's Operations Division moved him through STC; an NCOE gave him a real shot at excellence, and needed a working force-plate to do it properly; NSRS caught a training problem before a human did; TOPS and the Mission Olympic Cell backed him once he'd earned it, financed in part through NSDF; a completely separate governance chain — NSGA, the National Sports Board — decided whether his own federation could even field a team; and Parliament, NIPFP, and the ordinary machinery of audit and reporting quietly checked whether all of it was working as intended.</p>
+      <p>Ritu's job was never to be the hero of any single one of those stages. It was to be the person who kept files moving correctly through all of them.</p>
+    `},
+    {type:'diagram', svg:`
+      <svg viewBox="0 0 720 300" style="width:100%;">
+        <rect x="280" y="0" width="160" height="32" rx="5" fill="var(--c-govt)"/><text x="360" y="21" text-anchor="middle" fill="#fff" font-size="10.5">MYAS / Dept. of Sports</text>
+        <line x1="360" y1="32" x2="360" y2="52" stroke="#999" stroke-width="2"/>
+        <rect x="290" y="52" width="140" height="32" rx="5" fill="var(--c-sai)"/><text x="360" y="73" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">SAI</text>
+        <line x1="360" y1="84" x2="150" y2="120" stroke="var(--c-prog)" stroke-width="2"/>
+        <line x1="360" y1="84" x2="360" y2="120" stroke="var(--c-prog)" stroke-width="2"/>
+        <line x1="360" y1="84" x2="580" y2="120" stroke="var(--c-ad)" stroke-width="2"/>
+        <rect x="70" y="120" width="160" height="32" rx="5" fill="var(--c-prog)"/><text x="150" y="141" text-anchor="middle" fill="#fff" font-size="10">NSTC → STC → NCOE</text>
+        <rect x="290" y="120" width="140" height="32" rx="5" fill="var(--c-prog)" opacity="0.85"/><text x="360" y="141" text-anchor="middle" fill="#fff" font-size="10">NSRS / Sports Science</text>
+        <rect x="500" y="120" width="160" height="32" rx="5" fill="var(--c-ad)"/><text x="580" y="141" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">TOPS / MOC</text>
+        <line x1="150" y1="152" x2="150" y2="172" stroke="#999" stroke-width="1.5"/>
+        <rect x="70" y="172" width="160" height="28" rx="5" fill="var(--c-ext)"/><text x="150" y="190" text-anchor="middle" fill="#fff" font-size="9.5">State Sports Dept.</text>
+        <line x1="580" y1="152" x2="580" y2="172" stroke="var(--c-fin)" stroke-width="2" stroke-dasharray="4 3"/>
+        <rect x="500" y="172" width="160" height="28" rx="5" fill="var(--c-fin)"/><text x="580" y="190" text-anchor="middle" fill="#fff" font-size="9.5">NSDF financing</text>
+
+        <rect x="260" y="225" width="200" height="30" rx="15" fill="var(--c-ad)"/><text x="360" y="245" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Ritu — Assistant Director</text>
+
+        <rect x="30" y="270" width="180" height="28" rx="5" fill="var(--c-gov2)"/><text x="120" y="288" text-anchor="middle" fill="#fff" font-size="9.5">NSGA → NSB → Federation</text>
+        <rect x="510" y="270" width="180" height="28" rx="5" fill="var(--c-over)"/><text x="600" y="288" text-anchor="middle" fill="#fff" font-size="9.5">Parliament / NIPFP / Audit</text>
+      </svg>`, caption:'Every box in this diagram is a chapter you just read. Nothing here should feel unfamiliar.'},
+    {type:'lesson', html:`
+      <div class="lbl">The Success Test</div>
+      <h4>Try this cold, without scrolling back</h4>
+      <p>"Take me through one athlete's journey and tell me, at each stage, who is involved, what SAI/MYAS does, which scheme applies, where the money comes from, who implements, who monitors, who regulates, who audits, and where an Assistant Director fits."</p>
+      <p style="margin-top:10px;">If you can answer that from memory — even roughly, even out of order — using Arjun and Ritu as your mental anchors, this story has done its job. If a stage is fuzzy, that's exactly the chapter to reread, not the whole thing.</p>
+    `}
+  ]
+}
+];
+
+/* ================= ENGINE ================= */
+const SKEY='sai_story_v1';
+function loadS(){ try{return JSON.parse(localStorage.getItem(SKEY))||{completed:{}, last:0};}catch(e){return {completed:{}, last:0};} }
+function saveS(s){ try{localStorage.setItem(SKEY, JSON.stringify(s));}catch(e){} }
+let S = loadS();
+let currentIdx = S.last || 0;
+
+function renderProgress(){
+  const done = Object.keys(S.completed).length;
+  document.getElementById('progFill').style.width = Math.round(100*done/CHAPTERS.length)+'%';
+}
+
+function renderHome(){
+  currentIdx = -1;
+  const main = document.getElementById('main');
+  let html = `<div class="home-hero">
+    <h1>The Long Run</h1>
+    <p>A fictional runner, a real Assistant Director, and every institution in the SAI–MYAS system, told as one connected story. Follow the athlete, the file, the money, the decision, and the accountability — pick up wherever you left off.</p>
+  </div>
+  <div class="chlist">`;
+  CHAPTERS.forEach((ch,i)=>{
+    html += `<div class="chrow" onclick="openChapter(${i})">
+      <div><div class="ct">${i===0?'':i+'. '}${ch.title}</div><div class="cs">${ch.motif || (i===0?'Prologue':'Finale')}</div></div>
+      ${S.completed[ch.id]?'<span class="done">✓</span>':''}
+    </div>`;
+  });
+  html += `</div><a class="quizlink" href="../09-audio/index.html">Listening Room →</a><a class="quizlink" href="../quiz/index.html">Recall Bench (quiz) →</a>`;
+  main.innerHTML = html;
+  renderProgress();
+}
+
+function openChapter(i){
+  currentIdx = i;
+  S.last = i; saveS(S);
+  const ch = CHAPTERS[i];
+  const main = document.getElementById('main');
+  let html = '';
+  if(ch.motif) html += `<div class="scene"><span class="motif">${ch.motif}</span></div>`;
+  ch.sections.forEach(sec=>{
+    if(sec.type==='scene') html += `<div class="scene">${sec.html}</div>`;
+    else if(sec.type==='lesson') html += `<div class="lesson">${sec.html}</div>`;
+    else if(sec.type==='takeaway') html += `<div class="takeaway">${sec.html}</div>`;
+    else if(sec.type==='diagram') html += `<div class="diagwrap">${sec.svg}<div class="cap">${sec.caption}</div></div>`;
+    else if(sec.type==='cast'){
+      html += `<div class="castgrid">` + CAST.map(c=>`<div class="castcard"><div class="n">${c.n}</div><div class="r">${c.r}</div><div class="d">${c.d}</div></div>`).join('') + `</div>`;
+    }
+  });
+  html += `<div class="navrow">
+    <button class="navbtn" onclick="renderHome()">← All chapters</button>
+    <button class="navbtn primary" onclick="markDoneAndNext(${i})">${i<CHAPTERS.length-1? 'Mark read & continue →' : 'Mark read — finished'}</button>
+  </div>`;
+  main.innerHTML = html;
+  window.scrollTo(0,0);
+}
+
+function markDoneAndNext(i){
+  S.completed[CHAPTERS[i].id] = true; saveS(S);
+  if(i < CHAPTERS.length-1) openChapter(i+1);
+  else renderHome();
+}
+
+function openCast(){
+  document.getElementById('castContent').innerHTML = `<div class="castgrid">` + CAST.map(c=>`<div class="castcard"><div class="n">${c.n}</div><div class="r">${c.r}</div><div class="d">${c.d}</div></div>`).join('') + `</div>`;
+  document.getElementById('castModal').classList.add('show');
+}
+function closeCast(){ document.getElementById('castModal').classList.remove('show'); }
+
+renderHome();
+</script>
+</body>
+</html>
