@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SAI AD — Listening Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12151A; --surface:#1B2027; --surface-2:#20262F; --line:#2E353F;
+    --text:#EDEAE2; --text-dim:#9AA3AD; --gold:#C79A3D; --gold-dim:#8E6E2B;
+    --green:#3F7A5D; --red:#B5493F; --radius:4px; --maxw:480px;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--bg); color:var(--text);
+    font-family:'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;}
+  h1,h2,h3,.num,.btn,.tag{font-family:'Barlow Condensed', 'Arial Narrow', sans-serif;}
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+  #app{max-width:var(--maxw); margin:0 auto; min-height:100vh; display:flex; flex-direction:column;}
+  header.top{padding:18px 18px 14px; border-bottom:1px solid var(--line);}
+  header.top .brand{font-size:22px; font-weight:600;}
+  header.top .brand small{display:block; font-family:'Source Sans 3'; font-size:12px; color:var(--text-dim); font-weight:400; margin-top:2px;}
+  .dash{display:flex; gap:16px; margin-top:12px;}
+  .dash .num{font-size:28px; color:var(--gold); line-height:1;}
+  .dash .lbl{font-size:11px; color:var(--text-dim);}
+  .continuebar{margin-top:12px; background:var(--surface); border:1px solid var(--gold-dim); border-radius:var(--radius); padding:10px 12px; font-size:13px; cursor:pointer;}
+  main{flex:1; padding:16px 18px 40px;}
+  .rule{border:none; border-top:2px solid var(--gold); width:36px; margin:0 0 14px;}
+  .modlist{display:flex; flex-direction:column; gap:8px;}
+  .mod-row{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:12px 14px; cursor:pointer;}
+  .mod-row .mt{font-size:18px; font-weight:600;}
+  .mod-row .ms{font-size:12px; color:var(--text-dim); margin-top:3px;}
+  .mod-row .mp{height:3px; background:var(--line); border-radius:2px; margin-top:8px; overflow:hidden;}
+  .mod-row .mp > div{height:100%; background:var(--gold);}
+  .chaplist{display:flex; flex-direction:column; gap:8px; margin-top:10px;}
+  .chap-row{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:12px 14px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;}
+  .chap-row .ct{font-size:15.5px;}
+  .chap-row .cd{font-size:11px; color:var(--text-dim); margin-top:2px;}
+  .chap-row .done{color:var(--green); font-size:18px;}
+  .back{background:none; border:none; color:var(--text-dim); font-family:'Source Sans 3'; font-size:13px; cursor:pointer; padding:6px 0;}
+  .modebar{display:flex; gap:8px; margin:10px 0 16px;}
+  .modebtn{flex:1; padding:9px 6px; border-radius:var(--radius); border:1px solid var(--line); background:var(--surface-2); color:var(--text-dim); font-family:'Barlow Condensed'; font-size:15px; cursor:pointer;}
+  .modebtn.active{border-color:var(--gold); color:var(--gold);}
+  .tag{font-size:12px; color:var(--gold-dim); display:block; margin-bottom:6px;}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px;}
+  .liveline{font-size:18px; line-height:1.5; min-height:90px;}
+  .liveline .curr{color:var(--text);}
+  .liveline .past{color:var(--text-dim);}
+  .sources{margin-top:14px; padding-top:12px; border-top:1px dashed var(--line); font-size:11.5px; color:var(--text-dim); line-height:1.5;}
+  .transport{display:flex; align-items:center; justify-content:center; gap:14px; margin-top:18px;}
+  .tbtn{background:var(--surface-2); border:1px solid var(--line); color:var(--text); width:44px; height:44px; border-radius:50%; font-size:16px; cursor:pointer;}
+  .tbtn.play{width:60px; height:60px; background:var(--gold); color:#1a1408; border-color:var(--gold); font-size:20px;}
+  .progressbar{height:4px; background:var(--line); border-radius:2px; margin-top:14px; overflow:hidden;}
+  .progressbar > div{height:100%; background:var(--gold); width:0%;}
+  .speedrow{display:flex; justify-content:center; gap:6px; margin-top:12px;}
+  .spd{padding:6px 10px; border-radius:var(--radius); border:1px solid var(--line); background:var(--surface-2); color:var(--text-dim); font-size:12.5px; cursor:pointer;}
+  .spd.active{border-color:var(--gold); color:var(--gold);}
+  .voicerow{margin-top:12px; display:flex; gap:8px; align-items:center;}
+  .voicerow select{flex:1; background:var(--surface-2); color:var(--text); border:1px solid var(--line); border-radius:var(--radius); padding:7px; font-size:12.5px;}
+  .recallbox{margin-top:16px; background:var(--surface-2); border:1px solid var(--gold-dim); border-radius:var(--radius); padding:14px;}
+  .recallbox .q{font-size:15.5px; margin-bottom:8px;}
+  .recallbox .a{margin-top:10px; padding-top:10px; border-top:1px dashed var(--line); color:var(--gold); font-size:14.5px;}
+  .keyterms{margin-top:12px; display:flex; flex-wrap:wrap; gap:6px;}
+  .kt{background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:3px 10px; font-size:11.5px; color:var(--text-dim);}
+  .recap{margin-top:14px; padding:12px; background:var(--surface-2); border-radius:var(--radius); font-size:13.5px; color:var(--text-dim); line-height:1.5;}
+  .quizlink{display:block; text-align:center; margin-top:20px; padding:12px; border:1px solid var(--gold-dim); border-radius:var(--radius); color:var(--gold); text-decoration:none; font-family:'Barlow Condensed'; font-size:16px;}
+  .warn{font-size:12px; color:var(--text-dim); text-align:center; margin-top:10px;}
+  footer.note{padding:12px 18px 24px; color:var(--text-dim); font-size:11px; text-align:center; border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="top" id="headerArea"></header>
+  <main id="main"></main>
+  <footer class="note">Narration is generated speech (browser voice, varies by device) reading a curated script — it never introduces facts beyond the verified modules. Unresolved items are narrated as unresolved, not guessed.</footer>
+</div>
+
+<script>
+/* ============ CONTENT DATA ============
+   Every line here is a curated paraphrase of the verified Modules 0-8 already
+   in this repo. No new facts. Caveats/evidence classes are preserved verbatim
+   in spoken form, not softened for narration.
+*/
+const EVID = {
+  OC:'Official — current', OH:'Official — historical', IE:'Independent evaluation (NIPFP)',
+  PO:'Parliamentary oversight', INF:'Inference', IP:'Interview preparation'
+};
+
+const CHAPTERS = [
+// ---- Module 0 ----
+{modId:'m0', modTitle:'Module 0 — Interview Blueprint', id:'m0c1', title:'The Post & The Test',
+ lines:[
+  "This chapter covers the actual vacancy circular for Assistant Director, Sports Authority of India, dated the twenty-ninth of July, twenty twenty-six.",
+  "Nine posts, tentative. Pay Level ten. Deputation for one year, extendable up to three years, in one-year cycles.",
+  "Eligibility works two ways: either you already hold an analogous Assistant Director post, or you have at least three years of regular service at Pay Level seven.",
+  "The selection process is stated plainly in the circular: candidates who meet eligibility are called for interview, and selection is by a merit list from the Selection Committee. No written exam is mentioned anywhere.",
+  "The circular lists eleven duties for the post. They are overwhelmingly administrative: policy implementation, supervision, file examination, finance, H R, procurement, legal work, coordination, monitoring, compliance, and representation.",
+  "Nowhere does the circular require coaching qualifications or prior sports-federation experience.",
+  "One important nuance on the C V Proforma: question twenty-three asks about sports administration experience. It sits under 'Additional Information' — it is informational, not an eligibility gate. A blank or 'Nil' answer there does not disqualify anyone."
+ ],
+ recall:[{after:3, q:"Is there a written exam for this post, based on the circular?", a:"No — the circular goes straight from eligibility screening to interview and merit list."},
+         {after:6, q:"Does a 'Nil' answer on sports administration experience disqualify a candidate?", a:"No — that field is informational, not an eligibility requirement."}],
+ recap:"This is fundamentally a Government-administration post located inside a sports organisation. The interview is far more likely to test file-handling judgement and administrative literacy than sports trivia.",
+ sources:['Vacancy Notification F.No. 01-04001(03)/1/2026-66/411, dated 29.07.2026'],
+ evidenceClass:['OC'], keyTerms:['Pay Level 10','Deputation','Merit list','11 duties']},
+
+// ---- Module 1 ----
+{modId:'m1', modTitle:'Module 1 — Governance Architecture', id:'m1c1', title:'The Chain of Authority',
+ lines:[
+  "The chain runs: Government of India, then the Ministry of Youth Affairs and Sports, then the Department of Sports, then the Sports Authority of India.",
+  "It's a mistake to think of S A I as just an execution arm. S A I is a major autonomous institution in its own right, with its own finances, its own nineteen divisions, and its own governance bodies — a General Body, a Governing Body, and a Finance Committee.",
+  "States and Union Territories are critical implementation partners, especially for infrastructure, where they often co-fund above the central grant ceiling.",
+  "National Sports Federations govern sport-specific competition, and are subject to recognition or suspension by the Ministry.",
+  "And under the new National Sports Governance Act, two new bodies now exist: the National Sports Board, which sets standards, and the National Sports Tribunal, which resolves disputes."
+ ],
+ recall:[{after:1, q:"Is SAI just a passive execution arm of the Ministry?", a:"No — it's a major autonomous institution with its own finances, divisions, and governance structure."}],
+ recap:"Policy and funding sit with the Ministry; SAI implements at scale; States co-implement; NSFs govern competition; the new National Sports Board and Tribunal regulate and adjudicate.",
+ sources:['SAI official site — verified directly, Organisational Information'], evidenceClass:['OC'], keyTerms:['MYAS','SAI','NSB','NST']},
+
+{modId:'m1', modTitle:'Module 1 — Governance Architecture', id:'m1c2', title:'The Authority-vs-Function Test',
+ lines:[
+  "Here is a five-question test to apply to any scenario question in the interview.",
+  "Who owns the policy. Who provides the money. Who executes. Who monitors. And who has the final decision-making authority, and receives the escalation.",
+  "For example: if a National Sports Federation isn't complying with governance requirements, that's a National Sports Board matter under the new Act — not something S A I administers directly, unless that federation also runs S A I-linked athlete programmes.",
+  "S A I's I T Division is worth knowing in detail, because it comes up often. It runs the National Sports Repository System, the Khelo India app, e-Office, S P A R R O W for performance appraisals, and — this is the important part — a genuine data-analytics and A I, M L function covering athlete tracking and performance benchmarking.",
+  "So don't ever say S A I lacks digital infrastructure. It doesn't. The credible position is understanding and strengthening what already exists."
+ ],
+ recall:[{after:1, q:"What are the five questions in the authority-vs-function test?", a:"Who owns policy, who funds it, who executes, who monitors, and who has final decision authority."}],
+ recap:"Getting the authority chain right — not reciting scheme facts — is what resolves most scenario questions correctly.",
+ sources:['SAI Organisational Information — IT Division, independently verified'], evidenceClass:['OC','IP'], keyTerms:['NSRS','Authority vs function']},
+
+// ---- Module 2 ----
+{modId:'m2', modTitle:'Module 2 — Khelo Bharat Niti-2025', id:'m2c1', title:'Vision & Pillars',
+ lines:[
+  "Khelo Bharat Niti twenty twenty-five, launched on the first of July twenty twenty-five, is India's current national sports policy.",
+  "Its stated vision is: sports for nation building — harnessing sport for the nation's holistic development. Not just a medals policy.",
+  "It has five strategic pillars: excellence on the global stage, sports for economic development, sports for social inclusion and empowerment, sports as a people's movement, and harmony with the National Education Policy twenty-twenty.",
+  "The Union Government sets policy, funding, and standards. State Governments handle regional implementation, local infrastructure, and grassroots delivery. A programme can fail even with a sound national policy if State-level execution is weak — which is exactly why coordination and monitoring skills matter for this post."
+ ],
+ recall:[{after:1, q:"What is the policy's stated vision, in one line?", a:"Sports for Nation Building — harness the power of sports for the nation's holistic development."}],
+ recap:"Five pillars, integrated — not five separate schemes. Union sets direction; States execute locally.",
+ sources:['Khelo Bharat Niti-2025, Ministry of Youth Affairs & Sports — verified directly'], evidenceClass:['OC'], keyTerms:['Khelo Bharat Niti','5 pillars']},
+
+{modId:'m2', modTitle:'Module 2 — Khelo Bharat Niti-2025', id:'m2c2', title:'Objectives & the Administrator Gap',
+ lines:[
+  "The policy lists twelve objectives. Rather than memorising all twelve individually, group them: participation, competition, talent, infrastructure, athlete support, science, governance, finance, economy, inclusion, and careers.",
+  "One finding worth knowing well: a Task Force on Capacity Building of Sports Administrators, set up under this policy framework, explicitly found a lack of a professional cadre of sports administrators, weak institutional continuity, and limited use of digital tools in governance.",
+  "That finding is directly relevant to this interview. It shows that sports administration itself — not just athletics — is being treated as a capability that needs professionalising.",
+  "One caution: do not claim that this specific batch of Assistant Director vacancies was created because of this Task Force, or because of the wider policy. No source establishes that causal link. If asked why these posts exist now, describe the policy as current context — not as the stated cause of this recruitment."
+ ],
+ recall:[{after:1, q:"What did the Task Force on Capacity Building of Sports Administrators find?", a:"A lack of a professional administrator cadre, weak institutional continuity, and limited use of digital tools in governance."}],
+ recap:"The professionalisation-of-administration theme explains why a generalist Government officer, not a sports specialist, is being sought for this post.",
+ sources:['Task Force Report on Capacity Building of Sports Administrators, MYAS'], evidenceClass:['OC','INF'], keyTerms:['12 objectives','Administrator cadre']},
+
+// ---- Module 3 ----
+{modId:'m3', modTitle:'Module 3 — NSGA-2025', id:'m3c1', title:'The New Governance Framework',
+ lines:[
+  "The National Sports Governance Act, twenty twenty-five, was enacted on the eighteenth of August, twenty twenty-five.",
+  "It is important to get the commencement timeline right, because it's a common trap. The Act did not all come into force at once. Selected provisions commenced from the first of January, twenty twenty-six, following a first notification dated the thirty-first of December, twenty twenty-five. A second commencement notification followed on the twelfth of May, twenty twenty-six, bringing further provisions and rules into force.",
+  "The Act creates two new bodies: the National Sports Board, which sets governance standards for sports organisations, and the National Sports Tribunal, which resolves disputes.",
+  "For this interview: N S G A does not replace S A I. S A I continues as the sports-development implementation institution. The Act is a separate, statutory governance and regulatory layer sitting alongside it."
+ ],
+ recall:[{after:1, q:"Did the entire NSGA-2025 come into force on 1 January 2026?", a:"No — only selected provisions commenced then; further provisions and rules followed, including a second notification on 12 May 2026."}],
+ recap:"Enacted August 2025, staged commencement through 2026, created the National Sports Board and National Sports Tribunal.",
+ sources:['National Sports Governance Act, 2025 — MYAS-hosted commencement notifications, verified directly'], evidenceClass:['OC'], keyTerms:['NSGA-2025','Staged commencement']},
+
+// ---- Module 4 ----
+{modId:'m4', modTitle:'Module 4 — SAI Organisation & Machinery', id:'m4c1', title:'Founding & Governance',
+ lines:[
+  "S A I was established on the twenty-fifth of January, nineteen eighty-four, as the successor to the nineteen eighty-two Asian Games in New Delhi. It's a Society registered under the Societies Registration Act of eighteen sixty.",
+  "Its governance: a General Body of thirty-six members, reconstituted in November twenty twenty-two, and a Governing Body of twenty-eight members, reconstituted in September twenty twenty-three — both chaired by the Union Minister.",
+  "During the twenty twenty-three, twenty twenty-four year, the Governing Body met twice: its fifty-eighth meeting in September, and fifty-ninth in February."
+ ],
+ recall:[{after:0, q:"In what year was SAI established, and following what event?", a:"1984, as the successor to the 1982 Asian Games in New Delhi."}],
+ recap:"1984 founding, Societies Registration Act 1860, governed by a General Body, Governing Body, and Finance Committee, chaired by the Union Minister.",
+ sources:['SAI official site, AR 2023-24'], evidenceClass:['OH','OC'], keyTerms:['1984','General Body','Governing Body']},
+
+{modId:'m4', modTitle:'Module 4 — SAI Organisation & Machinery', id:'m4c2', title:'The Nineteen Divisions',
+ lines:[
+  "S A I currently has nineteen organisational divisions. Rather than a flat list, group them by function.",
+  "Athlete-facing: TEAMS, TOPS, Sports Science, Khelo India, and Operations.",
+  "Infrastructure and support: Stadia, Engineering, and Capacity Building.",
+  "Administration: Finance, General Administration and Procurement, Legal, Vigilance, H R, and Coordination.",
+  "And specialised: I T, Media, Rajbhasha for official-language compliance, Policy Research and Innovation, and TAGG for Asian Games preparation.",
+  "One caution worth repeating: the twenty twenty-three, twenty-four Annual Report's organisational chart groups some of these slightly differently than the current live website — for instance it uses 'Personnel Division' rather than a standalone 'H R'. That's most likely genuine restructuring over time, not an error in the research."
+ ],
+ recall:[{after:4, q:"Name three of SAI's administration-focused divisions.", a:"Finance, Legal, and Vigilance — also General Administration & Procurement, HR, and Coordination."}],
+ recap:"Nineteen divisions, grouped as athlete-facing, infrastructure, administration, and specialised functions — and the org chart is known to evolve over time.",
+ sources:['SAI Organisational Information, Divisions tab — independently verified via live page content'], evidenceClass:['OC'], keyTerms:['19 divisions']},
+
+{modId:'m4', modTitle:'Module 4 — SAI Organisation & Machinery', id:'m4c3', title:'What NIPFP Actually Found',
+ lines:[
+  "In January twenty twenty-six, N I P F P — the National Institute of Public Finance and Policy — completed a Ministry-commissioned, field-verified evaluation covering Khelo India and related schemes, based on a national assessment plus visits to five states.",
+  "Some real findings worth knowing. Khelo India accounts for roughly sixty-seven percent of the Department of Sports' budget for this financial year — about one thousand crore rupees. One thousand and sixty-seven Khelo India Centres are notified, of which nine hundred ninety-one are operational.",
+  "On manpower: the national average fill rate for sanctioned K I S C E posts is fifty-six percent — but that hides huge variation. Bihar was as low as twelve percent, while some states were at one hundred percent.",
+  "On systems: the N S R S portal — S A I's central data platform — was found to have real performance issues under heavy data load, plus a user-awareness gap. That's a documented finding, not an assumption.",
+  "On procurement: the Make-in-India requirement can sometimes restrict sourcing of specialised sports equipment where no suitable domestic, B I S-certified product exists. The evaluation itself recommends conditional flexibility for such cases."
+ ],
+ recall:[{after:2, q:"What was the national average KISCE manpower fill rate NIPFP found, and how much did it vary?", a:"56% on average — but as low as 12% in Bihar, and 100% in some other states."}],
+ recap:"These are documented, evaluator-identified administrative gaps — genuinely useful scenario-question material, but always frame them as execution gaps in systems that exist, not as evidence those systems don't exist.",
+ sources:['NIPFP Third-Party Evaluation Report, January 2026 — read directly by Claude, not a secondary summary'], evidenceClass:['IE'], keyTerms:['NIPFP','KISCE fill rate','NSRS']},
+
+// ---- Module 5 ----
+{modId:'m5', modTitle:'Module 5 — NCOE, STC & TOPS', id:'m5c1', title:'The Talent Pipeline',
+ lines:[
+  "Think of S A I's development machinery as a pipeline, not one programme. N S T C scouts talent in schools, ages eight to fourteen. S T C develops juniors, ages ten to eighteen. N C O E provides specialised, high-performance training. And T O P S gives targeted support to identified Olympic and Paralympic medal prospects.",
+  "N C O E's structure traces to a specific memorandum — Ministry order number K, eleven oh two oh, slash four, slash twenty nineteen, dated the eighteenth of September twenty nineteen — which merged same-campus schemes into the unified N C O E structure.",
+  "An important precision: S A I's key-statistics page lists twenty-four N C O Es. But the Annual Report for twenty twenty-three, twenty-four says only twenty-two were actually operational that year — Cooch Behar and Zirakpur were not yet running. Approved and operational are not the same thing."
+ ],
+ recall:[{after:2, q:"How many NCOEs are approved versus actually operational, per the 2023-24 Annual Report?", a:"24 approved, but only 22 operational — a genuinely useful distinction to draw on in an interview."}],
+ recap:"NSTC scouts, STC develops, NCOE specialises, TOPS supports elite medal prospects — a pipeline, and 'approved' doesn't always mean 'operational.'",
+ sources:['SAI NCOE brief; SAI Key Statistics; Annual Report 2023-24'], evidenceClass:['OC'], keyTerms:['NCOE','STC','NSTC','pipeline']},
+
+{modId:'m5', modTitle:'Module 5 — NCOE, STC & TOPS', id:'m5c2', title:'TOPS, the Mission Olympic Cell, and Mumbai',
+ lines:[
+  "T O P S is administered by the Mission Olympic Cell, chaired by the Director General of S A I. It approves customised athlete training programmes, recommends financial disbursement, monitors progress, and ensures documentation and contractual compliance.",
+  "One thing to be careful about: some material claims the Mission Olympic Cell meets weekly. That could not be confirmed from any primary source. Do not state that in an interview — if asked, say the meeting frequency isn't something you've verified.",
+  "A useful local detail, since the candidate is Mumbai-based: S A I's Kandivali Regional Centre was renamed, in July twenty twenty, to the Shri Atal Bihari Vajpayee National Centre of Excellence, Mumbai. Confirmed independently across two separate S A I sources."
+ ],
+ recall:[{after:1, q:"Is the Mission Olympic Cell's meeting frequency confirmed?", a:"No — 'meets weekly' could not be verified from any primary source; don't state it as fact."}],
+ recap:"TOPS runs on an administrative cycle — proposal, sanction, monitoring — which maps directly onto AD duties. The Mumbai NCOE naming is a genuinely useful, verified local reference point.",
+ sources:['SAI Target Olympic Podium Scheme page; SAI RC Mumbai page; SAI recruitment PDF'], evidenceClass:['OC'], keyTerms:['TOPS','MOC','SABV NCOE Mumbai']},
+
+// ---- Module 6 ----
+{modId:'m6', modTitle:'Module 6 — Annual Report 2023-24', id:'m6c1', title:'Numbers That Matter',
+ lines:[
+  "First, an important correction. There is no twenty twenty-four, twenty-five S A I Annual Report that could be located anywhere — including on S A I's own site. The most recent one verified is twenty twenty-three, twenty-four. Never cite a twenty twenty-four, twenty-five report as if it exists.",
+  "From the actual twenty twenty-three, twenty-four report: S T C had sixty-nine centres and three thousand eight hundred ninety-nine athletes. Extension Centres: twenty-six centres, four hundred twenty-six athletes. All N S T C sub-schemes combined: one thousand one hundred fifty-five athletes.",
+  "Total coaching strength as of the thirty-first of March, twenty twenty-four: eight hundred fourteen — four hundred seventy-six regular, three hundred eight on contract, and thirty on deputation."
+ ],
+ recall:[{after:0, q:"What is the most recent SAI Annual Report that has actually been verified to exist?", a:"2023-24 — no 2024-25 report could be located anywhere."}],
+ recap:"Real operational numbers, not scheme descriptions — and the 2024-25 report simply doesn't exist as far as this research has found.",
+ sources:['SAI Annual Report 2023-24 — read in full by Claude'], evidenceClass:['OH'], keyTerms:['AR 2023-24','814 coaches']},
+
+{modId:'m6', modTitle:'Module 6 — Annual Report 2023-24', id:'m6c2', title:'Procurement, HR & Stadia Revenue',
+ lines:[
+  "S A I's Equipment Support Division procured about thirty-eight point seven five crore rupees worth of goods in the twenty twenty-three, twenty-four financial year — including physiotherapy equipment, S T C sports kits, and a two-year medical insurance contract worth nearly seventeen crore.",
+  "S A I's five Delhi stadia generated a combined twenty-one point eight crore rupees in revenue that year, from booking fees, space licensing, and hostel boarding — while remaining free for sportspersons to use under the Come and Play scheme.",
+  "That tension — public-service access balanced against revenue generation for upkeep — is a genuinely interesting administrative theme if it comes up."
+ ],
+ recall:[{after:1, q:"How much did SAI's five Delhi stadia generate in revenue in FY 2023-24?", a:"₹21.8 crore, from booking fees, space licensing, and hostel boarding."}],
+ recap:"Real procurement and revenue figures at material scale — this is the actual administrative texture of the job.",
+ sources:['SAI Annual Report 2023-24'], evidenceClass:['OH'], keyTerms:['Procurement','Stadia revenue']},
+
+// ---- Module 7 ----
+{modId:'m7', modTitle:'Module 7 — Parliamentary Oversight', id:'m7c1', title:'The 369th Report\'s Key Findings',
+ lines:[
+  "The three hundred sixty-ninth Parliamentary Standing Committee report, presented on the twentieth of August, twenty twenty-five, is independent legislative oversight — not S A I describing itself.",
+  "Its key findings: it recommended examining whether S A I should become a statutory body with its own dedicated cadre. It found roughly forty-five percent of S A I's sanctioned posts vacant, and recommended filling them within six months. It recommended S A I, rather than the Indian Olympic Association, organise the National Games. And it flagged that N S D F funds — the National Sports Development Fund — had in some cases been diverted to civil-services associations and residential colonies, recommending stricter regulation.",
+  "One important discipline point: that forty-five percent S A I-wide vacancy figure is a different measurement from the fifty-six percent K I S C E manpower figure from the N I P F P evaluation. Don't merge them under pressure — they measure different populations."
+ ],
+ recall:[{after:1, q:"What vacancy rate did the Committee find across SAI's sanctioned posts, and what did it recommend?", a:"Roughly 45%, with a recommendation to fill vacancies within six months."}],
+ recap:"Independent oversight, not self-reporting — statutory-conversion recommendation, a serious vacancy rate, and an NSDF fund-utilisation concern that needs careful, factual handling if it comes up.",
+ sources:['PRS Legislative Research summary of the 369th Standing Committee Report'], evidenceClass:['PO'], keyTerms:['369th Report','45% vacancy','NSDF diversion']},
+
+{modId:'m7', modTitle:'Module 7 — Parliamentary Oversight', id:'m7c2', title:'From Problem to Administrative Response',
+ lines:[
+  "Here's how to convert a documented problem into an interview-ready answer, using the manpower-gap finding as an example.",
+  "State the problem factually: there's a documented, roughly forty-five percent vacancy rate across S A I's sanctioned posts.",
+  "Then describe a realistic Assistant Director response: analyse vacancy data by centre, escalate recruitment priority through the correct channel, and monitor the fill rate against the Committee's own six-month benchmark.",
+  "That structure — problem, evidence, realistic administrative response — works for the N C O E operational gap, the procurement constraint, and the maintenance-funding gap covered in earlier modules too.",
+  "One thing to actively avoid: if the N S D F finding comes up, never editorialise or speculate about wrongdoing. State only what the Committee itself said — that it recommended stricter regulation. Anything beyond that is not something you can substantiate."
+ ],
+ recall:[{after:2, q:"What's the three-part structure for turning a documented problem into an interview answer?", a:"State the problem factually, cite the evidence source, then describe a realistic, proportionate administrative response."}],
+ recap:"This problem-to-response pattern is reusable across nearly every scenario question the board might ask.",
+ sources:['Repository Problem → Administrative Response Matrix, Module 7'], evidenceClass:['IP'], keyTerms:['Problem-response pattern']},
+
+// ---- Module 8 ----
+{modId:'m8', modTitle:'Module 8 — Quick Reference', id:'m8c1', title:'Persons & Fact Traps', 
+ lines:[
+  "Current, as verified on the tenth of September twenty twenty-six: the Union Minister for Youth Affairs and Sports is Doctor Mansukh Mandaviya. The Minister of State is Raksha Khadse. Secretary, Youth Affairs, is Sunil Paliwal. Secretary, Sports, is Hari Ranjan Rao.",
+  "Here is the one to be careful with: the current Director General of S A I is not confirmed. Do not guess a name. If asked, say plainly that you'd want to verify the current office-holder before answering with confidence.",
+  "A few other things never to state as settled: S A I's exact Regional Centre count — sources genuinely disagree between ten and twelve. Whether the Mission Olympic Cell meets weekly — unconfirmed. And never cite a twenty twenty-four, twenty-five Annual Report — it doesn't exist as far as this research has found."
+ ],
+ recall:[{after:1, q:"Who is the confirmed current Director General of SAI?", a:"Unconfirmed — this deliberately has no settled answer in this material. Say you'd verify rather than guess."}],
+ recap:"When in doubt, say you'd verify rather than state a guess confidently — that's the safer and more credible position in every one of these cases.",
+ sources:['08-reference/important-persons.md; interview-fact-traps.md'], evidenceClass:['OC','IP'], keyTerms:['DG SAI unconfirmed','Fact traps']},
+
+{modId:'m8', modTitle:'Module 8 — Quick Reference', id:'m8c2', title:'Numbers, Rapid Fire',
+ lines:[
+  "S A I: one hundred eighty-seven total centres, nine thousand four hundred thirty-two athletes system-wide.",
+  "Twenty-four N C O Es approved, twenty-two operational. Sixty-nine S T Cs. Twenty-six Extension Centres.",
+  "Governance: thirty-six on the General Body, twenty-eight on the Governing Body.",
+  "Vacancy and manpower: forty-five percent S A I-wide vacancy from the Parliamentary Committee. Fifty-six percent K I S C E fill rate from N I P F P — different measurements, don't merge them.",
+  "Finance: thirty-eight point seven five crore in equipment procurement, twenty-one point eight crore in stadia revenue, for financial year twenty twenty-three, twenty-four.",
+  "Khelo India: roughly sixty-seven percent of the Department of Sports budget, one thousand sixty-seven notified centres."
+ ],
+ recall:[], recap:"That's the full must-know number set — if only one rapid pass is possible before the interview, this is it.",
+ sources:['08-reference/interview-numbers.md'], evidenceClass:['OC','IE','PO'], keyTerms:['Rapid numbers']},
+
+{modId:'m8', modTitle:'Module 8 — Quick Reference', id:'m8c3', title:'Abbreviations, Rapid Fire',
+ lines:[
+  "N C O E: National Centre of Excellence. S T C: S A I Training Centre. N S T C: National Sports Talent Contest. T O P S: Target Olympic Podium Scheme.",
+  "M Y A S: Ministry of Youth Affairs and Sports. N S G A: National Sports Governance Act. N S B: National Sports Board. N S T: National Sports Tribunal. N S D F: National Sports Development Fund.",
+  "N S R S: National Sports Repository System — S A I's central data platform. G F R: General Financial Rules. G e M: Government e-Marketplace. M O C: Mission Olympic Cell, which administers T O P S."
+ ],
+ recall:[], recap:"If any of these came up unclearly in conversation, this rapid pass should make them automatic.",
+ sources:['08-reference/abbreviations.md'], evidenceClass:['OC'], keyTerms:['Abbreviations']}
+];
+
+const MODULE_ORDER = ['m0','m1','m2','m3','m4','m5','m6','m7','m8'];
+const MODULE_META = {
+  m0:{title:'Interview Blueprint'}, m1:{title:'Governance Architecture'}, m2:{title:'Khelo Bharat Niti-2025'},
+  m3:{title:'NSGA-2025'}, m4:{title:'SAI Organisation & Machinery'}, m5:{title:'NCOE, STC & TOPS'},
+  m6:{title:'Annual Report 2023-24'}, m7:{title:'Parliamentary Oversight'}, m8:{title:'Quick Reference'}
+};
+
+/* ============ STORAGE ============ */
+const SKEY='sai_audio_v1';
+function loadS(){ try{return JSON.parse(localStorage.getItem(SKEY))||{completed:{},last:null,voice:null,rate:1};}catch(e){return {completed:{},last:null,voice:null,rate:1};} }
+function saveS(s){ try{localStorage.setItem(SKEY, JSON.stringify(s));}catch(e){} }
+let S = loadS();
+
+function chaptersFor(modId){ return CHAPTERS.filter(c=>c.modId===modId); }
+function moduleProgress(modId){
+  const chs = chaptersFor(modId); if(!chs.length) return 0;
+  const done = chs.filter(c=>S.completed[c.id]).length;
+  return done/chs.length;
+}
+function overallProgress(){
+  const done = CHAPTERS.filter(c=>S.completed[c.id]).length;
+  return {done, total:CHAPTERS.length, pct: Math.round(100*done/CHAPTERS.length)};
+}
+
+/* ============ TTS ============ */
+let voices = [];
+function loadVoices(){ voices = speechSynthesis.getVoices(); }
+if('speechSynthesis' in window){ speechSynthesis.onvoiceschanged = loadVoices; loadVoices(); }
+let utter=null, speaking=false, paused=false;
+function stopSpeech(){ if('speechSynthesis' in window) speechSynthesis.cancel(); speaking=false; paused=false; }
+
+/* ============ PLAYER STATE ============ */
+let player = null; // {chapter, mode, lineIdx, playing}
+
+function renderHeaderDash(){
+  const p = overallProgress();
+  const h = document.getElementById('headerArea');
+  let cont = '';
+  if(S.last){
+    const ch = CHAPTERS.find(c=>c.id===S.last);
+    if(ch) cont = `<div class="continuebar" onclick="openChapter('${ch.id}','learn')">Continue — ${ch.modTitle.replace(/^Module \d+ — /,'')} · ${ch.title}</div>`;
+  }
+  h.innerHTML = `
+    <div class="brand">Listening Room<small>SAI Assistant Director — narrated study</small></div>
+    <div class="dash">
+      <div><div class="num">${p.done}/${p.total}</div><div class="lbl">chapters done</div></div>
+      <div><div class="num">${p.pct}%</div><div class="lbl">course progress</div></div>
+    </div>
+    ${cont}
+  `;
+}
+
+function renderHome(){
+  stopSpeech();
+  player=null;
+  renderHeaderDash();
+  const main = document.getElementById('main');
+  let html = `<hr class="rule"><div class="modlist">`;
+  MODULE_ORDER.forEach(mid=>{
+    const prog = Math.round(100*moduleProgress(mid));
+    const n = chaptersFor(mid).length;
+    html += `<div class="mod-row" onclick="openModule('${mid}')">
+      <div class="mt">${MODULE_META[mid].title}</div>
+      <div class="ms">${n} chapter${n>1?'s':''}</div>
+      <div class="mp"><div style="width:${prog}%"></div></div>
+    </div>`;
+  });
+  html += `</div><a class="quizlink" href="../quiz/index.html">Switch to Recall Bench (quiz) →</a>`;
+  main.innerHTML = html;
+}
+
+function openModule(modId){
+  stopSpeech();
+  const main = document.getElementById('main');
+  const chs = chaptersFor(modId);
+  let html = `<div><button class="back" onclick="renderHome()">← modules</button></div>
+    <h2 style="margin:6px 0 2px;">${MODULE_META[modId].title}</h2>
+    <div class="chaplist">`;
+  chs.forEach(c=>{
+    html += `<div class="chap-row" onclick="openChapter('${c.id}','learn')">
+      <div><div class="ct">${c.title}</div><div class="cd">${c.lines.length} lines · ~${Math.max(1,Math.round(c.lines.join(' ').split(' ').length/150))} min</div></div>
+      ${S.completed[c.id]?'<span class="done">✓</span>':''}
+    </div>`;
+  });
+  html += `</div>`;
+  main.innerHTML = html;
+}
+
+function openChapter(chapterId, mode){
+  const chapter = CHAPTERS.find(c=>c.id===chapterId);
+  stopSpeech();
+  player = {chapter, mode, lineIdx:0, playing:false};
+  S.last = chapterId; saveS(S);
+  renderPlayer();
+}
+
+function renderPlayer(){
+  const {chapter} = player;
+  const main = document.getElementById('main');
+  const voiceOpts = voices.map((v,i)=>`<option value="${i}" ${S.voice===v.name?'selected':''}>${v.name}</option>`).join('');
+  const rates = [0.75,1,1.25,1.5,2];
+
+  let html = `<div><button class="back" onclick="openModule('${chapter.modId}')">← ${MODULE_META[chapter.modId].title}</button></div>
+  <div class="modebar">
+    <button class="modebtn ${player.mode==='learn'?'active':''}" onclick="setMode('learn')">Learn</button>
+    <button class="modebtn ${player.mode==='recall'?'active':''}" onclick="setMode('recall')">Recall</button>
+    <button class="modebtn ${player.mode==='rapid'?'active':''}" onclick="setMode('rapid')">Rapid</button>
+  </div>
+  <div class="card">
+    <span class="tag">${chapter.title}</span>
+    <div class="liveline" id="liveline"></div>
+    <div id="recallSlot"></div>
+    <div class="progressbar"><div id="chapProg" style="width:0%"></div></div>
+    <div class="transport">
+      <button class="tbtn" onclick="prevLine()">⟲</button>
+      <button class="tbtn play" id="playBtn" onclick="togglePlay()">▶</button>
+      <button class="tbtn" onclick="nextLine()">⟳</button>
+    </div>
+    <div class="speedrow">${rates.map(r=>`<button class="spd ${S.rate===r?'active':''}" onclick="setRate(${r})">${r}x</button>`).join('')}</div>
+    <div class="voicerow"><select onchange="setVoice(this.value)">${voiceOpts||'<option>Default voice</option>'}</select></div>
+    <div class="sources"><strong>${chapter.evidenceClass.map(e=>EVID[e]).join(' · ')}</strong><br>${chapter.sources.join('; ')}</div>
+    <div class="keyterms">${chapter.keyTerms.map(k=>`<span class="kt">${k}</span>`).join('')}</div>
+    <div class="recap"><strong>Recap:</strong> ${chapter.recap}</div>
+  </div>
+  <div class="warn">Browser voice availability and quality vary by device — this is not a professional recording.</div>`;
+  main.innerHTML = html;
+  renderLine();
+}
+
+function setMode(mode){ stopSpeech(); player.mode=mode; player.lineIdx=0; player.playing=false; renderPlayer(); }
+function setRate(r){ S.rate=r; saveS(S); if(player) renderPlayer(); }
+function setVoice(idx){ const v = voices[idx]; if(v){ S.voice=v.name; saveS(S); } }
+
+function linesForMode(){
+  const {chapter, mode} = player;
+  if(mode==='rapid') return [chapter.recap];
+  return chapter.lines;
+}
+
+function renderLine(){
+  const lines = linesForMode();
+  const el = document.getElementById('liveline');
+  if(!el) return;
+  const idx = player.lineIdx;
+  el.innerHTML = lines.map((l,i)=> i===idx? `<span class="curr">${l}</span>` : (i<idx?`<span class="past">${l}</span> `:'')).join(' ');
+  const bar = document.getElementById('chapProg');
+  if(bar) bar.style.width = Math.round(100*(idx)/lines.length)+'%';
+
+  // recall prompt check
+  const slot = document.getElementById('recallSlot');
+  slot.innerHTML='';
+  if(player.mode==='recall'){
+    const rp = player.chapter.recall.find(r=>r.after===idx-1);
+    if(rp && player._pendingRecall!==rp){
+      player._pendingRecall = rp;
+      slot.innerHTML = `<div class="recallbox"><div class="q">${rp.q}</div>
+        <button class="btn" style="padding:9px 14px; border-radius:4px; border:1px solid var(--gold-dim); background:transparent; color:var(--gold); cursor:pointer;" onclick="revealRecall()">Reveal answer</button>
+        <div class="a" id="recallAns" style="display:none;">${rp.a}</div></div>`;
+    }
+  }
+}
+function revealRecall(){ const a = document.getElementById('recallAns'); if(a) a.style.display='block'; }
+
+function speakCurrentLine(){
+  if(!('speechSynthesis' in window)){ setTimeout(advanceLine, 2500); return; }
+  const lines = linesForMode();
+  const text = lines[player.lineIdx];
+  if(!text){ finishChapter(); return; }
+  utter = new SpeechSynthesisUtterance(text);
+  utter.rate = S.rate || 1;
+  const v = voices.find(v=>v.name===S.voice);
+  if(v) utter.voice = v;
+  utter.onend = ()=>{ if(player && player.playing) advanceLine(); };
+  speechSynthesis.speak(utter);
+}
+
+function togglePlay(){
+  if(!player) return;
+  player.playing = !player.playing;
+  document.getElementById('playBtn').textContent = player.playing ? '❚❚' : '▶';
+  if(player.playing) speakCurrentLine(); else stopSpeech();
+}
+function advanceLine(){
+  const lines = linesForMode();
+  player.lineIdx++;
+  if(player.lineIdx >= lines.length){ finishChapter(); return; }
+  renderLine();
+  if(player.playing) speakCurrentLine();
+}
+function nextLine(){ stopSpeech(); player.playing=false; document.getElementById('playBtn').textContent='▶'; player.lineIdx=Math.min(player.lineIdx+1, linesForMode().length-1); renderLine(); }
+function prevLine(){ stopSpeech(); player.playing=false; document.getElementById('playBtn').textContent='▶'; player.lineIdx=Math.max(player.lineIdx-1,0); renderLine(); }
+
+function finishChapter(){
+  stopSpeech();
+  S.completed[player.chapter.id] = true; saveS(S);
+  player.playing=false;
+  const btn = document.getElementById('playBtn'); if(btn) btn.textContent='▶';
+  renderLine();
+}
+
+/* ============ INIT ============ */
+renderHome();
+</script>
+</body>
+</html>
