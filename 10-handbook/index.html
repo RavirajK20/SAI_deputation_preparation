@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SAI–MYAS Systems Handbook</title>
+<!-- Using locally-available system fonts (Liberation Serif/Sans) instead of Google Fonts: the build sandbox's network egress does not permit fonts.googleapis.com, and depending on an unreachable remote font risks silent fallback/layout drift in the final PDF. Liberation Serif/Sans are metrically compatible with Times New Roman/Arial and render identically wherever this HTML is opened. -->
+<style>
+  @page { size: A4; margin: 16mm 14mm 18mm 14mm; }
+  :root{
+    --ink:#1B2A41; --ink-soft:#4A5568; --paper:#FAF7F0; --paper-panel:#F1ECDF;
+    --gold:#B8863B; --gold-soft:#E9D9B8;
+    --c-govt:#1B2A41; --c-sai:#B8863B; --c-prog:#2E6E62; --c-gov2:#7A2E2E;
+    --c-fin:#3F7A3F; --c-over:#5B6470; --c-ext:#5A4E8C; --c-ad:#C9420B;
+    --line:#D8CFB8;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0; padding:0; background:#e9e4d5; color:var(--ink); font-family:'Liberation Sans', Arial, sans-serif;}
+  h1,h2,h3,h4{font-family:'Liberation Serif', Georgia, serif; font-weight:700; margin:0;}
+  .page{
+    width:210mm; min-height:297mm; background:var(--paper); margin:0 auto 6mm;
+    padding:16mm 14mm 18mm; position:relative; page-break-after:always;
+  }
+  .page:last-child{page-break-after:auto;}
+  .kicker{font-family:'Liberation Sans'; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:4px;}
+  .pagenum{position:absolute; bottom:8mm; right:14mm; font-size:10px; color:var(--ink-soft);}
+  .pagenum.left{right:auto; left:14mm;}
+  h1.title{font-size:30px; line-height:1.15; margin-bottom:6px;}
+  h2.title{font-size:23px; margin-bottom:10px;}
+  p.lede{font-size:14px; color:var(--ink-soft); line-height:1.55; max-width:150mm;}
+  .rule{border:none; border-top:2px solid var(--gold); width:34px; margin:10px 0 14px;}
+  .tag{display:inline-block; font-size:9.5px; font-weight:700; letter-spacing:0.4px; text-transform:uppercase; padding:2px 7px; border-radius:3px; margin-right:4px;}
+  .tag-off{background:#E4EEE4; color:#2C5C2C;}
+  .tag-hist{background:#EDE4D4; color:#6B5230;}
+  .tag-eval{background:#E3E9F2; color:#2C4A78;}
+  .tag-parl{background:#F2E3E3; color:#7A2E2E;}
+  .tag-inf{background:#EDEDED; color:#555;}
+  .tag-ip{background:#FBEBD9; color:#8A5A1E;}
+  .legend-box{background:var(--paper-panel); border:1px solid var(--line); border-radius:4px; padding:12px 14px; font-size:11.5px; margin-top:10px;}
+  .legend-row{display:flex; align-items:center; gap:8px; margin:5px 0;}
+  .legend-swatch{width:26px; height:3px; flex-shrink:0;}
+  .legend-swatch.dash{background-image:linear-gradient(to right, currentColor 50%, transparent 50%); background-size:8px 3px; height:3px; background-color:transparent;}
+  .legend-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
+  table.matrix{width:100%; border-collapse:collapse; font-size:11px; margin-top:10px;}
+  table.matrix th{background:var(--ink); color:var(--paper); text-align:left; padding:6px 8px; font-family:'Liberation Sans'; font-weight:600;}
+  table.matrix td{padding:6px 8px; border-bottom:1px solid var(--line); vertical-align:top;}
+  table.matrix tr:nth-child(even) td{background:#F5F1E6;}
+  .callout{background:var(--paper-panel); border-left:4px solid var(--gold); padding:10px 14px; font-size:12px; margin:12px 0; border-radius:0 4px 4px 0;}
+  .callout.ad{border-left-color:var(--c-ad); background:#FBEBE2;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .chip{display:inline-block; background:#fff; border:1px solid var(--line); border-radius:3px; padding:3px 9px; font-size:11px; margin:2px;}
+  .footer-note{position:absolute; bottom:8mm; left:14mm; right:14mm; font-size:9px; color:#999; border-top:1px solid var(--line); padding-top:4px;}
+  .glossary-grid{columns:2; column-gap:20px; font-size:11.5px;}
+  .glossary-item{break-inside:avoid; margin-bottom:8px;}
+  .glossary-item b{color:var(--gold); font-family:'Liberation Serif';}
+  svg text{font-family:'Liberation Sans', sans-serif;}
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1: COVER ============ -->
+<div class="page" style="display:flex; flex-direction:column;">
+  <div>
+    <div class="kicker">SAI Assistant Director — Deputation Preparation</div>
+    <h1 style="font-size:44px; line-height:1.1; margin-top:10px;">The SAI–MYAS<br>Systems Handbook</h1>
+    <p class="lede" style="margin-top:16px; font-size:16px;">A visual map of who governs Indian sport, who implements it, who pays for it, who watches it — and exactly where an Assistant Director stands inside all of it.</p>
+    <hr class="rule">
+    <p class="lede">Built to be understood as a system, not memorised as a list of facts. Read it once start to finish; come back to individual pages before the interview.</p>
+  </div>
+
+  <svg viewBox="0 0 700 260" style="width:100%; max-height:340px; margin-top:60px;">
+    <!-- simple layered silhouette: Govt -> MYAS -> SAI -> Programmes -> AD -->
+    <rect x="250" y="10" width="200" height="34" rx="4" fill="var(--c-govt)"/>
+    <text x="350" y="31" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Government of India</text>
+    <line x1="350" y1="44" x2="350" y2="64" stroke="#999" stroke-width="2"/>
+    <rect x="230" y="64" width="240" height="34" rx="4" fill="var(--c-govt)" opacity="0.85"/>
+    <text x="350" y="85" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">MYAS / Department of Sports</text>
+    <line x1="350" y1="98" x2="350" y2="118" stroke="#999" stroke-width="2"/>
+    <rect x="270" y="118" width="160" height="34" rx="4" fill="var(--c-sai)"/>
+    <text x="350" y="139" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">SAI</text>
+    <line x1="350" y1="152" x2="200" y2="178" stroke="#999" stroke-width="1.5"/>
+    <line x1="350" y1="152" x2="350" y2="178" stroke="#999" stroke-width="1.5"/>
+    <line x1="350" y1="152" x2="500" y2="178" stroke="#999" stroke-width="1.5"/>
+    <rect x="130" y="178" width="140" height="30" rx="4" fill="var(--c-prog)"/>
+    <text x="200" y="197" text-anchor="middle" fill="#fff" font-size="11">Khelo India / TOPS</text>
+    <rect x="280" y="178" width="140" height="30" rx="4" fill="var(--c-prog)"/>
+    <text x="350" y="197" text-anchor="middle" fill="#fff" font-size="11">NCOE / STC / NSTC</text>
+    <rect x="430" y="178" width="140" height="30" rx="4" fill="var(--c-prog)"/>
+    <text x="500" y="197" text-anchor="middle" fill="#fff" font-size="11">Finance / IT / HR</text>
+    <path d="M 350 152 L 350 165 L 450 165 L 450 220" fill="none" stroke="var(--c-ad)" stroke-width="2.5" stroke-dasharray="4 3"/>
+    <rect x="370" y="220" width="160" height="30" rx="15" fill="var(--c-ad)"/>
+    <text x="450" y="240" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">ASSISTANT DIRECTOR</text>
+  </svg>
+  <div class="footer-note">Last verified: 10–12 September 2026, against primary MYAS/SAI/parliamentary sources. See page 20 for full source register and open items.</div>
+</div>
+
+<!-- ============ PAGE 2: HOW TO READ ============ -->
+<div class="page">
+  <div class="kicker">Before You Start</div>
+  <h2 class="title">How to Read This Handbook</h2>
+  <p class="lede">Three conventions repeat on every page. Learn them once here, and every later diagram becomes readable at a glance.</p>
+  <hr class="rule">
+
+  <h3 style="font-size:15px; margin-top:18px;">1 — Evidence tags</h3>
+  <p style="font-size:12px; color:var(--ink-soft);">Every claim in this handbook carries a tag showing how solid it is. Nothing here is presented as more certain than it actually is.</p>
+  <div style="margin-top:8px;">
+    <span class="tag tag-off">Official — Current</span>
+    <span class="tag tag-hist">Official — Historical</span>
+    <span class="tag tag-eval">Independent Evaluation</span>
+    <span class="tag tag-parl">Parliamentary Oversight</span>
+    <span class="tag tag-inf">Inference</span>
+    <span class="tag tag-ip">Interview Prep</span>
+  </div>
+
+  <h3 style="font-size:15px; margin-top:22px;">2 — Relationship lines</h3>
+  <p style="font-size:12px; color:var(--ink-soft);">Not every arrow means the same thing. Government relationships are hierarchy, funding, coordination, monitoring, regulation, and audit — and they are genuinely different from each other. Conflating them is one of the easiest mistakes to make in an interview.</p>
+  <div class="legend-box">
+    <div class="legend-row"><svg width="34" height="10"><line x1="0" y1="5" x2="34" y2="5" stroke="#1B2A41" stroke-width="3"/></svg> Reports to / administrative hierarchy</div>
+    <div class="legend-row"><svg width="34" height="10"><line x1="0" y1="5" x2="34" y2="5" stroke="#3F7A3F" stroke-width="3" stroke-dasharray="6 3"/></svg> Funds / financial flow</div>
+    <div class="legend-row"><svg width="34" height="10"><line x1="0" y1="5" x2="34" y2="5" stroke="#2E6E62" stroke-width="3"/></svg> Implements</div>
+    <div class="legend-row"><svg width="34" height="10"><line x1="0" y1="5" x2="34" y2="5" stroke="#5A4E8C" stroke-width="2" stroke-dasharray="2 3"/></svg> Coordinates with</div>
+    <div class="legend-row"><svg width="34" height="10"><line x1="0" y1="5" x2="34" y2="5" stroke="#C9420B" stroke-width="2" stroke-dasharray="1 4"/></svg> Monitors / reviews</div>
+    <div class="legend-row"><svg width="34" height="10"><line x1="0" y1="5" x2="34" y2="5" stroke="#7A2E2E" stroke-width="3"/></svg> Regulates / recognises</div>
+    <div class="legend-row"><svg width="34" height="10"><line x1="0" y1="5" x2="34" y2="5" stroke="#5B6470" stroke-width="3" stroke-dasharray="1 2"/></svg> Audit / oversight</div>
+  </div>
+
+  <h3 style="font-size:15px; margin-top:22px;">3 — Colour by layer</h3>
+  <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">
+    <span class="chip" style="border-left:4px solid var(--c-govt);">Government / Ministry</span>
+    <span class="chip" style="border-left:4px solid var(--c-sai);">SAI institutional</span>
+    <span class="chip" style="border-left:4px solid var(--c-prog);">Programmes / schemes</span>
+    <span class="chip" style="border-left:4px solid var(--c-gov2);">NSGA governance layer</span>
+    <span class="chip" style="border-left:4px solid var(--c-fin);">Finance</span>
+    <span class="chip" style="border-left:4px solid var(--c-over);">Oversight / audit</span>
+    <span class="chip" style="border-left:4px solid var(--c-ext);">External stakeholders</span>
+    <span class="chip" style="border-left:4px solid var(--c-ad); font-weight:700;">Assistant Director</span>
+  </div>
+
+  <div class="callout" style="margin-top:24px;">One rule repeated throughout: illustrative examples (an athlete, a fictional case) are always explicitly labelled <b>ILLUSTRATIVE EXAMPLE</b>. Institutional relationships are either source-grounded or explicitly labelled inference. The two are never blended silently.</div>
+  <div class="pagenum">2</div>
+</div>
+
+<!-- ============ PAGE 3: OPENING CASE ============ -->
+<div class="page">
+  <div class="kicker">Illustrative Example — Not a Documented Case</div>
+  <h2 class="title">Start With a Person, Not a Chart</h2>
+  <p class="lede">Before the boxes and arrows, here's the shape of the whole system through one invented, representative story. Every institution named below reappears — accurately — in the pages that follow.</p>
+  <hr class="rule">
+
+  <div style="background:var(--paper-panel); border-radius:6px; padding:18px 20px; font-size:13px; line-height:1.7; margin-top:14px;">
+    <b>ILLUSTRATIVE EXAMPLE.</b> Meera is fourteen, from a small town with no proper athletics track. A physical education teacher spots her sprint times at a <b>National Sports Talent Contest (NSTC)</b> trial. She's selected into a nearby <b>SAI Training Centre (STC)</b>, where she trains for four years. At seventeen, her performance qualifies her for a <b>National Centre of Excellence (NCOE)</b>, with better coaching and sports-science support. At nineteen, after a strong national meet, she's proposed for <b>TOPS</b> — the Mission Olympic Cell reviews her file and approves a customised support package, financed partly through the <b>National Sports Development Fund</b>.
+    <br><br>
+    Along the way: her STC's funding and staffing was monitored by <b>SAI's Operations Division</b>; her equipment came through <b>General Administration & Procurement</b> under GFR rules; a data record of her performances sits in <b>NSRS</b>; if her NSF's governance were ever in question, that would be a <b>National Sports Board</b> matter, not SAI's; and if Parliament ever reviewed whether her State's KISCE posts were adequately staffed, that finding would show up in a <b>Parliamentary Standing Committee</b> report, not a SAI press release.
+    <br><br>
+    <b>An Assistant Director never coaches Meera.</b> But an AD could be the person examining whether her STC's file properly recorded her progression, whether her NCOE's equipment procurement followed GFR, or whether her TOPS proposal's paperwork was in order before it went to the Mission Olympic Cell.
+  </div>
+
+  <div class="callout ad" style="margin-top:18px;">That's the whole handbook in one paragraph: <b>policy → programme → institution → money → monitoring → an Assistant Director sitting inside the administrative machinery, not the athlete's story.</b></div>
+  <div class="pagenum">3</div>
+</div>
+
+<!-- ============ PAGE 4: GOVERNANCE CHAIN ============ -->
+<div class="page">
+  <div class="kicker">The Chain of Authority <span class="tag tag-off">Official — Current</span></div>
+  <h2 class="title">Who Sits Above Whom</h2>
+  <p class="lede">Four layers of government authority, then SAI's own internal structure. Get this chain automatic before anything else.</p>
+  <hr class="rule">
+
+  <svg viewBox="0 0 720 380" style="width:100%; margin-top:10px;">
+    <rect x="210" y="0" width="300" height="40" rx="5" fill="var(--c-govt)"/>
+    <text x="360" y="25" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Government of India</text>
+    <line x1="360" y1="40" x2="360" y2="66" stroke="#1B2A41" stroke-width="2.5"/>
+    <text x="380" y="58" font-size="10" fill="var(--ink-soft)">hierarchy</text>
+
+    <rect x="190" y="66" width="340" height="40" rx="5" fill="var(--c-govt)" opacity="0.88"/>
+    <text x="360" y="91" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Ministry of Youth Affairs &amp; Sports (MYAS)</text>
+    <line x1="360" y1="106" x2="360" y2="132" stroke="#1B2A41" stroke-width="2.5"/>
+
+    <rect x="210" y="132" width="300" height="40" rx="5" fill="var(--c-govt)" opacity="0.75"/>
+    <text x="360" y="157" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Department of Sports</text>
+    <rect x="255" y="180" width="210" height="12" fill="#FAF7F0"/>
+    <text x="360" y="188" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)">Secretary, Sports — Hari Ranjan Rao, IAS (verified 21.08.2026)</text>
+    <line x1="360" y1="172" x2="360" y2="205" stroke="#1B2A41" stroke-width="2.5"/>
+
+    <rect x="230" y="205" width="260" height="42" rx="5" fill="var(--c-sai)"/>
+    <text x="360" y="232" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Sports Authority of India (SAI)</text>
+    <rect x="220" y="254" width="280" height="12" fill="#FAF7F0"/>
+    <text x="360" y="262" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)">Autonomous Society, Societies Registration Act 1860 · est. 25.01.1984</text>
+
+    <line x1="360" y1="247" x2="360" y2="285" stroke="#B8863B" stroke-width="2"/>
+    <rect x="120" y="285" width="480" height="36" rx="5" fill="#EFE2C6" stroke="var(--c-sai)"/>
+    <text x="360" y="308" text-anchor="middle" font-size="12" fill="var(--ink)">General Body (36) · Governing Body (28) · Finance Committee</text>
+    <text x="360" y="335" text-anchor="middle" font-size="9.5" fill="var(--ink-soft)">General Body &amp; Governing Body chaired by the Union Minister · Finance Committee chaired by Secretary (Sports), MYAS</text>
+
+    <line x1="360" y1="321" x2="360" y2="352" stroke="#B8863B" stroke-width="2" stroke-dasharray="2 3"/>
+    <rect x="230" y="352" width="260" height="26" rx="13" fill="none" stroke="var(--c-sai)" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <text x="360" y="369" text-anchor="middle" font-size="11" fill="var(--ink-soft)">19 operational divisions — see page 5</text>
+  </svg>
+
+  <div class="callout">SAI is <b>not</b> a passive execution unit of the Ministry. It is a major autonomous institution with its own finances, its own governance bodies, and its own internal structure — this distinction matters constantly in interview answers.</div>
+  <div class="pagenum">4</div>
+</div>
+
+<!-- ============ PAGE 5: 19 DIVISIONS GROUPED ============ -->
+<div class="page">
+  <div class="kicker">SAI's Internal Structure <span class="tag tag-off">Official — Current</span></div>
+  <h2 class="title">Nineteen Divisions, Four Groups</h2>
+  <p class="lede">Independently verified directly against SAI's own Divisions tab. Grouped by function so it's learnable as four ideas, not nineteen names.</p>
+  <hr class="rule">
+
+  <div class="grid2" style="margin-top:14px;">
+    <div style="background:#EAF2EF; border:1px solid var(--c-prog); border-radius:6px; padding:14px;">
+      <h4 style="color:var(--c-prog); font-size:14px;">Athlete-facing</h4>
+      <div class="chip">TEAMS</div><div class="chip">TOPS</div><div class="chip">Sports Science</div><div class="chip">Khelo India</div><div class="chip">Operations</div>
+    </div>
+    <div style="background:#F2EEE6; border:1px solid var(--gold); border-radius:6px; padding:14px;">
+      <h4 style="color:var(--gold); font-size:14px;">Infrastructure &amp; Support</h4>
+      <div class="chip">Stadia</div><div class="chip">Engineering</div><div class="chip">Capacity Building</div>
+    </div>
+    <div style="background:#EFEAF5; border:1px solid var(--c-ext); border-radius:6px; padding:14px;">
+      <h4 style="color:var(--c-ext); font-size:14px;">Administration</h4>
+      <div class="chip">Finance</div><div class="chip">GAD &amp; Procurement</div><div class="chip">Legal</div><div class="chip">Vigilance</div><div class="chip">HR</div><div class="chip">Coordination</div>
+    </div>
+    <div style="background:#EEEEEE; border:1px solid var(--c-over); border-radius:6px; padding:14px;">
+      <h4 style="color:var(--c-over); font-size:14px;">Specialised</h4>
+      <div class="chip">IT</div><div class="chip">Media</div><div class="chip">Rajbhasha</div><div class="chip">Policy, Research &amp; Innovation</div><div class="chip">TAGG</div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:16px;">The 2023-24 Annual Report's organisational chart groups a few of these slightly differently (e.g. "Personnel Division" rather than a standalone "HR"). Most likely genuine restructuring over time — not an error in this research. SAI's org chart is not static.</div>
+
+  <h4 style="margin-top:20px; font-size:14px;">IT Division, in detail — worth knowing precisely</h4>
+  <p style="font-size:12px; color:var(--ink-soft); line-height:1.6;">Runs NSRS (National Sports Repository System), the Khelo India website/app, the Fitness App, online facility booking, cloud infrastructure and security (with NIC), e-Office Premium, SPARROW, and file/leave/tour/personnel modules — plus a genuine <b>Data Analytics and Sports Intelligence</b> function: athlete tracking, performance benchmarking, AI/ML-based insights, integrated dashboards. <span class="tag tag-ip">Never say SAI lacks digital infrastructure — it doesn't.</span></p>
+  <div class="pagenum">5</div>
+</div>
+
+<!-- ============ PAGE 6: RESPONSIBILITY MATRIX ============ -->
+<div class="page">
+  <div class="kicker">Who Owns What <span class="tag tag-off">Official — Current</span></div>
+  <h2 class="title">Division Responsibility Matrix</h2>
+  <p class="lede">Where a source only supports a coordinating or supporting role — not ownership — this table says so. Don't over-claim a division's authority.</p>
+  <hr class="rule">
+  <table class="matrix">
+    <tr><th>Division</th><th>Owns</th><th>Coordinates</th><th>Monitors</th></tr>
+    <tr><td><b>Operations</b></td><td>Day-to-day running of NCOE/STC/Extension Centre/NSTC machinery</td><td>Regional Centres, States</td><td>Scheme-level expenditure, centre compliance</td></tr>
+    <tr><td><b>Khelo India</b></td><td>KIC/KISCE scheme administration, academy accreditation</td><td>State Sports Departments</td><td>Utilisation certificates, fund release</td></tr>
+    <tr><td><b>TOPS (via MOC)</b></td><td>Elite athlete support decisions</td><td>NSFs, implementation-partner agencies</td><td>Athlete progress against training plans</td></tr>
+    <tr><td><b>Finance</b></td><td>Budgeting, fund release, GFR compliance</td><td>All spending divisions</td><td>Expenditure control, PFMS</td></tr>
+    <tr><td><b>GAD &amp; Procurement</b></td><td>Contracts, vendor management</td><td>Equipment Support, Engineering</td><td>GFR/CVC compliance on purchases</td></tr>
+    <tr><td><b>IT</b></td><td>NSRS, digital platforms</td><td>All divisions on data needs</td><td><i>supports</i> — not owner of programme-level M&amp;E</td></tr>
+    <tr><td><b>Vigilance</b></td><td>Integrity matters</td><td>HR, Legal</td><td>Complaint/disciplinary tracking</td></tr>
+    <tr><td><b>Coordination</b></td><td><i>supports/coordinates</i> — nodal function, not a programme owner</td><td>MYAS liaison</td><td>Parliament questions, RTI routing</td></tr>
+    <tr><td><b>Policy, Research &amp; Innovation</b></td><td>Evaluation frameworks, benchmarking</td><td>All divisions on data requests</td><td><i>supports</i> — advisory, not enforcement</td></tr>
+    <tr><td><b>Rajbhasha</b></td><td>Official Language Act compliance</td><td>All Regional Centres</td><td>Subject to periodic Parliamentary Committee inspection (8 in 2023-24 alone)</td></tr>
+  </table>
+  <div class="pagenum">6</div>
+</div>
+
+<!-- ============ PAGE 7: TALENT PIPELINE ============ -->
+<div class="page">
+  <div class="kicker">The Programme Layer <span class="tag tag-off">Official — Current</span></div>
+  <h2 class="title">The Talent Pipeline</h2>
+  <p class="lede">Not one programme — a sequence, with different institutions responsible at each stage.</p>
+  <hr class="rule">
+
+  <svg viewBox="0 0 740 200" style="width:100%; margin-top:20px;">
+    <rect x="0" y="60" width="150" height="60" rx="6" fill="var(--c-prog)"/>
+    <text x="75" y="85" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">NSTC</text>
+    <text x="75" y="102" text-anchor="middle" fill="#fff" font-size="10">Scout, ages 8–14</text>
+    <line x1="150" y1="90" x2="195" y2="90" stroke="var(--c-prog)" stroke-width="3" marker-end="url(#arrow1)"/>
+
+    <rect x="195" y="60" width="150" height="60" rx="6" fill="var(--c-prog)" opacity="0.85"/>
+    <text x="270" y="85" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">STC</text>
+    <text x="270" y="102" text-anchor="middle" fill="#fff" font-size="10">Develop, ages 10–18</text>
+    <line x1="345" y1="90" x2="390" y2="90" stroke="var(--c-prog)" stroke-width="3" marker-end="url(#arrow1)"/>
+
+    <rect x="390" y="60" width="150" height="60" rx="6" fill="var(--c-prog)" opacity="0.7"/>
+    <text x="465" y="85" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">NCOE</text>
+    <text x="465" y="102" text-anchor="middle" fill="#fff" font-size="10">Specialise, high-performance</text>
+    <line x1="540" y1="90" x2="585" y2="90" stroke="var(--c-prog)" stroke-width="3" marker-end="url(#arrow1)"/>
+
+    <rect x="585" y="60" width="150" height="60" rx="6" fill="var(--c-ad)"/>
+    <text x="660" y="85" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">TOPS</text>
+    <text x="660" y="102" text-anchor="middle" fill="#fff" font-size="10">Elite medal prospects</text>
+
+    <line x1="660" y1="120" x2="660" y2="150" stroke="var(--c-ad)" stroke-width="2" stroke-dasharray="2 3"/>
+    <text x="660" y="170" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)">Mission Olympic Cell</text>
+    <text x="660" y="184" text-anchor="middle" font-size="9.5" fill="var(--ink-soft)">chaired by DG, SAI</text>
+
+    <defs><marker id="arrow1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--c-prog)"/></marker></defs>
+  </svg>
+
+  <div class="grid2" style="margin-top:24px;">
+    <div>
+      <h4 style="font-size:13px;">Precision worth remembering</h4>
+      <p style="font-size:12px; color:var(--ink-soft);">SAI's Key Statistics page lists <b>24 NCOEs approved</b>. The 2023-24 Annual Report shows only <b>22 were actually operational</b> that year (Cooch Behar and Zirakpur were not yet running). Approved ≠ operational — a genuinely useful distinction in an interview.</p>
+    </div>
+    <div>
+      <h4 style="font-size:13px;">What NOT to say</h4>
+      <p style="font-size:12px; color:var(--ink-soft);"><span class="tag tag-inf">Unconfirmed</span> Whether the Mission Olympic Cell meets weekly could not be verified from any primary source. Don't state it as fact.</p>
+    </div>
+  </div>
+  <div class="pagenum">7</div>
+</div>
+
+<!-- ============ PAGE 8: MONEY MAP ============ -->
+<div class="page">
+  <div class="kicker">Financial Flow <span class="tag tag-eval">Independent Evaluation</span> <span class="tag tag-hist">Official — Historical</span></div>
+  <h2 class="title">Where Money Actually Moves</h2>
+  <p class="lede">Directional flow, not to scale — real proportional Sankey widths would require line-item budget data not available here. Boxes are equal width deliberately, to avoid implying false precision.</p>
+  <hr class="rule">
+
+  <svg viewBox="0 0 740 300" style="width:100%; margin-top:10px;">
+    <rect x="270" y="0" width="200" height="36" rx="5" fill="var(--c-govt)"/>
+    <text x="370" y="23" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">Union Budget (MYAS)</text>
+
+    <line x1="370" y1="36" x2="150" y2="80" stroke="var(--c-fin)" stroke-width="2.5" stroke-dasharray="6 3"/>
+    <line x1="370" y1="36" x2="370" y2="80" stroke="var(--c-fin)" stroke-width="2.5" stroke-dasharray="6 3"/>
+    <line x1="370" y1="36" x2="590" y2="80" stroke="var(--c-fin)" stroke-width="2.5" stroke-dasharray="6 3"/>
+
+    <rect x="50" y="80" width="200" height="36" rx="5" fill="var(--c-prog)"/>
+    <text x="150" y="103" text-anchor="middle" fill="#fff" font-size="11.5">Khelo India (~67% of DoS budget, FY25-26)</text>
+
+    <rect x="270" y="80" width="200" height="36" rx="5" fill="var(--c-sai)"/>
+    <text x="370" y="103" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">SAI (grant-in-aid)</text>
+
+    <rect x="490" y="80" width="200" height="36" rx="5" fill="#8A7A4A"/>
+    <text x="590" y="103" text-anchor="middle" fill="#fff" font-size="11">NSDF (Govt + CSR blend)</text>
+
+    <line x1="370" y1="116" x2="200" y2="160" stroke="var(--c-fin)" stroke-width="2" stroke-dasharray="6 3"/>
+    <line x1="370" y1="116" x2="370" y2="160" stroke="var(--c-fin)" stroke-width="2" stroke-dasharray="6 3"/>
+    <line x1="590" y1="116" x2="540" y2="160" stroke="var(--c-fin)" stroke-width="2" stroke-dasharray="6 3"/>
+
+    <rect x="90" y="160" width="180" height="34" rx="5" fill="#EFE2C6" stroke="var(--c-sai)"/>
+    <text x="180" y="182" text-anchor="middle" font-size="11">SAI Finance Division</text>
+    <rect x="290" y="160" width="180" height="34" rx="5" fill="#EFE2C6" stroke="var(--c-sai)"/>
+    <text x="380" y="182" text-anchor="middle" font-size="11">Equipment/Procurement</text>
+    <rect x="490" y="160" width="180" height="34" rx="5" fill="var(--c-ad)"/>
+    <text x="580" y="182" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">TOPS athlete support</text>
+
+    <line x1="180" y1="194" x2="180" y2="230" stroke="var(--c-over)" stroke-width="2" stroke-dasharray="1 3"/>
+    <line x1="380" y1="194" x2="380" y2="230" stroke="var(--c-over)" stroke-width="2" stroke-dasharray="1 3"/>
+    <line x1="580" y1="194" x2="580" y2="230" stroke="var(--c-over)" stroke-width="2" stroke-dasharray="1 3"/>
+
+    <rect x="90" y="230" width="180" height="34" rx="5" fill="none" stroke="var(--c-over)" stroke-width="1.5"/>
+    <text x="180" y="252" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)">PFMS tracking</text>
+    <rect x="290" y="230" width="180" height="34" rx="5" fill="none" stroke="var(--c-over)" stroke-width="1.5"/>
+    <text x="380" y="252" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)">GeM / GFR compliance</text>
+    <rect x="490" y="230" width="180" height="34" rx="5" fill="none" stroke="var(--c-over)" stroke-width="1.5"/>
+    <text x="580" y="252" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)">CAG audit</text>
+  </svg>
+
+  <div class="callout">Real figures, not estimates: FY2023-24 Equipment Support procurement was <b>₹38.75 crore</b>; five Delhi stadia generated <b>₹21.8 crore</b> revenue the same year; Khelo India represents roughly <b>67% (~₹1,000 crore)</b> of the Department of Sports' FY25-26 budget.</div>
+  <div class="pagenum">8</div>
+</div>
+
+<!-- ============ PAGE 9: NSGA SEPARATION ============ -->
+<div class="page">
+  <div class="kicker">Governance Layer <span class="tag tag-off">Official — Current</span></div>
+  <h2 class="title">Two Chains That Must Not Be Merged</h2>
+  <p class="lede" style="font-size:12.5px;">The single most common conceptual error in this subject: treating NSGA's new bodies as if they sit inside, above, or in place of SAI. They don't. They're a parallel regulatory system.</p>
+  <hr class="rule" style="margin:8px 0 10px;">
+
+  <div class="grid2" style="margin-top:10px;">
+    <div>
+      <h4 style="font-size:13px; color:var(--c-sai); margin-bottom:4px;">SAI's operational chain</h4>
+      <svg viewBox="0 0 300 195" style="width:100%; max-height:200px;">
+        <rect x="50" y="0" width="200" height="34" rx="5" fill="var(--c-govt)"/>
+        <text x="150" y="22" text-anchor="middle" fill="#fff" font-size="11">MYAS / Dept. of Sports</text>
+        <line x1="150" y1="34" x2="150" y2="56" stroke="var(--c-govt)" stroke-width="2"/>
+        <rect x="70" y="56" width="160" height="34" rx="5" fill="var(--c-sai)"/>
+        <text x="150" y="78" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">SAI</text>
+        <line x1="150" y1="90" x2="150" y2="112" stroke="var(--c-sai)" stroke-width="2"/>
+        <rect x="40" y="112" width="220" height="30" rx="5" fill="var(--c-prog)"/>
+        <text x="150" y="132" text-anchor="middle" fill="#fff" font-size="10.5">19 divisions / schemes / centres</text>
+        <line x1="150" y1="142" x2="150" y2="160" stroke="var(--c-ad)" stroke-width="2" stroke-dasharray="3 3"/>
+        <rect x="60" y="160" width="180" height="26" rx="13" fill="var(--c-ad)"/>
+        <text x="150" y="177" text-anchor="middle" fill="#fff" font-size="10.5" font-weight="700">Assistant Director</text>
+      </svg>
+      <p style="font-size:11px; color:var(--ink-soft); margin-top:4px;"><b>Function:</b> implements sports development — trains athletes, runs centres, procures equipment, administers schemes.</p>
+    </div>
+    <div>
+      <h4 style="font-size:13px; color:var(--c-gov2); margin-bottom:4px;">NSGA-2025 regulatory chain</h4>
+      <svg viewBox="0 0 300 195" style="width:100%; max-height:200px;">
+        <rect x="50" y="0" width="200" height="34" rx="5" fill="var(--c-gov2)"/>
+        <text x="150" y="22" text-anchor="middle" fill="#fff" font-size="11">National Sports Governance Act, 2025</text>
+        <line x1="150" y1="34" x2="80" y2="56" stroke="var(--c-gov2)" stroke-width="2"/>
+        <line x1="150" y1="34" x2="220" y2="56" stroke="var(--c-gov2)" stroke-width="2"/>
+        <rect x="10" y="56" width="140" height="34" rx="5" fill="var(--c-gov2)" opacity="0.85"/>
+        <text x="80" y="78" text-anchor="middle" fill="#fff" font-size="10.5">National Sports Board</text>
+        <rect x="160" y="56" width="140" height="34" rx="5" fill="var(--c-gov2)" opacity="0.85"/>
+        <text x="230" y="78" text-anchor="middle" fill="#fff" font-size="10.5">National Sports Tribunal</text>
+        <line x1="80" y1="90" x2="80" y2="112" stroke="var(--c-gov2)" stroke-width="2"/>
+        <line x1="230" y1="90" x2="230" y2="112" stroke="var(--c-gov2)" stroke-width="2"/>
+        <rect x="30" y="112" width="100" height="30" rx="5" fill="none" stroke="var(--c-gov2)"/>
+        <text x="80" y="131" text-anchor="middle" font-size="10">Sets standards</text>
+        <rect x="180" y="112" width="100" height="30" rx="5" fill="none" stroke="var(--c-gov2)"/>
+        <text x="230" y="131" text-anchor="middle" font-size="10">Resolves disputes</text>
+        <line x1="150" y1="142" x2="150" y2="164" stroke="var(--c-gov2)" stroke-width="2" stroke-dasharray="3 3"/>
+        <rect x="30" y="164" width="240" height="28" rx="5" fill="#F2E3E3" stroke="var(--c-gov2)"/>
+        <text x="150" y="182" text-anchor="middle" font-size="9.5" fill="var(--c-gov2)">National Sports Bodies</text>
+      </svg>
+      <p style="font-size:11px; color:var(--ink-soft); margin-top:4px;"><b>Function:</b> governs and regulates <b>National Sports Bodies</b> — the Act's defined term covering the National Olympic Committee, National Paralympic Committee, NSFs, and Regional Sports Federations — sets standards, recognises/suspends, adjudicates disputes. Does not run training centres or athlete programmes.</p>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:10px; font-size:11.5px; padding:9px 12px;"><b>Interview-safe line:</b> "NSGA-2025 doesn't replace or absorb SAI. It's a separate statutory governance layer for what the Act calls National Sports Bodies — the Olympic and Paralympic Committees, NSFs, and Regional Sports Federations. The two chains only intersect where a body's governance status could affect its athletes' participation in SAI-linked programmes."</div>
+  <div class="pagenum">9</div>
+</div>
+
+<!-- ============ PAGE 10: OVERSIGHT ============ -->
+<div class="page">
+  <div class="kicker">Accountability <span class="tag tag-parl">Parliamentary Oversight</span></div>
+  <h2 class="title">Who Watches the Watchers</h2>
+  <p class="lede">Four independent oversight mechanisms, each catching something different.</p>
+  <hr class="rule">
+
+  <table class="matrix" style="margin-top:16px;">
+    <tr><th>Mechanism</th><th>What it actually found / does</th></tr>
+    <tr><td><b>Parliamentary Standing Committee</b><br><span style="font-size:10px; color:var(--ink-soft);">369th Report, 20.08.2025</span></td><td>~45% SAI-wide sanctioned-post vacancy (recommended filling within 6 months); recommended examining statutory conversion of SAI; NSDF fund-utilisation concerns flagged, recommending stricter regulation; recommended SAI (not IOA) organise the National Games.</td></tr>
+    <tr><td><b>Independent Evaluation (NIPFP)</b><br><span style="font-size:10px; color:var(--ink-soft);">Jan 2026, field-verified</span></td><td>National average KISCE manpower fill rate 56% (Bihar 12%, some states 100%); NSRS load/performance issues; Make-in-India procurement constraints on specialised equipment.</td></tr>
+    <tr><td><b>CAG / Audit</b></td><td>Standard financial and compliance audit function over SAI's accounts — referenced structurally in governance material; not independently deep-dived in this handbook.</td></tr>
+    <tr><td><b>RTI / Vigilance / Grievances</b></td><td>Statutory transparency and integrity mechanisms; SAI's Vigilance Division and RTI cell handle these routinely as part of normal administration.</td></tr>
+  </table>
+
+  <div class="callout" style="margin-top:16px;"><b>Discipline point:</b> the 45% SAI-wide vacancy figure (Parliamentary Committee) and the 56% KISCE fill rate (NIPFP) measure <i>different populations</i>. Never merge them under pressure.</div>
+  <div class="pagenum">10</div>
+</div>
+
+<!-- ============ PAGE 11: EXTERNAL ECOSYSTEM ============ -->
+<div class="page">
+  <div class="kicker">Stakeholders Outside SAI <span class="tag tag-off">Official — Current</span> <span class="tag tag-inf">Some Inference</span></div>
+  <h2 class="title">Who SAI Deals With, Day to Day</h2>
+  <hr class="rule">
+
+  <svg viewBox="0 0 720 320" style="width:100%; margin-top:10px;">
+    <rect x="280" y="140" width="160" height="40" rx="6" fill="var(--c-sai)"/>
+    <text x="360" y="165" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">SAI</text>
+
+    <line x1="360" y1="140" x2="130" y2="60" stroke="var(--c-ext)" stroke-width="2" stroke-dasharray="2 3"/>
+    <rect x="40" y="30" width="180" height="34" rx="5" fill="var(--c-ext)"/>
+    <text x="130" y="52" text-anchor="middle" fill="#fff" font-size="11">State Sports Departments</text>
+
+    <line x1="360" y1="140" x2="590" y2="60" stroke="var(--c-gov2)" stroke-width="2"/>
+    <rect x="500" y="30" width="180" height="34" rx="5" fill="var(--c-gov2)"/>
+    <text x="590" y="52" text-anchor="middle" fill="#fff" font-size="11">National Sports Federations</text>
+
+    <line x1="360" y1="140" x2="130" y2="220" stroke="var(--c-ext)" stroke-width="2" stroke-dasharray="2 3"/>
+    <rect x="40" y="220" width="180" height="34" rx="5" fill="var(--c-ext)" opacity="0.85"/>
+    <text x="130" y="242" text-anchor="middle" fill="#fff" font-size="11">Indian Olympic Association</text>
+
+    <line x1="360" y1="180" x2="590" y2="240" stroke="var(--c-prog)" stroke-width="2"/>
+    <rect x="500" y="240" width="180" height="34" rx="5" fill="var(--c-prog)"/>
+    <text x="590" y="262" text-anchor="middle" fill="#fff" font-size="11">Athletes &amp; Coaches</text>
+
+    <line x1="360" y1="180" x2="360" y2="280" stroke="var(--c-over)" stroke-width="2" stroke-dasharray="1 3"/>
+    <rect x="270" y="280" width="180" height="34" rx="5" fill="var(--c-over)"/>
+    <text x="360" y="302" text-anchor="middle" fill="#fff" font-size="11">CPWD / Vendors / Contractors</text>
+  </svg>
+
+  <table class="matrix" style="margin-top:6px;">
+    <tr><th>Stakeholder</th><th>Relationship type</th></tr>
+    <tr><td>State Sports Departments</td><td>Coordinate — especially infrastructure co-funding above the central grant ceiling</td></tr>
+    <tr><td>National Sports Federations</td><td>Regulated by NSGA/NSB, not SAI directly; SAI coordinates with them on athlete programmes</td></tr>
+    <tr><td>Indian Olympic Association</td><td>Coordinates on Olympic-cycle matters; Parliamentary Committee recommended SAI (not IOA) run National Games — a proposal, not yet an established fact</td></tr>
+    <tr><td>Athletes &amp; Coaches</td><td>Direct beneficiaries/employees of SAI's schemes and cadre</td></tr>
+    <tr><td>CPWD / Vendors / Contractors</td><td>Implementation partners for infrastructure and procurement, under GFR/GeM rules</td></tr>
+  </table>
+  <div class="pagenum">11</div>
+</div>
+
+<!-- ============ PAGE 12: DIGITAL ARCHITECTURE ============ -->
+<div class="page">
+  <div class="kicker">Digital Backbone <span class="tag tag-off">Official — Current</span></div>
+  <h2 class="title">The Systems Already Running</h2>
+  <p class="lede">All confirmed directly against SAI's own IT Division description — nothing here is aspirational.</p>
+  <hr class="rule">
+
+  <div class="grid2" style="margin-top:16px;">
+    <div class="legend-box">
+      <b>Athlete &amp; scheme data</b>
+      <p style="font-size:11.5px; margin-top:6px;">NSRS (National Sports Repository System) — SAI's central athlete/scheme data platform. Feeds data-analytics and AI/ML-based performance benchmarking and dashboards.</p>
+    </div>
+    <div class="legend-box">
+      <b>Public-facing</b>
+      <p style="font-size:11.5px; margin-top:6px;">Khelo India website and mobile app, Fitness App, online facility booking for SAI stadia.</p>
+    </div>
+    <div class="legend-box">
+      <b>Internal administration</b>
+      <p style="font-size:11.5px; margin-top:6px;">e-Office Premium, SPARROW (APAR system), file/leave/tour/personnel management modules.</p>
+    </div>
+    <div class="legend-box">
+      <b>Scheme delivery (Ministry-level)</b>
+      <p style="font-size:11.5px; margin-top:6px;">dbtyas-sports.gov.in — a live DBT portal with Scheme Owner and Sportsperson logins, handling Cash Incentives, National Sports Awards, Pension to Meritorious Sportspersons, HRDS.</p>
+    </div>
+  </div>
+  <div class="callout ad" style="margin-top:16px;"><b>The AD angle:</b> a technically fluent AD isn't introducing digital administration to SAI — SAI already runs it. The credible pitch is understanding and strengthening an existing, real system.</div>
+  <div class="pagenum">12</div>
+</div>
+
+<!-- ============ PAGE 13: AD OVERLAY (CRITICAL) ============ -->
+<div class="page">
+  <div class="kicker" style="color:var(--c-ad);">The Critical Page</div>
+  <h2 class="title" style="color:var(--c-ad);">Where Does an Assistant Director Actually Fit?</h2>
+  <p class="lede">Not a coach. Not automatically the head of a division. An administrative/managerial layer inside SAI's existing machinery, mapped duty by duty to the vacancy circular.</p>
+  <hr class="rule">
+
+  <table class="matrix">
+    <tr><th>Circular duty</th><th>Maps to</th></tr>
+    <tr><td>Policy implementation</td><td>Any programme division (Khelo India, Operations, TOPS)</td></tr>
+    <tr><td>Supervisory role</td><td>Section Officers / subordinate staff within assigned division</td></tr>
+    <tr><td>Administrative management</td><td>Day-to-day planning, coordination, monitoring of the domain assigned</td></tr>
+    <tr><td>File examination &amp; decision support</td><td>Every division — recommending to higher authority</td></tr>
+    <tr><td>Finance / HR / procurement / infra / legal / technical</td><td>Assigned per organisational need — Finance, GAD &amp; Procurement, HR, Legal, Engineering</td></tr>
+    <tr><td>Inter-departmental coordination</td><td>Coordination Division's nodal function; MYAS liaison</td></tr>
+    <tr><td>Monitoring &amp; reporting</td><td>Policy, Research &amp; Innovation; Operations</td></tr>
+    <tr><td>Compliance &amp; governance</td><td>Vigilance, Legal, Finance (GFR)</td></tr>
+    <tr><td>Representation &amp; communication</td><td>Media, external meetings/committees</td></tr>
+    <tr><td>Capacity building &amp; institutional support</td><td>Capacity Building Division</td></tr>
+    <tr><td>Other duties assigned</td><td>Flexible — competent authority's discretion</td></tr>
+  </table>
+
+  <div class="callout ad" style="margin-top:16px; font-size:13px;"><b>Interview lens, memorise this exact chain:</b><br>SAI problem → responsible function → AD action → reporting/escalation → monitoring/accountability.</div>
+  <div class="pagenum">13</div>
+</div>
+
+<!-- ============ PAGE 14: CASE STUDIES ============ -->
+<div class="page">
+  <div class="kicker">Illustrative Examples — Not Documented Cases</div>
+  <h2 class="title">Walking a Problem Through the System</h2>
+  <p class="lede">Three invented, representative scenarios. Same five-stage structure each time — memorise the structure, not the specific story.</p>
+  <hr class="rule">
+
+  <div style="margin-top:14px;">
+    <h4 style="font-size:13px; color:var(--c-prog);">1 — A Khelo India Centre has a staffing gap</h4>
+    <svg viewBox="0 0 720 60" style="width:100%;">
+      <rect x="0" y="10" width="130" height="40" rx="5" fill="var(--c-prog)"/><text x="65" y="34" text-anchor="middle" fill="#fff" font-size="10">Problem: post vacant</text>
+      <line x1="130" y1="30" x2="155" y2="30" stroke="#999" stroke-width="2"/>
+      <rect x="155" y="10" width="130" height="40" rx="5" fill="var(--c-sai)"/><text x="220" y="34" text-anchor="middle" fill="#fff" font-size="10">Khelo India Division</text>
+      <line x1="285" y1="30" x2="310" y2="30" stroke="#999" stroke-width="2"/>
+      <rect x="310" y="10" width="130" height="40" rx="5" fill="var(--c-ad)"/><text x="375" y="34" text-anchor="middle" fill="#fff" font-size="10">AD: verify, escalate</text>
+      <line x1="440" y1="30" x2="465" y2="30" stroke="#999" stroke-width="2"/>
+      <rect x="465" y="10" width="130" height="40" rx="5" fill="var(--c-govt)"/><text x="530" y="34" text-anchor="middle" fill="#fff" font-size="10">HR recruitment cycle</text>
+      <line x1="595" y1="30" x2="620" y2="30" stroke="#999" stroke-width="2"/>
+      <rect x="620" y="10" width="100" height="40" rx="5" fill="var(--c-over)"/><text x="670" y="34" text-anchor="middle" fill="#fff" font-size="9.5">Monitor fill rate</text>
+    </svg>
+  </div>
+
+  <div style="margin-top:14px;">
+    <h4 style="font-size:13px; color:var(--c-prog);">2 — An NCOE needs specialised equipment</h4>
+    <svg viewBox="0 0 720 60" style="width:100%;">
+      <rect x="0" y="10" width="130" height="40" rx="5" fill="var(--c-prog)"/><text x="65" y="34" text-anchor="middle" fill="#fff" font-size="10">Equipment need</text>
+      <line x1="130" y1="30" x2="155" y2="30" stroke="#999" stroke-width="2"/>
+      <rect x="155" y="10" width="130" height="40" rx="5" fill="var(--c-ad)"/><text x="220" y="34" text-anchor="middle" fill="#fff" font-size="10">AD examines proposal</text>
+      <line x1="285" y1="30" x2="310" y2="30" stroke="#999" stroke-width="2"/>
+      <rect x="310" y="10" width="130" height="40" rx="5" fill="var(--c-fin)"/><text x="375" y="34" text-anchor="middle" fill="#fff" font-size="10">GFR/GAD procurement</text>
+      <line x1="440" y1="30" x2="465" y2="30" stroke="#999" stroke-width="2"/>
+      <rect x="465" y="10" width="130" height="40" rx="5" fill="var(--c-govt)"/><text x="530" y="34" text-anchor="middle" fill="#fff" font-size="9.5">Make-in-India check</text>
+      <line x1="595" y1="30" x2="620" y2="30" stroke="#999" stroke-width="2"/>
+      <rect x="620" y="10" width="100" height="40" rx="5" fill="var(--c-over)"/><text x="670" y="34" text-anchor="middle" fill="#fff" font-size="9.5">CAG/audit trail</text>
+    </svg>
+  </div>
+
+  <div style="margin-top:14px;">
+    <h4 style="font-size:13px; color:var(--c-prog);">3 — An athlete needs additional support</h4>
+    <svg viewBox="0 0 720 60" style="width:100%;">
+      <rect x="0" y="10" width="130" height="40" rx="5" fill="var(--c-prog)"/><text x="65" y="34" text-anchor="middle" fill="#fff" font-size="10">Support request</text>
+      <line x1="130" y1="30" x2="155" y2="30" stroke="#999" stroke-width="2"/>
+      <rect x="155" y="10" width="130" height="40" rx="5" fill="var(--c-ad)"/><text x="220" y="34" text-anchor="middle" fill="#fff" font-size="9.5">AD/Ops file review</text>
+      <line x1="285" y1="30" x2="310" y2="30" stroke="#999" stroke-width="2"/>
+      <rect x="310" y="10" width="130" height="40" rx="5" fill="var(--c-sai)"/><text x="375" y="34" text-anchor="middle" fill="#fff" font-size="10">Mission Olympic Cell</text>
+      <line x1="440" y1="30" x2="465" y2="30" stroke="#999" stroke-width="2"/>
+      <rect x="465" y="10" width="130" height="40" rx="5" fill="var(--c-fin)"/><text x="530" y="34" text-anchor="middle" fill="#fff" font-size="9.5">NSDF disbursement</text>
+      <line x1="595" y1="30" x2="620" y2="30" stroke="#999" stroke-width="2"/>
+      <rect x="620" y="10" width="100" height="40" rx="5" fill="var(--c-over)"/><text x="670" y="34" text-anchor="middle" fill="#fff" font-size="9.5">Progress review</text>
+    </svg>
+  </div>
+  <div class="pagenum">14</div>
+</div>
+
+<!-- ============ PAGE 14B: DIVISIONS NETWORK (V2 ADDITION) ============ -->
+<div class="page">
+  <div class="kicker">V2 Addition — Relational Depth <span class="tag tag-off">Official — Current</span> <span class="tag tag-inf">Some Inference on Connection Strength</span></div>
+  <h2 class="title">The Divisions Network — What's Connected to What</h2>
+  <p class="lede" style="font-size:12.5px;">Page 5 grouped the 19 divisions by function. This page shows the connections between the busiest ones — the ones that actually touch each other in daily administration.</p>
+  <hr class="rule" style="margin:8px 0 10px;">
+
+  <svg viewBox="0 0 720 380" style="width:100%; margin-top:6px;">
+    <!-- central IT/NSRS node -->
+    <circle cx="360" cy="190" r="46" fill="var(--c-over)"/>
+    <text x="360" y="186" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">IT /</text>
+    <text x="360" y="200" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">NSRS</text>
+
+    <!-- surrounding nodes -->
+    <circle cx="150" cy="80" r="44" fill="var(--c-prog)"/>
+    <text x="150" y="76" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Operations</text>
+    <text x="150" y="90" text-anchor="middle" fill="#fff" font-size="9">Reg. Centres</text>
+
+    <circle cx="570" cy="80" r="44" fill="var(--c-prog)"/>
+    <text x="570" y="76" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Khelo India</text>
+    <text x="570" y="90" text-anchor="middle" fill="#fff" font-size="9">States / KIC</text>
+
+    <circle cx="640" cy="230" r="44" fill="var(--c-ad)"/>
+    <text x="640" y="226" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">TOPS</text>
+    <text x="640" y="240" text-anchor="middle" fill="#fff" font-size="9">MOC / NSFs</text>
+
+    <circle cx="540" cy="340" r="42" fill="var(--c-fin)"/>
+    <text x="540" y="344" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Finance</text>
+
+    <circle cx="200" cy="340" r="42" fill="var(--c-ext)"/>
+    <text x="200" y="336" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">Legal /</text>
+    <text x="200" y="349" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">Vigilance</text>
+
+    <circle cx="90" cy="230" r="42" fill="var(--c-sai)"/>
+    <text x="90" y="226" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="700">Policy/Research</text>
+    <text x="90" y="239" text-anchor="middle" fill="#fff" font-size="9">&amp; Innovation</text>
+
+    <!-- connectors -->
+    <line x1="188" y1="105" x2="325" y2="165" stroke="var(--c-over)" stroke-width="2" stroke-dasharray="2 3"/>
+    <line x1="532" y1="105" x2="395" y2="165" stroke="var(--c-over)" stroke-width="2" stroke-dasharray="2 3"/>
+    <line x1="600" y1="200" x2="406" y2="195" stroke="var(--c-over)" stroke-width="2" stroke-dasharray="2 3"/>
+    <line x1="510" y1="310" x2="390" y2="220" stroke="var(--c-fin)" stroke-width="2" stroke-dasharray="6 3"/>
+    <line x1="230" y1="310" x2="330" y2="220" stroke="var(--c-ext)" stroke-width="1.5" stroke-dasharray="1 3"/>
+    <line x1="125" y1="200" x2="318" y2="195" stroke="var(--c-sai)" stroke-width="1.5" stroke-dasharray="1 3"/>
+    <!-- cross connections not through IT -->
+    <line x1="180" y1="115" x2="540" y2="105" stroke="#999" stroke-width="1.3" stroke-dasharray="2 3"/>
+    <line x1="600" y1="115" x2="618" y2="192" stroke="#999" stroke-width="1.3"/>
+    <line x1="230" y1="325" x2="502" y2="335" stroke="#999" stroke-width="1.3" stroke-dasharray="1 3"/>
+  </svg>
+
+  <table class="matrix" style="margin-top:4px;">
+    <tr><th>Connection</th><th>Nature</th></tr>
+    <tr><td>Operations ↔ Khelo India</td><td>Coordinate — both touch Regional Centres and State-level implementation</td></tr>
+    <tr><td>Khelo India ↔ TOPS</td><td>Coordinate — a Khelo India-developed athlete can graduate into a TOPS proposal</td></tr>
+    <tr><td>TOPS ↔ Finance</td><td>Funds — MOC-approved disbursements route through Finance/NSDF</td></tr>
+    <tr><td>Legal/Vigilance ↔ Policy/Research &amp; Innovation</td><td>Coordinate — compliance findings can feed evaluation/benchmarking work</td></tr>
+    <tr><td>IT/NSRS ↔ nearly everything</td><td>Supports — data platform underlying Operations, Khelo India, and TOPS record-keeping</td></tr>
+  </table>
+  <div class="callout" style="margin-top:10px; font-size:11px; padding:8px 12px;"><span class="tag tag-inf">Inference</span> The specific connection lines above describe plausible, functionally sensible working relationships based on each division's documented role — they are not copied from an official organisational network diagram (SAI does not publish one). Treat this page as a reasoning aid, not a memorised official chart.</div>
+  <div class="pagenum">14b</div>
+</div>
+
+<!-- ============ PAGE 14C: END-TO-END PROBLEM (V2 ADDITION) ============ -->
+<div class="page">
+  <div class="kicker">V2 Addition — Relational Depth <span class="tag tag-inf">Illustrative Example</span></div>
+  <h2 class="title">One Problem, All the Way Through</h2>
+  <p class="lede" style="font-size:12.5px;">The case studies on the previous pages were quick. Here's one slowed all the way down, with WHO / WHAT / WHY / WHO CHECKS under every step.</p>
+  <hr class="rule" style="margin:8px 0 10px;">
+
+  <div style="background:var(--paper-panel); border-radius:6px; padding:10px 14px; font-size:11.5px; margin-bottom:10px;"><b>ILLUSTRATIVE EXAMPLE.</b> An NCOE's coaching staff identify a need for a ₹50 lakh specialised training system not currently on site.</div>
+
+  <table class="matrix" style="font-size:10.5px;">
+    <tr><th>Step</th><th>Who</th><th>What happens</th><th>Why</th><th>Who checks</th></tr>
+    <tr><td>1</td><td>Coach / NCOE technical staff</td><td>Raises a technical requirement note</td><td>Training gap identified</td><td>NCOE administrative in-charge</td></tr>
+    <tr><td>2</td><td>Operations Division</td><td>Reviews and forwards as a formal proposal</td><td>Confirms it's a genuine operational need, not ad hoc</td><td>Operations leadership</td></tr>
+    <tr><td>3</td><td><b>Assistant Director</b></td><td>Examines the file: technical justification, budget head, prior similar procurements</td><td>File examination &amp; decision-support duty</td><td>Reporting officer</td></tr>
+    <tr><td>4</td><td>GAD &amp; Procurement</td><td>Runs GFR-compliant procurement process (tender/GeM as applicable), checks Make-in-India availability</td><td>Legal requirement for public spending</td><td>Finance concurrence; CVC guidelines</td></tr>
+    <tr><td>5</td><td>Finance Division</td><td>Confirms budget availability, sanctions expenditure</td><td>No spend without financial sanction</td><td>Competent financial authority per delegation</td></tr>
+    <tr><td>6</td><td>Vendor</td><td>Supplies and installs equipment</td><td>Contract fulfilment</td><td>Engineering/technical acceptance</td></tr>
+    <tr><td>7</td><td>NCOE + IT/NSRS</td><td>Records asset, logs into inventory/data systems</td><td>Institutional memory, future audits</td><td>IT Division</td></tr>
+    <tr><td>8</td><td>Operations / Policy Research</td><td>Monitors utilisation over time</td><td>Value-for-money accountability</td><td>Internal review</td></tr>
+    <tr><td>9</td><td>CAG / Internal Audit</td><td>Periodic audit of the transaction</td><td>Statutory oversight</td><td>Parliament, ultimately</td></tr>
+  </table>
+  <div class="callout ad" style="margin-top:10px; font-size:11.5px;">Notice where the AD sits: <b>not</b> at the technical decision (step 1) and <b>not</b> at final financial sanction (step 5) — but squarely at the file-examination chokepoint (step 3) that everything else depends on moving through correctly.</div>
+  <div class="pagenum">14c</div>
+</div>
+
+<!-- ============ PAGE 14D: AD'S DAY (V2 ADDITION) ============ -->
+<div class="page">
+  <div class="kicker">V2 Addition — Relational Depth <span class="tag tag-ip">Interview Prep</span></div>
+  <h2 class="title">Turning 11 Generic Duties Into Something You'd Actually Do</h2>
+  <p class="lede" style="font-size:12.5px;">A file lands on an Assistant Director's desk. Here's the decision sequence — this is what "policy implementation" and "file examination" actually look like in motion.</p>
+  <hr class="rule" style="margin:8px 0 10px;">
+
+  <svg viewBox="0 0 640 420" style="width:100%; max-width:500px; display:block; margin:6px auto;">
+    <!-- vertical decision chain -->
+    <rect x="170" y="0" width="300" height="34" rx="16" fill="var(--c-ad)"/><text x="320" y="22" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">A file/case is received</text>
+    <line x1="320" y1="34" x2="320" y2="50" stroke="#999" stroke-width="2"/>
+    <rect x="150" y="50" width="340" height="30" rx="4" fill="var(--paper-panel)" stroke="var(--c-ad)"/><text x="320" y="70" text-anchor="middle" font-size="11">What exactly is the issue?</text>
+    <line x1="320" y1="80" x2="320" y2="96" stroke="#999" stroke-width="2"/>
+    <rect x="150" y="96" width="340" height="30" rx="4" fill="var(--paper-panel)" stroke="var(--c-ad)"/><text x="320" y="116" text-anchor="middle" font-size="11">Which division/function owns it?</text>
+    <line x1="320" y1="126" x2="320" y2="142" stroke="#999" stroke-width="2"/>
+    <rect x="150" y="142" width="340" height="30" rx="4" fill="var(--paper-panel)" stroke="var(--c-ad)"/><text x="320" y="162" text-anchor="middle" font-size="11">What rules/GFR/precedent apply?</text>
+    <line x1="320" y1="172" x2="320" y2="188" stroke="#999" stroke-width="2"/>
+    <rect x="150" y="188" width="340" height="30" rx="4" fill="var(--paper-panel)" stroke="var(--c-ad)"/><text x="320" y="208" text-anchor="middle" font-size="11">What evidence/documentation is needed?</text>
+    <line x1="320" y1="218" x2="320" y2="234" stroke="#999" stroke-width="2"/>
+    <rect x="150" y="234" width="340" height="30" rx="4" fill="var(--paper-panel)" stroke="var(--c-ad)"/><text x="320" y="254" text-anchor="middle" font-size="11">Who else needs consulting?</text>
+    <line x1="320" y1="264" x2="320" y2="280" stroke="#999" stroke-width="2"/>
+    <rect x="150" y="280" width="340" height="30" rx="4" fill="var(--paper-panel)" stroke="var(--c-ad)"/><text x="320" y="300" text-anchor="middle" font-size="11">Is this within my delegation to decide?</text>
+    <line x1="230" y1="310" x2="180" y2="326" stroke="var(--c-fin)" stroke-width="2"/>
+    <line x1="410" y1="310" x2="460" y2="326" stroke="var(--c-gov2)" stroke-width="2"/>
+    <rect x="30" y="326" width="230" height="30" rx="4" fill="#E4EEE4"/><text x="145" y="346" text-anchor="middle" font-size="10.5">Yes → recommend/decide, record reasoning</text>
+    <rect x="380" y="326" width="230" height="30" rx="4" fill="#F2E3E3"/><text x="495" y="346" text-anchor="middle" font-size="10.5">No → escalate with recommendation</text>
+    <line x1="145" y1="356" x2="270" y2="380" stroke="#999" stroke-width="1.5"/>
+    <line x1="495" y1="356" x2="370" y2="380" stroke="#999" stroke-width="1.5"/>
+    <rect x="170" y="380" width="300" height="30" rx="15" fill="var(--c-over)"/><text x="320" y="400" text-anchor="middle" fill="#fff" font-size="11">Monitor implementation · record for audit trail</text>
+  </svg>
+  <div class="pagenum">14d</div>
+</div>
+
+<!-- ============ PAGE 15: GLOSSARY ============ -->
+<div class="page">
+  <div class="kicker">Reference</div>
+  <h2 class="title">Abbreviation Glossary</h2>
+  <hr class="rule">
+  <div class="glossary-grid">
+    <div class="glossary-item"><b>MYAS</b> — Ministry of Youth Affairs &amp; Sports</div>
+    <div class="glossary-item"><b>SAI</b> — Sports Authority of India</div>
+    <div class="glossary-item"><b>DoS</b> — Department of Sports</div>
+    <div class="glossary-item"><b>NSGA</b> — National Sports Governance Act, 2025</div>
+    <div class="glossary-item"><b>NSB</b> — National Sports Board</div>
+    <div class="glossary-item"><b>NST</b> — National Sports Tribunal</div>
+    <div class="glossary-item"><b>NSF</b> — National Sports Federation</div>
+    <div class="glossary-item"><b>IOA</b> — Indian Olympic Association</div>
+    <div class="glossary-item"><b>NCOE</b> — National Centre of Excellence</div>
+    <div class="glossary-item"><b>STC</b> — SAI Training Centre</div>
+    <div class="glossary-item"><b>NSTC</b> — National Sports Talent Contest</div>
+    <div class="glossary-item"><b>KIC</b> — Khelo India Centre</div>
+    <div class="glossary-item"><b>KISCE</b> — Khelo India State Centre of Excellence</div>
+    <div class="glossary-item"><b>TOPS</b> — Target Olympic Podium Scheme</div>
+    <div class="glossary-item"><b>MOC</b> — Mission Olympic Cell</div>
+    <div class="glossary-item"><b>TEAMS</b> — Training of Elite Athletes &amp; Management Support</div>
+    <div class="glossary-item"><b>TAGG</b> — Target Asian Games Group</div>
+    <div class="glossary-item"><b>NSRS</b> — National Sports Repository System</div>
+    <div class="glossary-item"><b>NSDF</b> — National Sports Development Fund</div>
+    <div class="glossary-item"><b>PFMS</b> — Public Financial Management System</div>
+    <div class="glossary-item"><b>GeM</b> — Government e-Marketplace</div>
+    <div class="glossary-item"><b>GFR</b> — General Financial Rules</div>
+    <div class="glossary-item"><b>CAG</b> — Comptroller and Auditor General</div>
+    <div class="glossary-item"><b>CPWD</b> — Central Public Works Department</div>
+    <div class="glossary-item"><b>GAD</b> — General Administration &amp; Procurement (SAI division)</div>
+    <div class="glossary-item"><b>SPARROW</b> — Smart Performance Appraisal Report Recording Online Window (APAR system)</div>
+  </div>
+  <div class="pagenum">18</div>
+</div>
+
+<!-- ============ PAGE 16: INTERVIEW PROMPTS ============ -->
+<div class="page">
+  <div class="kicker">Study Utility <span class="tag tag-ip">Interview Prep</span></div>
+  <h2 class="title">How to Read This Map in an Interview</h2>
+  <p class="lede">Whatever scenario question you're asked, run it through these prompts in order before answering.</p>
+  <hr class="rule">
+  <ol style="font-size:14px; line-height:2.3; margin-top:14px;">
+    <li><b>Who makes policy</b> on this? (MYAS / Department of Sports, or NSGA's NSB for governance standards)</li>
+    <li><b>Who funds it?</b> (Union budget, NSDF blend, or State co-funding)</li>
+    <li><b>Who implements it?</b> (SAI division, State Sports Department, or an NSF)</li>
+    <li><b>Who monitors it?</b> (The owning division, or Policy/Research &amp; Innovation)</li>
+    <li><b>Who regulates or recognises the body involved?</b> (NSB, under NSGA — only for NSFs/sports bodies, not SAI's own schemes)</li>
+    <li><b>Who audits or holds it accountable?</b> (CAG, Parliament, Vigilance, RTI)</li>
+    <li><b>Where would an AD actually intervene?</b> (File examination, coordination, monitoring — rarely the technical/coaching decision itself)</li>
+    <li><b>When would an AD escalate rather than decide?</b> (Anything requiring higher financial sanction, policy interpretation, or cross-division authority)</li>
+  </ol>
+  <div class="pagenum">19</div>
+</div>
+
+<!-- ============ PAGE 17: SOURCE REGISTER ============ -->
+<div class="page">
+  <div class="kicker">Provenance</div>
+  <h2 class="title">Source Register &amp; Open Items</h2>
+  <p class="lede">Last verified: 10–12 September 2026. Re-verify anything date-sensitive closer to the actual interview.</p>
+  <hr class="rule">
+  <h4 style="font-size:13px; margin-top:14px;">Primary sources used</h4>
+  <p style="font-size:11.5px; line-height:1.7; color:var(--ink-soft);">
+  SAI Vacancy Notification F.No. 01-04001(03)/1/2026-66/411 (29.07.2026) · SAI Organisational Information, Divisions tab (live site) · SAI Key Statistics page · SAI Annual Report 2023-24 · SAI NCOE brief &amp; Target Olympic Podium Scheme page · SAI RC Mumbai page · Khelo Bharat Niti-2025 (MYAS) · National Sports Governance Act, 2025 + commencement notifications (MYAS) · NIPFP Third-Party Evaluation Report (Jan 2026) · PRS Legislative Research summary of the 369th Parliamentary Standing Committee Report · dbtyas-sports.gov.in (live portal) · Live MYAS leadership confirmation (21.08.2026).
+  </p>
+  <h4 style="font-size:13px; margin-top:18px;">Deliberately left unresolved — do not state as fact</h4>
+  <table class="matrix">
+    <tr><th>Item</th><th>Status</th></tr>
+    <tr><td>Current DG, SAI</td><td>Unconfirmed — last confirmed holder (Oct 2024) has since changed roles</td></tr>
+    <tr><td>SAI Regional Centre count</td><td>Sources disagree: 10 (scheme page) vs 12 (older Key Statistics/AR headline)</td></tr>
+    <tr><td>Mission Olympic Cell meeting frequency</td><td>"Weekly" claim could not be verified from any primary source</td></tr>
+    <tr><td>SAI Annual Report 2024-25</td><td>Could not be located anywhere — 2023-24 is the latest verified report</td></tr>
+    <tr><td>Causal link: Khelo Bharat Niti-2025 / NSGA-2025 → these 9 AD vacancies</td><td>No source establishes this; do not claim it in an interview</td></tr>
+  </table>
+  <h4 style="font-size:13px; margin-top:18px;">V2 changes from V1</h4>
+  <p style="font-size:11px; color:var(--ink-soft); line-height:1.6;">Corrected: Finance Committee chairmanship (Secretary, Sports — not the Union Minister; General Body and Governing Body chairmanship by the Union Minister was independently re-verified and stands). Corrected: NSGA-2025's regulated category is the Act's defined "National Sports Bodies" (Olympic/Paralympic Committees, NSFs, Regional Sports Federations), not NSFs alone. Added: three relational-depth pages (divisions network, one-problem-through-the-system, and an Assistant Director's decision sequence) after the case studies, addressing the gap between "what are the components" and "how do they interact."</p>
+  <div class="footer-note">This handbook is a study aid built from the SAI_deputation_preparation repository's verified Modules 0–8. It supplements, and cross-references, the Listening Room (audio) and Recall Bench (quiz) tools in the same repository.</div>
+</div>
+
+</body>
+</html>
