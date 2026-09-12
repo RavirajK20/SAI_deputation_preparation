@@ -21,13 +21,13 @@
   header.top{background:var(--night); color:var(--night-text); padding:14px 18px; position:sticky; top:0; z-index:20; display:flex; justify-content:space-between; align-items:center; font-family:-apple-system,sans-serif;}
   header.top .brand{font-size:15px; font-weight:700;}
   header.top .brand small{display:block; font-weight:400; font-size:10.5px; color:#9AA3AD;}
+  header.top .btns{display:flex; gap:6px;}
   header.top button{background:none; border:1px solid var(--night-line); color:var(--night-text); border-radius:4px; padding:6px 10px; font-size:11px; cursor:pointer; font-family:-apple-system,sans-serif;}
   .progressbar{height:3px; background:var(--night-line);}
   .progressbar > div{height:100%; background:var(--gold);}
 
   main{padding:24px 22px 60px;}
 
-  /* SCENE (narrative prose) */
   .scene{margin-bottom:20px;}
   .scene .chnum{font-family:-apple-system,sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); font-weight:700;}
   .scene h2{font-size:26px; margin:6px 0 4px; line-height:1.2;}
@@ -35,7 +35,6 @@
   .scene p{font-size:16.5px; line-height:1.75; margin:0 0 14px;}
   .scene p.char{font-family:-apple-system,sans-serif; font-size:13px; color:var(--ink-soft); font-style:italic; margin-bottom:16px;}
 
-  /* LESSON (institutional interlude — dark register, deliberately distinct) */
   .lesson{background:var(--night); color:var(--night-text); border-radius:8px; padding:20px 20px 16px; margin:22px 0; font-family:-apple-system,sans-serif;}
   .lesson .lbl{font-size:10.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:8px;}
   .lesson h4{color:#fff; font-size:16px; margin-bottom:8px;}
@@ -48,54 +47,56 @@
   .tag-inf{background:#3A3A3A; color:#C9C9C9;}
   .tag-parl{background:#4A2C2C; color:#E0B0B0;}
 
-  /* TAKEAWAY */
   .takeaway{border-left:4px solid var(--c-ad); background:#FBEBE2; padding:12px 16px; margin:16px 0; font-family:-apple-system,sans-serif; font-size:12.5px; border-radius:0 6px 6px 0;}
   .takeaway .lbl{font-size:10px; letter-spacing:1px; text-transform:uppercase; font-weight:700; color:var(--c-ad); margin-bottom:4px;}
 
-  /* DIAGRAM WRAP */
   .diagwrap{background:var(--night); border-radius:8px; padding:16px; margin:18px 0;}
   .diagwrap .cap{font-family:-apple-system,sans-serif; font-size:10.5px; color:#9AA3AD; margin-top:8px; text-align:center;}
   svg text{font-family:-apple-system,Arial,sans-serif;}
 
-  /* CAST CARDS */
   .castgrid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px 0;}
   .castcard{background:var(--paper-panel); border:1px solid var(--line); border-radius:6px; padding:10px 12px; font-family:-apple-system,sans-serif;}
   .castcard .n{font-size:13px; font-weight:700; color:var(--ink);}
   .castcard .r{font-size:10.5px; color:var(--gold); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:4px;}
   .castcard .d{font-size:11.5px; color:var(--ink-soft); line-height:1.4;}
 
-  /* nav */
   .navrow{display:flex; justify-content:space-between; gap:10px; margin-top:30px; font-family:-apple-system,sans-serif;}
   .navbtn{flex:1; padding:14px; text-align:center; border-radius:6px; border:1px solid var(--line); background:var(--paper-panel); color:var(--ink); font-size:13px; font-weight:700; cursor:pointer;}
   .navbtn.primary{background:var(--night); color:#fff; border-color:var(--night);}
 
-  /* home */
   .home-hero{padding:10px 0 20px;}
   .home-hero h1{font-size:32px; line-height:1.2; margin-bottom:8px;}
   .home-hero p{font-family:-apple-system,sans-serif; font-size:13.5px; color:var(--ink-soft); line-height:1.6;}
+  .viewtoggle{display:flex; gap:8px; margin-top:16px; font-family:-apple-system,sans-serif;}
+  .viewtoggle button{flex:1; padding:10px; border-radius:6px; border:1px solid var(--line); background:var(--paper-panel); color:var(--ink-soft); font-size:12.5px; font-weight:700; cursor:pointer;}
+  .viewtoggle button.active{background:var(--night); color:#fff; border-color:var(--night);}
   .chlist{display:flex; flex-direction:column; gap:8px; margin-top:18px;}
   .chrow{background:var(--paper-panel); border:1px solid var(--line); border-radius:6px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-family:-apple-system,sans-serif;}
   .chrow .ct{font-size:14px; font-weight:700;}
   .chrow .cs{font-size:11px; color:var(--ink-soft); margin-top:2px;}
   .chrow .done{color:#2C7A2C; font-size:16px;}
 
-  /* modal */
+  .mapwrap{margin-top:16px;}
+  .mapwrap p.intro{font-family:-apple-system,sans-serif; font-size:12.5px; color:var(--ink-soft); margin-bottom:10px;}
+  .maplegend{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; font-family:-apple-system,sans-serif;}
+  .maplegend span{font-size:9.5px; padding:2px 8px; border-radius:8px; background:var(--paper-panel); color:var(--ink-soft); border:1px solid var(--line);}
+  .mapnode{cursor:pointer;}
+  .mapnode text{pointer-events:none;}
+  .mapcaption{font-family:-apple-system,sans-serif; font-size:10.5px; color:#9AA3AD; text-align:center; margin-top:6px;}
+
   .modal-backdrop{position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:100; display:none; align-items:flex-end; justify-content:center;}
   .modal-backdrop.show{display:flex;}
   .modal{background:var(--paper); width:100%; max-width:var(--maxw); max-height:80vh; overflow-y:auto; border-radius:14px 14px 0 0; padding:20px;}
   .modal .close{float:right; background:none; border:none; font-size:20px; cursor:pointer; color:var(--ink-soft);}
 
   .quizlink{display:block; text-align:center; margin-top:20px; padding:12px; border:1px solid var(--gold); border-radius:6px; color:var(--gold); text-decoration:none; font-family:-apple-system,sans-serif; font-weight:700; font-size:13.5px;}
-
-  @keyframes movealong{ to { offset-distance: 100%; } }
-  .token{offset-rotate:0deg; animation:movealong 3.5s linear infinite;}
 </style>
 </head>
 <body>
 <div id="app">
   <header class="top">
     <div class="brand">The Long Run<small>An interactive story of the Indian sports system</small></div>
-    <button onclick="openCast()">Cast &amp; Terms</button>
+    <div class="btns"><button onclick="openCast()">Cast &amp; Terms</button></div>
   </header>
   <div class="progressbar"><div id="progFill" style="width:0%"></div></div>
   <main id="main"></main>
@@ -111,7 +112,6 @@
 </div>
 
 <script>
-/* ================= CAST (fictional characters) ================= */
 const CAST = [
   {n:'Arjun Toppo', r:'Protagonist', d:'14 at the story\'s start, from a small town in Jharkhand. A natural middle-distance runner discovered at a school meet.'},
   {n:'Meena Ekka', r:'PE Teacher / Talent Scout', d:'Notices Arjun\'s times and enters him for an NSTC trial.'},
@@ -120,10 +120,9 @@ const CAST = [
   {n:'D. K. Ramesh', r:'Centre Administrator', d:'Runs day-to-day operations at Arjun\'s NCOE — Ritu\'s point of contact on the ground.'},
   {n:'The State Sports Department', r:'Institution', d:'Co-implements Khelo India infrastructure and grassroots schemes alongside SAI, with its own funding role.'},
   {n:'"The Federation"', r:'Institution (generic)', d:'A stand-in for whichever National Sports Federation governs Arjun\'s sport — deliberately unnamed so no real federation\'s conduct is implied.'},
+  {n:'Sunita Marandi', r:'Fellow athlete (javelin)', d:'At the same district meet as Arjun. Not picked for NSTC — her path runs through a Khelo India Centre instead, showing that scheme as a parallel door into the system.'},
+  {n:'Farhan Aziz', r:'National-level athlete, "the Federation"', d:'A senior athlete affected by the Federation\'s lapsed elections. His selection dispute is what eventually reaches the National Sports Tribunal.'},
 ];
-
-/* ================= STORY DATA ================= */
-/* Section types: scene, lesson, takeaway, diagram (svg string), cast (mini inline cards) */
 
 const CHAPTERS = [
 {
@@ -136,6 +135,7 @@ const CHAPTERS = [
       <p>This is a made-up story about a made-up runner. Every character in it — Arjun, Meena, Vikram, Ritu, D.K. Ramesh — is fictional. But every institution they walk into, every rule they follow, every rupee that moves, and every office that signs off is real, and drawn from the same verified material as the rest of this preparation project.</p>
       <p>Read it the way you'd read a well-made documentary drama: enjoy the story, but trust the institutional facts as facts. Wherever the story invents something for convenience — a name, a date, a specific number — it's flagged <span class="tag tag-fict">FICTIONAL</span>. Wherever it states how the system actually works, it's flagged <span class="tag tag-fact">OFFICIAL FACT</span>, <span class="tag tag-parl">PARLIAMENTARY</span>, or <span class="tag tag-inf">INFERENCE</span> if it's a reasonable but unconfirmed connection.</p>
       <p>Two threads run through the whole story. One is <b>Arjun's</b> — follow the athlete. The other is <b>Ritu's</b> — an Assistant Director at SAI, and the character who turns eleven generic vacancy-circular duties into things you'll actually watch someone do.</p>
+      <p>You can read chapter by chapter, in order — or, from the home screen, switch to the <b>Campus Map</b> and jump straight to whichever institution you want to understand, which will take you to the chapter where it actually comes up.</p>
     `},
     {type:'cast'},
     {type:'takeaway', html:`<div class="lbl">Why this exists</div>By the end, you should be able to take any real interview question — "who funds Khelo India," "where does an NSF fit," "what can an AD actually decide" — and answer it by picturing a scene in this story rather than recalling an isolated fact.`}
@@ -167,6 +167,27 @@ const CHAPTERS = [
         <rect x="420" y="35" width="150" height="50" rx="6" fill="#333"/><text x="495" y="65" text-anchor="middle" fill="#9AA3AD" font-size="11">STC?</text>
         <defs><marker id="a1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--gold)"/></marker></defs>
       </svg>`, caption:'One trial. One form. The first institutional door in a long chain.'}
+  ]
+},
+{
+  id:'ch1b', title:'The Other Door', motif:'FOLLOW THE ATHLETE',
+  sections:[
+    {type:'scene', html:`
+      <div class="chnum">Chapter 1B</div>
+      <h2>The Other Door</h2>
+      <p class="char">The same district meet. A javelin throw, a different name on a different list.</p>
+      <p><span class="tag tag-fict">Fictional character</span> Sunita Marandi threw the javelin that afternoon, two events after Arjun's race. She wasn't in Meena's age bracket for NSTC — she'd turned fifteen that spring, past the scheme's usual scouting window — so her name went onto a different list entirely: one the State Sports Department maintained for its <b>Khelo India Centre</b> in the block town, twenty minutes from her village.</p>
+      <p><span class="tag tag-fact">Official fact</span> A Khelo India Centre (KIC) is not the same thing as an SAI Training Centre. KICs are part of the Khelo India scheme — funded and largely administered through the State, with Central support — and they exist in far greater numbers, closer to where athletes actually live, precisely to catch talent that a centralised SAI scheme like NSTC might miss on age, timing, or geography alone.</p>
+      <p>Sunita trained at the KIC for two years under a State-appointed coach. Her technique improved enough that, at seventeen, she was moved up — not to an SAI NCOE, but to a <b>Khelo India State Centre of Excellence (KISCE)</b>, a more advanced tier of the same Khelo India scheme, still State-administered, still distinct from SAI's own ladder.</p>
+      <p><span class="tag tag-illus">Illustrative scenario</span> It was at a State-level meet that Sunita and Arjun's paths crossed again, years after the district meet neither of them remembered clearly. He was NCOE by then; she was KISCE. Different ladders, same government interest in not losing either of them.</p>
+    `},
+    {type:'lesson', html:`
+      <div class="lbl">What Just Happened <span class="tag tag-fact">Official Fact</span></div>
+      <h4>Two Grassroots Doors, Not One</h4>
+      <p>NSTC→STC→NCOE is SAI's own ladder. KIC→KISCE is the Khelo India scheme's ladder, State-administered with Central funding support. They are not competing programmes so much as parallel doors into the same broader system — a state with strong KIC/KISCE coverage can catch athletes that SAI's narrower, school-based NSTC scouting would miss, and vice versa.</p>
+      <p><span class="tag tag-inf">Inference</span> The two ladders aren't hermetically sealed — a strong KISCE performer could plausibly be identified for an SAI-administered NCOE later, the way Sunita's and Arjun's paths could genuinely converge at elite level — but that specific crossover isn't something this project has verified as a formal, defined transition; treat it as a plausible connection, not a documented one.</p>
+    `},
+    {type:'takeaway', html:`<div class="lbl">Interview takeaway</div>If asked to distinguish a Khelo India Centre from a KISCE: KIC is the grassroots entry tier, KISCE is the more advanced tier — both State-administered under the Khelo India scheme, both distinct from SAI's own NSTC/STC/NCOE ladder, even though both ultimately serve the same national talent-development goal.</div>`}
   ]
 },
 {
@@ -311,6 +332,26 @@ const CHAPTERS = [
   ]
 },
 {
+  id:'ch7b', title:'The Selection That Was Challenged', motif:'FOLLOW THE ACCOUNTABILITY',
+  sections:[
+    {type:'scene', html:`
+      <div class="chnum">Chapter 7B</div>
+      <h2>The Selection That Was Challenged</h2>
+      <p class="char">Months into the Federation's governance dispute. A different kind of file, in a different building entirely.</p>
+      <p><span class="tag tag-fict">Fictional scenario</span> Farhan Aziz, a senior athlete in Arjun's sport, was left out of a national team announced by the Federation's outgoing, term-lapsed committee. Farhan believed the selection trials had been run unfairly — not a governance-recognition question for the National Sports Board, but a dispute about a specific decision affecting a specific athlete.</p>
+      <p><span class="tag tag-fact">Official fact</span> This is exactly the kind of matter the <b>National Sports Tribunal</b> exists for. Where the National Sports Board asks "is this Federation governed properly, and should it stay recognised," the Tribunal asks a narrower, sharper question: "was this specific decision — a selection, a disciplinary action, an eligibility call — correctly made." Farhan's case went to the Tribunal, not the Board.</p>
+      <p>Ritu heard about this dispute the same secondhand way she'd heard about the Federation's lapsed elections — and this time, even more clearly, it had nothing to do with her desk. <span class="tag tag-illus">Illustrative</span> No SAI file crossed her table because of it; no SAI division was party to it. The Tribunal's jurisdiction sat entirely outside SAI's administrative machinery, the same way a civil court case wouldn't route through a government office simply because a government employee found it interesting.</p>
+    `},
+    {type:'lesson', html:`
+      <div class="lbl">What Just Happened <span class="tag tag-fact">Official Fact</span></div>
+      <h4>Recognition vs. Disputes — Two Different Questions, Two Different Bodies</h4>
+      <p>Chapter 7 showed the National Sports Board's function: governance standards, recognition, suspension of National Sports Bodies as institutions. This chapter shows the National Sports Tribunal's separate function: resolving specific disputes — selection, disciplinary, eligibility — brought by individuals or bodies. Both sit under the NSGA-2025 framework; neither sits inside SAI, and neither handles SAI's own internal administrative files.</p>
+      <p><span class="tag tag-inf">Inference</span> The story doesn't specify Farhan's case outcome — the Tribunal's actual procedures and typical case timelines aren't independently verified in this project's source material, so the story stops at "the case went to the Tribunal" rather than inventing a verdict or a process it can't back up.</p>
+    `},
+    {type:'takeaway', html:`<div class="lbl">Interview takeaway</div>Don't let "governance dispute" become one undifferentiated bucket. A Federation's recognition/compliance status is an NSB matter; a specific selection or disciplinary dispute is an NST matter. Neither is something an Assistant Director at SAI would be asked to resolve — but knowing which body handles which is exactly the kind of precision a board question is likely to probe.</div>`}
+  ]
+},
+{
   id:'ch8', title:'Who Is Watching', motif:'FOLLOW THE ACCOUNTABILITY',
   sections:[
     {type:'scene', html:`
@@ -349,7 +390,7 @@ const CHAPTERS = [
     {type:'scene', html:`
       <div class="chnum">Final Chapter</div>
       <h2>The Whole Map</h2>
-      <p>Arjun never met Ritu. He never will — that's realistic, not a plot gap. But every stage of his story ran through a system she was one small, real part of administering: NSTC brought him in; a State Department and SAI's Operations Division moved him through STC; an NCOE gave him a real shot at excellence, and needed a working force-plate to do it properly; NSRS caught a training problem before a human did; TOPS and the Mission Olympic Cell backed him once he'd earned it, financed in part through NSDF; a completely separate governance chain — NSGA, the National Sports Board — decided whether his own federation could even field a team; and Parliament, NIPFP, and the ordinary machinery of audit and reporting quietly checked whether all of it was working as intended.</p>
+      <p>Arjun never met Ritu. He never will — that's realistic, not a plot gap. But every stage of his story ran through a system she was one small, real part of administering: NSTC brought him in, while a parallel Khelo India door brought Sunita in a different way; a State Department and SAI's Operations Division moved him through STC; an NCOE gave him a real shot at excellence, and needed a working force-plate to do it properly; NSRS caught a training problem before a human did; TOPS and the Mission Olympic Cell backed him once he'd earned it, financed in part through NSDF; a completely separate governance chain — NSGA, the National Sports Board — decided whether his own federation could even field a team, while the National Sports Tribunal handled a specific selection dispute that the Board never touched; and Parliament, NIPFP, and the ordinary machinery of audit and reporting quietly checked whether all of it was working as intended.</p>
       <p>Ritu's job was never to be the hero of any single one of those stages. It was to be the person who kept files moving correctly through all of them.</p>
     `},
     {type:'diagram', svg:`
@@ -364,13 +405,14 @@ const CHAPTERS = [
         <rect x="290" y="120" width="140" height="32" rx="5" fill="var(--c-prog)" opacity="0.85"/><text x="360" y="141" text-anchor="middle" fill="#fff" font-size="10">NSRS / Sports Science</text>
         <rect x="500" y="120" width="160" height="32" rx="5" fill="var(--c-ad)"/><text x="580" y="141" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">TOPS / MOC</text>
         <line x1="150" y1="152" x2="150" y2="172" stroke="#999" stroke-width="1.5"/>
-        <rect x="70" y="172" width="160" height="28" rx="5" fill="var(--c-ext)"/><text x="150" y="190" text-anchor="middle" fill="#fff" font-size="9.5">State Sports Dept.</text>
+        <rect x="70" y="172" width="160" height="28" rx="5" fill="var(--c-ext)"/><text x="150" y="190" text-anchor="middle" fill="#fff" font-size="9.5">State Dept. / KIC-KISCE</text>
         <line x1="580" y1="152" x2="580" y2="172" stroke="var(--c-fin)" stroke-width="2" stroke-dasharray="4 3"/>
         <rect x="500" y="172" width="160" height="28" rx="5" fill="var(--c-fin)"/><text x="580" y="190" text-anchor="middle" fill="#fff" font-size="9.5">NSDF financing</text>
 
         <rect x="260" y="225" width="200" height="30" rx="15" fill="var(--c-ad)"/><text x="360" y="245" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Ritu — Assistant Director</text>
 
-        <rect x="30" y="270" width="180" height="28" rx="5" fill="var(--c-gov2)"/><text x="120" y="288" text-anchor="middle" fill="#fff" font-size="9.5">NSGA → NSB → Federation</text>
+        <rect x="15" y="270" width="150" height="28" rx="5" fill="var(--c-gov2)"/><text x="90" y="288" text-anchor="middle" fill="#fff" font-size="9">NSGA → NSB → recognition</text>
+        <rect x="185" y="270" width="150" height="28" rx="5" fill="var(--c-gov2)" opacity="0.8"/><text x="260" y="288" text-anchor="middle" fill="#fff" font-size="9">NSGA → NST → disputes</text>
         <rect x="510" y="270" width="180" height="28" rx="5" fill="var(--c-over)"/><text x="600" y="288" text-anchor="middle" fill="#fff" font-size="9.5">Parliament / NIPFP / Audit</text>
       </svg>`, caption:'Every box in this diagram is a chapter you just read. Nothing here should feel unfamiliar.'},
     {type:'lesson', html:`
@@ -383,9 +425,45 @@ const CHAPTERS = [
 }
 ];
 
-/* ================= ENGINE ================= */
+const MAP_NODES = [
+  {key:'myas',   label:'MYAS',                 x:300, y:10,  w:140, h:40, color:'var(--c-govt)', chapterId:'ch10'},
+  {key:'sai',    label:'SAI',                  x:300, y:70,  w:140, h:40, color:'var(--c-sai)',  chapterId:'ch10'},
+  {key:'state',  label:'State Dept. /\nKIC-KISCE', x:30, y:140, w:150, h:46, color:'var(--c-ext)', chapterId:'ch1b'},
+  {key:'ops',    label:'Operations /\nNCOE',   x:220, y:140, w:150, h:46, color:'var(--c-prog)', chapterId:'ch3'},
+  {key:'science',label:'Sports Science',       x:410, y:140, w:140, h:46, color:'var(--c-prog)', chapterId:'ch5'},
+  {key:'it',     label:'IT / NSRS',            x:590, y:140, w:130, h:46, color:'var(--c-over)', chapterId:'ch5'},
+  {key:'gad',    label:'Finance / GAD /\nProcurement', x:60, y:210, w:170, h:46, color:'var(--c-fin)', chapterId:'ch4'},
+  {key:'eng',    label:'Engineering',          x:260, y:210, w:130, h:46, color:'var(--c-fin)', chapterId:'ch4'},
+  {key:'tops',   label:'TOPS / MOC',           x:420, y:210, w:140, h:46, color:'var(--c-ad)',  chapterId:'ch6'},
+  {key:'ad',     label:'Assistant\nDirector',  x:590, y:210, w:130, h:46, color:'var(--c-ad)',  chapterId:'ch9'},
+  {key:'nsb',    label:'National Sports\nBoard', x:130, y:280, w:160, h:46, color:'var(--c-gov2)', chapterId:'ch7'},
+  {key:'nst',    label:'National Sports\nTribunal', x:340, y:280, w:160, h:46, color:'var(--c-gov2)', chapterId:'ch7b'},
+  {key:'audit',  label:'Parliament /\nNIPFP / Audit', x:530, y:280, w:170, h:46, color:'var(--c-over)', chapterId:'ch8'},
+];
+
+function chapterIdxById(id){ return CHAPTERS.findIndex(c=>c.id===id); }
+
+function renderMapSVG(){
+  let nodes = '';
+  MAP_NODES.forEach(n=>{
+    const lines = n.label.split('\n');
+    const ty = n.y + n.h/2 - (lines.length-1)*7;
+    let texts = lines.map((l,i)=>`<text x="${n.x+n.w/2}" y="${ty+i*14}" text-anchor="middle" fill="#fff" font-size="10.5" font-weight="700">${l}</text>`).join('');
+    nodes += `<g class="mapnode" onclick="jumpToChapterById('${n.chapterId}')">
+      <rect x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="7" fill="${n.color}"/>
+      ${texts}
+    </g>`;
+  });
+  return `<svg viewBox="0 0 720 350" style="width:100%;">${nodes}</svg>`;
+}
+
+function jumpToChapterById(id){
+  const idx = chapterIdxById(id);
+  if(idx>=0) openChapter(idx);
+}
+
 const SKEY='sai_story_v1';
-function loadS(){ try{return JSON.parse(localStorage.getItem(SKEY))||{completed:{}, last:0};}catch(e){return {completed:{}, last:0};} }
+function loadS(){ try{return JSON.parse(localStorage.getItem(SKEY))||{completed:{}, last:0, homeView:'chapters'};}catch(e){return {completed:{}, last:0, homeView:'chapters'};} }
 function saveS(s){ try{localStorage.setItem(SKEY, JSON.stringify(s));}catch(e){} }
 let S = loadS();
 let currentIdx = S.last || 0;
@@ -395,21 +473,45 @@ function renderProgress(){
   document.getElementById('progFill').style.width = Math.round(100*done/CHAPTERS.length)+'%';
 }
 
+function setHomeView(v){
+  S.homeView = v; saveS(S);
+  renderHome();
+}
+
 function renderHome(){
   currentIdx = -1;
+  const view = S.homeView || 'chapters';
   const main = document.getElementById('main');
   let html = `<div class="home-hero">
     <h1>The Long Run</h1>
-    <p>A fictional runner, a real Assistant Director, and every institution in the SAI–MYAS system, told as one connected story. Follow the athlete, the file, the money, the decision, and the accountability — pick up wherever you left off.</p>
+    <p>A fictional runner, a real Assistant Director, and every institution in the SAI–MYAS system, told as one connected story. Follow the athlete, the file, the money, the decision, and the accountability — pick up wherever you left off, or explore by institution on the Campus Map.</p>
   </div>
-  <div class="chlist">`;
-  CHAPTERS.forEach((ch,i)=>{
-    html += `<div class="chrow" onclick="openChapter(${i})">
-      <div><div class="ct">${i===0?'':i+'. '}${ch.title}</div><div class="cs">${ch.motif || (i===0?'Prologue':'Finale')}</div></div>
-      ${S.completed[ch.id]?'<span class="done">✓</span>':''}
+  <div class="viewtoggle">
+    <button class="${view==='chapters'?'active':''}" onclick="setHomeView('chapters')">Chapters</button>
+    <button class="${view==='map'?'active':''}" onclick="setHomeView('map')">Campus Map</button>
+  </div>`;
+
+  if(view==='map'){
+    html += `<div class="mapwrap">
+      <p class="intro">Tap any location to jump straight to the chapter where it's actually covered — this isn't a decorative diagram, each node opens real content.</p>
+      <div class="maplegend">
+        <span>Government/SAI</span><span>Programmes</span><span>Finance</span><span>AD</span><span>NSGA governance</span><span>Oversight</span>
+      </div>
+      ${renderMapSVG()}
+      <div class="mapcaption">Institutions shown are the ones that actually appear in the story — not an exhaustive org chart.</div>
     </div>`;
-  });
-  html += `</div><a class="quizlink" href="../09-audio/index.html">Listening Room →</a><a class="quizlink" href="../quiz/index.html">Recall Bench (quiz) →</a>`;
+  } else {
+    html += `<div class="chlist">`;
+    CHAPTERS.forEach((ch,i)=>{
+      html += `<div class="chrow" onclick="openChapter(${i})">
+        <div><div class="ct">${i===0?'':i+'. '}${ch.title}</div><div class="cs">${ch.motif || (i===0?'Prologue':'Finale')}</div></div>
+        ${S.completed[ch.id]?'<span class="done">✓</span>':''}
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `<a class="quizlink" href="../09-audio/index.html">Listening Room →</a><a class="quizlink" href="../quiz/index.html">Recall Bench (quiz) →</a>`;
   main.innerHTML = html;
   renderProgress();
 }
