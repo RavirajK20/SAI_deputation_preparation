@@ -1,0 +1,44 @@
+THE LONG RUN -- Full Story Narration (v2, lexicon-synced)
+============================================================
+
+Total duration: 1533.425s (25.56 minutes / 25:33.42)
+Voice / model: Kokoro-82M, voice 'af_heart' (hexgrad/Kokoro-82M)
+Generation date: 2026-09-14
+Total word count (TTS-input text, including chapter announcements): 3878
+Approximate words/minute: 151.7
+Source: source/story.json, derived from the locked 11-story/index.html (13 chapters)
+
+Chapter timestamps (start = when the spoken chapter announcement begins):
+----------------------------------------
+  ch0    00:00.60 -> 01:30.35   The Cast & The Map
+  ch1    01:31.95 -> 03:26.90   A Time at the District Meet
+  ch1b   03:29.70 -> 06:17.12   The Other Door
+  ch2    06:18.73 -> 08:35.42   Selection
+  ch3    08:37.02 -> 10:05.70   The Centre
+  ch4    10:07.30 -> 12:20.80   The ₹50 Lakh Problem
+  ch5    12:22.40 -> 13:56.50   The Data That Follows You
+  ch6    13:58.10 -> 15:08.27   Podium Track
+  ch7    15:09.88 -> 17:14.55   A Federation Under Question
+  ch7b   17:17.35 -> 19:59.55   The Selection That Was Challenged
+  ch8    20:01.15 -> 21:38.47   Who Is Watching
+  ch9    21:40.08 -> 23:40.75   Ritu's Desk
+  ch10   23:42.35 -> 25:33.42   The Whole Map
+
+Notes:
+- This is v2: regenerated to apply script/pronunciation_lexicon.md uniformly
+  across all 13 chapters (the v1 file predated most of the lexicon's fixes).
+  Pronunciation adaptations applied to TTS input only (display/canonical text
+  elsewhere in this project is unaffected): SAI -> S-A-I, NSTC -> N S T C,
+  STC -> S T C, NSRS -> N S R S, MOC -> M O C, NSDF -> N S D F, IT -> I T,
+  Ritu -> Ree-tu, Solanki -> Soh-lahn-kee, Toppo -> Tawp-oh (partial fix),
+  Jharkhand -> Jhar-khand (partial fix), age ranges spelled out, tilde ->
+  'approximately'. NIPFP and NCOE are left plain (no respelling needed/helps).
+- Known unresolved pronunciation limitations (STT-confirmed, re-tested at full-
+  story scale): Jharkhand and Toppo remain imperfect (see pronunciation_lexicon.md
+  for exact hit rates); 'Khelo' is consistently heard as 'Kilo'; 'lakh' is heard
+  as 'lock'. These are documented design constraints, not re-attempted per the
+  project's standing instruction not to chase them indefinitely.
+- Full QA evidence: docs/full_story_audio_qa_v2.json (pre-lexicon baseline
+  preserved at docs/full_story_audio_qa_v1_prelexicon.json for comparison).
+- Before/after comparison: docs/full_story_narration_v2_report.md
+- Pre-lexicon audio preserved for comparison: full_story_narration_v1_prelexicon.{mp3,wav,txt}

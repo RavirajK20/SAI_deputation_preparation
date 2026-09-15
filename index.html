@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAI AD — Interview Preparation</title>
+<style>
+  :root{
+    --bg:#12151A; --surface:#1B2027; --line:#2E353F;
+    --text:#EDEAE2; --text-dim:#9AA3AD;
+    --gold:#C79A3D; --gold-dim:#8E6E2B;
+    --green:#3F7A5D; --red:#B5493F;
+    --radius:4px; --maxw:640px;
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--bg); color:var(--text); font-family:'Source Sans 3','Segoe UI',system-ui,sans-serif;
+       margin:0; padding:0 16px 48px; line-height:1.5;}
+  h1,h2,h3,.tag{font-family:'Barlow Condensed','Arial Narrow',sans-serif;}
+  .wrap{max-width:var(--maxw); margin:0 auto;}
+  header.top{padding:28px 0 18px;}
+  header.top h1{font-size:26px; margin:0 0 4px; letter-spacing:0.3px;}
+  header.top .sub{color:var(--text-dim); font-size:14px;}
+  .rule{border:none; border-top:2px solid var(--gold); width:36px; margin:18px 0 14px;}
+  section{margin-top:8px;}
+  section > h2{font-size:13px; letter-spacing:2px; color:var(--gold-dim); text-transform:uppercase; margin:28px 0 10px;}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; margin-bottom:10px;}
+  .card a.rowlink{display:block; text-decoration:none; color:inherit;}
+  .card .t{font-size:16px; font-weight:600; color:var(--text);}
+  .card .d{font-size:12.5px; color:var(--text-dim); margin-top:3px;}
+  .grid{display:flex; flex-direction:column; gap:0;}
+  .chip{display:inline-block; font-size:11px; color:var(--gold); border:1px solid var(--gold-dim); border-radius:10px; padding:2px 8px; margin-left:8px; vertical-align:middle;}
+  video{width:100%; border-radius:var(--radius); margin-top:8px; background:#000;}
+  audio{width:100%; margin-top:8px;}
+  details{margin-top:2px;}
+  details > summary{cursor:pointer; color:var(--gold-dim); font-size:13px; padding:4px 0;}
+  .subrow{display:flex; justify-content:space-between; padding:8px 0; border-top:1px dashed var(--line); font-size:13.5px;}
+  .subrow:first-of-type{border-top:none;}
+  .subrow a{color:var(--text); text-decoration:none;}
+  .subrow a:hover{color:var(--gold);}
+  .subrow .n{color:var(--text-dim); font-size:12px;}
+  .note{font-size:12px; color:var(--text-dim); margin-top:6px;}
+  .legend{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px;}
+  .legend span{font-size:11px; border:1px solid var(--line); border-radius:10px; padding:2px 8px; color:var(--text-dim);}
+  footer.note{padding:24px 0; color:var(--text-dim); font-size:11px; text-align:center; border-top:1px solid var(--line); margin-top:32px;}
+  a{color:var(--gold);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <h1>SAI Assistant Director — Interview Preparation</h1>
+    <div class="sub">A self-contained study system for the SAI/MYAS Assistant Director deputation process —
+      reference material, a narrative learning artifact, full audio narration, and a recall/quiz layer.</div>
+    <hr class="rule">
+  </header>
+
+  <!-- ===================== LEARN ===================== -->
+  <section>
+    <h2>Learn</h2>
+    <div class="grid">
+      <div class="card">
+        <a class="rowlink" href="10-handbook/index.html">
+          <div class="t">Visual Systems Handbook</div>
+          <div class="d">The SAI–MYAS institutional architecture as a structured visual reference — governance layers, divisions, and schemes in one navigable handbook.</div>
+        </a>
+      </div>
+      <div class="card">
+        <a class="rowlink" href="11-story/index.html">
+          <div class="t">The Long Run — Story / Narrative</div>
+          <div class="d">A 13-chapter interactive narrative (fictional athlete + Assistant Director threads) that walks the same institutional material through scenes instead of a reference list. Characters are fictional; institutions are real and source-tagged.</div>
+        </a>
+      </div>
+      <div class="card">
+        <a class="rowlink" href="09-audio/index.html">
+          <div class="t">Full Story Audio <span class="chip">25:33</span></div>
+          <div class="d">The entire 13-chapter narrative as one continuous narrated audiobook, plus the original per-module Listening Room player. Chapter timestamp index included.</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WATCH ===================== -->
+  <section>
+    <h2>Watch — Animated Chapters</h2>
+    <div class="card">
+      <div class="d" style="margin-bottom:10px;">
+        12 of the story's 13 narrative units have been produced as short painterly/illustrated animated
+        chapters (~22.6 minutes total). The prologue chapter, <b>"The Cast &amp; The Map,"</b> is a
+        cast/reference section rather than a narrative scene and was intentionally not produced as video —
+        it's covered in the Full Story Audio above instead.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="t">Chapter 1 — A Time at the District Meet <span class="chip">1:50</span></div>
+      <video controls preload="none" poster="">
+        <source src="video/ch1/chapter_01.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="card">
+      <div class="t">Chapter 1B — The Other Door <span class="chip">2:15</span></div>
+      <video controls preload="none"><source src="video/ch1b/chapter_1b.mp4" type="video/mp4"></video>
+    </div>
+    <div class="card">
+      <div class="t">Chapter 2 — Selection <span class="chip">2:12</span></div>
+      <video controls preload="none"><source src="video/ch2/chapter_02.mp4" type="video/mp4"></video>
+    </div>
+    <div class="card">
+      <div class="t">Chapter 3 — The Centre <span class="chip">1:30</span></div>
+      <video controls preload="none"><source src="video/ch3/chapter_03.mp4" type="video/mp4"></video>
+    </div>
+    <div class="card">
+      <div class="t">Chapter 4 — The ₹50 Lakh Problem <span class="chip">2:09</span></div>
+      <video controls preload="none"><source src="video/ch4/chapter_04.mp4" type="video/mp4"></video>
+    </div>
+    <div class="card">
+      <div class="t">Chapter 5 — The Data That Follows You <span class="chip">1:35</span></div>
+      <video controls preload="none"><source src="video/ch5/chapter_05.mp4" type="video/mp4"></video>
+    </div>
+    <div class="card">
+      <div class="t">Chapter 6 — Podium Track <span class="chip">1:18</span></div>
+      <video controls preload="none"><source src="video/ch6/chapter_06.mp4" type="video/mp4"></video>
+    </div>
+    <div class="card">
+      <div class="t">Chapter 7 — A Federation Under Question <span class="chip">2:02</span></div>
+      <video controls preload="none"><source src="video/ch7/chapter_07.mp4" type="video/mp4"></video>
+    </div>
+    <div class="card">
+      <div class="t">Chapter 7B — The Selection That Was Challenged <span class="chip">2:10</span></div>
+      <video controls preload="none"><source src="video/ch7b/chapter_7b.mp4" type="video/mp4"></video>
+    </div>
+    <div class="card">
+      <div class="t">Chapter 8 — Who Is Watching <span class="chip">1:44</span></div>
+      <video controls preload="none"><source src="video/ch8/chapter_08.mp4" type="video/mp4"></video>
+    </div>
+    <div class="card">
+      <div class="t">Chapter 9 — Ritu's Desk <span class="chip">2:05</span></div>
+      <video controls preload="none"><source src="video/ch9/chapter_09.mp4" type="video/mp4"></video>
+    </div>
+    <div class="card">
+      <div class="t">Chapter 10 — The Whole Map <span class="chip">1:48</span></div>
+      <video controls preload="none"><source src="video/ch10/chapter_10.mp4" type="video/mp4"></video>
+      <div class="note">For the full read-along text of every chapter, see the <a href="11-story/index.html">Story</a> section above.</div>
+    </div>
+  </section>
+
+  <!-- ===================== PRACTICE ===================== -->
+  <section>
+    <h2>Practice</h2>
+    <div class="card">
+      <a class="rowlink" href="quiz/index.html">
+        <div class="t">Recall Bench</div>
+        <div class="d">Mobile-first quiz/recall app — Quick 10, Facts, Abbreviations, Divisions, Module Recall,
+          Fact Traps, Weak Areas, Board Pressure, and Explain Aloud modes. No account, no backend.</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===================== REFERENCE ===================== -->
+  <section>
+    <h2>Reference — Modules 0–8</h2>
+    <div class="card">
+      <div class="subrow"><a href="00-interview-blueprint/README.md">Module 0 — Interview Blueprint</a></div>
+      <div class="subrow"><a href="01-sports-governance/institutional-map.md">Module 1 — Sports Governance Architecture</a></div>
+      <div class="subrow"><a href="02-policy/khelo-bharat-niti-2025.md">Module 2 — Khelo Bharat Niti-2025</a></div>
+      <div class="subrow"><a href="03-policy/national-sports-governance-act-2025.md">Module 3 — National Sports Governance Act, 2025</a></div>
+      <div class="subrow"><a href="04-sai/organisation-and-machinery.md">Module 4 — SAI: Organisation &amp; Machinery</a></div>
+      <div class="subrow"><a href="05-sai-schemes/ncoe-stc-tops.md">Module 5 — Talent Pipeline: NCOE, STC, TOPS</a></div>
+      <div class="subrow"><a href="06-sai-annual-report/ar-2023-24-findings.md">Module 6 — SAI Annual Report Findings</a></div>
+      <div class="subrow"><a href="07-oversight/369th-parliamentary-committee.md">Module 7 — 369th Parliamentary Committee</a></div>
+      <details>
+        <summary>Module 8 — Quick-Reference Layer (8 sheets)</summary>
+        <div class="subrow"><a href="08-reference/quick-factsheet.md">Quick Factsheet</a></div>
+        <div class="subrow"><a href="08-reference/interview-fact-traps.md">Interview Fact Traps</a></div>
+        <div class="subrow"><a href="08-reference/interview-numbers.md">Interview Numbers Bank</a></div>
+        <div class="subrow"><a href="08-reference/module-memory-cards.md">Module Memory Cards</a></div>
+        <div class="subrow"><a href="08-reference/sai-divisions-one-line.md">SAI Divisions — One-Line Recall</a></div>
+        <div class="subrow"><a href="08-reference/abbreviations.md">Abbreviation Dictionary</a></div>
+        <div class="subrow"><a href="08-reference/important-persons.md">Important Persons</a></div>
+        <div class="subrow"><a href="08-reference/key-dates.md">Key Dates</a></div>
+      </details>
+      <div class="note">Modules 0–8 are Markdown source files (rendered by GitHub Pages' default processing) —
+        they intentionally use plain formatting rather than the custom interface used elsewhere on this site.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Evidence discipline</h2>
+    <div class="card">
+      <div class="d">Every module, the story, and the handbook use the same source-tagging convention throughout this project:</div>
+      <div class="legend">
+        <span>Official Fact</span><span>Parliamentary</span><span>Independent Evaluation</span>
+        <span>Inference</span><span>Illustrative Scenario</span><span>Fictional (story only)</span>
+      </div>
+      <div class="note">In the story and its animated chapters specifically: characters and invented scenes are
+        fictional; the institutions, rules, figures, and findings they encounter are real and cited at first
+        appearance. Nothing in this repository states an inference or an illustrative scenario as settled fact.</div>
+    </div>
+  </section>
+
+  <footer class="note">
+    SAI Assistant Director deputation interview-preparation project · study material only, independently
+    compiled · not an official SAI/MYAS publication · see <a href="video/PRODUCTION_STATUS.md">video/PRODUCTION_STATUS.md</a> for the current animated-chapter production status.
+  </footer>
+
+</div>
+</body>
+</html>

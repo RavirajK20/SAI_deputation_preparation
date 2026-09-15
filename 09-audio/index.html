@@ -72,6 +72,42 @@
 <body>
 <div id="app">
   <header class="top" id="headerArea"></header>
+
+  <!-- ===== Full-story companion audiobook (static, separate from the Module 0-8
+       Listening Room app below, which reads different content) ===== -->
+  <div class="card" style="margin:16px 18px 0;">
+    <span class="tag">Companion audiobook</span>
+    <div style="font-size:15.5px; font-weight:600; margin-bottom:4px;">Full Story — 25:33</div>
+    <div style="font-size:12.5px; color:var(--text-dim); margin-bottom:10px;">
+      A single, continuous narration of all 13 chapters of "The Long Run" (Arjun's and Ritu's threads,
+      including the 1B and 7B interstitial chapters), read start to finish in the same Kokoro voice.
+    </div>
+    <audio controls style="width:100%;" preload="none">
+      <source src="full_story_narration.mp3" type="audio/mpeg">
+      Your browser does not support the audio element. You can still
+      <a href="full_story_narration.mp3" style="color:var(--gold);">download the file directly</a>.
+    </audio>
+    <details style="margin-top:12px;">
+      <summary style="cursor:pointer; font-size:12.5px; color:var(--gold-dim);">Chapter timestamp index (tap to expand)</summary>
+      <div class="chaplist" style="margin-top:8px;">
+        <div class="chap-row" style="cursor:default;"><div><div class="ct">The Cast &amp; The Map</div><div class="cd">0:00.6 – 1:30.4</div></div></div>
+        <div class="chap-row" style="cursor:default;"><div><div class="ct">Ch 1 — A Time at the District Meet</div><div class="cd">1:32.0 – 3:26.9</div></div></div>
+        <div class="chap-row" style="cursor:default;"><div><div class="ct">Ch 1B — The Other Door</div><div class="cd">3:29.7 – 6:17.1</div></div></div>
+        <div class="chap-row" style="cursor:default;"><div><div class="ct">Ch 2 — Selection</div><div class="cd">6:18.7 – 8:35.4</div></div></div>
+        <div class="chap-row" style="cursor:default;"><div><div class="ct">Ch 3 — The Centre</div><div class="cd">8:37.0 – 10:05.7</div></div></div>
+        <div class="chap-row" style="cursor:default;"><div><div class="ct">Ch 4 — The ₹50 Lakh Problem</div><div class="cd">10:07.3 – 12:20.8</div></div></div>
+        <div class="chap-row" style="cursor:default;"><div><div class="ct">Ch 5 — The Data That Follows You</div><div class="cd">12:22.4 – 13:56.5</div></div></div>
+        <div class="chap-row" style="cursor:default;"><div><div class="ct">Ch 6 — Podium Track</div><div class="cd">13:58.1 – 15:08.3</div></div></div>
+        <div class="chap-row" style="cursor:default;"><div><div class="ct">Ch 7 — A Federation Under Question</div><div class="cd">15:09.9 – 17:14.6</div></div></div>
+        <div class="chap-row" style="cursor:default;"><div><div class="ct">Ch 7B — The Selection That Was Challenged</div><div class="cd">17:17.4 – 19:59.6</div></div></div>
+        <div class="chap-row" style="cursor:default;"><div><div class="ct">Ch 8 — Who Is Watching</div><div class="cd">20:01.2 – 21:38.5</div></div></div>
+        <div class="chap-row" style="cursor:default;"><div><div class="ct">Ch 9 — Ritu's Desk</div><div class="cd">21:40.1 – 23:40.8</div></div></div>
+        <div class="chap-row" style="cursor:default;"><div><div class="ct">Ch 10 — The Whole Map</div><div class="cd">23:42.4 – 25:33.4</div></div></div>
+      </div>
+    </details>
+  </div>
+  <!-- ===== end full-story audiobook block ===== -->
+
   <main id="main"></main>
   <footer class="note">Narration is generated speech (browser voice, varies by device) reading a curated script — it never introduces facts beyond the verified modules. Unresolved items are narrated as unresolved, not guessed.</footer>
 </div>
