@@ -1,0 +1,81 @@
+{
+  "programme_by_record": [
+    {
+      "programme_category": "TOPS",
+      "n_records": 516
+    },
+    {
+      "programme_category": "Cash Award/Medal",
+      "n_records": 192
+    },
+    {
+      "programme_category": "NSDF/Welfare",
+      "n_records": 140
+    },
+    {
+      "programme_category": "NWF/Welfare",
+      "n_records": 84
+    },
+    {
+      "programme_category": "TOPS (PIB batch announcement)",
+      "n_records": 76
+    },
+    {
+      "programme_category": "State Welfare",
+      "n_records": 60
+    },
+    {
+      "programme_category": "SAI Employment",
+      "n_records": 28
+    },
+    {
+      "programme_category": "Elite Training/Coaching",
+      "n_records": 12
+    }
+  ],
+  "programme_by_unique_athlete": [
+    {
+      "programme_category": "TOPS",
+      "n_unique_athletes": 267
+    },
+    {
+      "programme_category": "Cash Award/Medal",
+      "n_unique_athletes": 139
+    },
+    {
+      "programme_category": "NSDF/Welfare",
+      "n_unique_athletes": 138
+    },
+    {
+      "programme_category": "NWF/Welfare",
+      "n_unique_athletes": 80
+    },
+    {
+      "programme_category": "TOPS (PIB batch announcement)",
+      "n_unique_athletes": 76
+    },
+    {
+      "programme_category": "State Welfare",
+      "n_unique_athletes": 58
+    },
+    {
+      "programme_category": "SAI Employment",
+      "n_unique_athletes": 28
+    },
+    {
+      "programme_category": "Elite Training/Coaching",
+      "n_unique_athletes": 12
+    }
+  ],
+  "accounting_stage_counts": {
+    "AMBIGUOUS": 386,
+    "RELEASED_PAID": 318,
+    "CASH_AWARD_OUTCOME_LINKED": 192,
+    "SANCTIONED": 60,
+    "NO_AMOUNT": 76,
+    "NOT_FINANCIAL": 76
+  },
+  "outcome_linked_cash_award_rows": 192,
+  "n_total_support_records": 1108,
+  "source": "stage6_2_support_ecosystem.csv, government_support_accounting_normalized.csv"
+}

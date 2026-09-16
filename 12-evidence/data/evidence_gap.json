@@ -1,0 +1,64 @@
+{
+  "source_note": "Every figure below is read directly from a frozen Stage 6/6B file; none is recomputed.",
+  "register": {
+    "n": 638,
+    "source": "athletes.csv",
+    "label": "Government support register"
+  },
+  "support_records": {
+    "n": 1108,
+    "source": "government_support_accounting_normalized.csv"
+  },
+  "outcome_rows": {
+    "n": 368,
+    "source": "stage6_2_major_games_outcomes.csv (deduplicated)"
+  },
+  "cohort_outcome_coverage": {
+    "n": 60,
+    "of": 75,
+    "source": "major games join against identity_evidence.csv athlete_ids"
+  },
+  "research_cohort": {
+    "n": 75,
+    "source": "athletes.csv:in_75_research_cohort"
+  },
+  "primary_cohort": {
+    "n": 71,
+    "source": "pop_b_primary.csv (75 - REJECTED - NEEDS_REVIEW)"
+  },
+  "identity_status": {
+    "VERIFIED": 0,
+    "PROBABLE": 60,
+    "NO_OLYMPEDIA_COVERAGE": 11,
+    "NEEDS_REVIEW": 3,
+    "REJECTED": 1,
+    "of": 75,
+    "source": "identity_evidence.csv:identity_match_status_stage4"
+  },
+  "dated_support_anchor": {
+    "n": 19,
+    "of": 75,
+    "source": "identity_evidence.csv:has_dated_government_support_anchor"
+  },
+  "explicit_addition": {
+    "n": 2,
+    "of": 75,
+    "source": "identity_evidence.csv:has_explicit_addition_event"
+  },
+  "lag_eligible_pop_c": {
+    "n": 16,
+    "of": 71,
+    "source": "pop_c_lag_eligible.csv"
+  },
+  "actual_date_anchor": {
+    "n": 2,
+    "of": 16,
+    "source": "pop_c_lag_eligible.csv:n_with_actual_date"
+  },
+  "financial_staged_in_lag_eligible": {
+    "n": 0,
+    "of": 16,
+    "source": "6B5_QA_LOG.txt (0 of 16, frozen finding)"
+  },
+  "linkage_statement": "The assembled public records do not establish a common event-level linkage connecting support timing, financial stage, and outcome timing for the same intervention."
+}

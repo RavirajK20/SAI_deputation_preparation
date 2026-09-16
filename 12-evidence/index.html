@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Evidence Architecture — India's Sports Development System</title>
+<style>
+  :root{
+    --bg:#12151A; --surface:#1B2027; --surface2:#20262E; --line:#2E353F;
+    --text:#EDEAE2; --text-dim:#9AA3AD; --text-dimmer:#6E7681;
+    --gold:#C79A3D; --gold-dim:#8E6E2B; --gold-faint:#3A3221;
+    --coverage:#5B7A99; --coverage-dim:#39506A;
+    --radius:4px; --maxw:1080px;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--bg); color:var(--text); font-family:'Source Sans 3','Segoe UI',system-ui,sans-serif;
+       margin:0; padding:0 16px 64px; line-height:1.55;}
+  h1,h2,h3,h4,.tag{font-family:'Barlow Condensed','Arial Narrow',sans-serif;}
+  .wrap{max-width:var(--maxw); margin:0 auto;}
+  a{color:var(--gold);}
+  .rule{border:none; border-top:2px solid var(--gold); width:44px; margin:20px 0 16px;}
+
+  /* ---------- header / nav ---------- */
+  header.top{padding:28px 0 10px;}
+  header.top .backlink{font-size:12px; color:var(--text-dim); text-decoration:none;}
+  header.top h1{font-size:clamp(28px,5vw,42px); margin:10px 0 8px; letter-spacing:0.2px; line-height:1.1;}
+  header.top .sub{color:var(--text-dim); font-size:15px; max-width:640px;}
+  header.top .tension{font-size:clamp(18px,2.6vw,24px); color:var(--text); margin:20px 0; font-style:italic;
+    border-left:2px solid var(--gold); padding-left:16px; max-width:680px; line-height:1.4;}
+
+  nav.sections{position:sticky; top:env(safe-area-inset-top,0px); background:rgba(18,21,26,0.96);
+    backdrop-filter:blur(6px); z-index:50; border-bottom:1px solid var(--line); margin:0 -16px 24px;
+    padding:0 16px;}
+  nav.sections .navwrap{max-width:var(--maxw); margin:0 auto; display:flex; gap:2px; overflow-x:auto;
+    padding:8px 0; scrollbar-width:thin;}
+  nav.sections a{white-space:nowrap; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;
+    color:var(--text-dim); text-decoration:none; padding:6px 10px; border-radius:3px;}
+  nav.sections a:hover, nav.sections a.active{color:var(--gold); background:var(--surface);}
+
+  /* ---------- sections ---------- */
+  section.beat{margin:56px 0; scroll-margin-top:56px;}
+  section.beat > .kicker{font-size:12px; letter-spacing:2px; color:var(--gold-dim); text-transform:uppercase; margin:0 0 6px;}
+  section.beat > h2{font-size:clamp(22px,3.4vw,30px); margin:0 0 14px;}
+  section.beat > .lede{color:var(--text-dim); font-size:15px; max-width:720px; margin-bottom:20px;}
+
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px; margin-bottom:12px;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  @media (max-width:760px){ .grid2,.grid3{grid-template-columns:1fr;} }
+
+  /* the recurring "does/does not establish" caption pattern */
+  .est{margin-top:10px; padding-top:10px; border-top:1px dashed var(--line); font-size:12.5px;}
+  .est .yes{color:var(--text);} .est .yes::before{content:"Establishes: "; color:var(--gold-dim); font-weight:600;}
+  .est .no{color:var(--text-dim); margin-top:4px; display:block;}
+  .est .no::before{content:"Does not establish: "; color:var(--text-dimmer); font-weight:600;}
+
+  .src{font-size:10.5px; color:var(--text-dimmer); margin-top:4px;}
+  .src::before{content:"⟶ source: "; }
+
+  .stat{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;}
+  .stat .n{font-family:'Barlow Condensed',sans-serif; font-size:clamp(30px,5vw,44px); color:var(--gold); line-height:1;}
+  .stat .of{font-size:13px; color:var(--text-dim);}
+  .stat .label{font-size:13px; color:var(--text-dim); width:100%; margin-top:2px;}
+  .denomtag{display:inline-block; font-size:10px; border:1px solid var(--gold-dim); border-radius:8px; padding:1px 7px; color:var(--gold-dim); margin-left:4px;}
+
+  .pullquote{font-family:'Barlow Condensed',sans-serif; font-size:clamp(22px,3.2vw,30px); line-height:1.3;
+    color:var(--text); border-left:3px solid var(--gold); padding:4px 0 4px 18px; margin:16px 0;}
+
+  /* funnel / staircase */
+  .staircase-branch{display:flex; gap:14px;}
+  @media (max-width:700px){ .staircase-branch{flex-direction:column;} }
+  .stepbox{background:var(--surface2); border:1px solid var(--line); border-radius:var(--radius);
+    padding:14px 16px; flex:1; cursor:default;}
+  .stepbox h4{margin:0 0 6px; font-size:15px; color:var(--text);}
+  .stepbox .figs{font-size:13px; color:var(--gold); font-weight:600;}
+  .stepbox .figs .dim{color:var(--text-dim); font-weight:400;}
+  .connector{display:flex; justify-content:center; padding:6px 0; color:var(--text-dimmer); font-size:18px;}
+  .why{max-height:0; overflow:hidden; transition:max-height .25s ease; font-size:12.5px; color:var(--text-dim); margin-top:0;}
+  .stepbox.open .why{max-height:200px; margin-top:8px;}
+  .stepbox .hint{font-size:10.5px; color:var(--gold-dim); margin-top:6px; text-transform:uppercase; letter-spacing:0.4px;}
+
+  /* tables */
+  table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  th{text-align:left; color:var(--gold-dim); font-weight:600; font-size:11px; text-transform:uppercase;
+    letter-spacing:0.4px; padding:8px 10px; border-bottom:1px solid var(--line); cursor:pointer; white-space:nowrap;}
+  th:hover{color:var(--gold);}
+  td{padding:7px 10px; border-bottom:1px solid var(--line); color:var(--text-dim);}
+  td.num{text-align:right; font-variant-numeric:tabular-nums; color:var(--text);}
+  .tablewrap{overflow-x:auto;}
+  @media (max-width:700px){
+    #state-table{display:none;}
+  }
+  .statecard{display:none;}
+  @media (max-width:700px){
+    .statecard{display:block; background:var(--surface2); border:1px solid var(--line); border-radius:var(--radius);
+      padding:10px 14px; margin-bottom:8px; font-size:13px;}
+    .statecard .name{color:var(--text); font-weight:600; margin-bottom:4px;}
+    .statecard .row{display:flex; justify-content:space-between; color:var(--text-dim); font-size:12px;}
+  }
+
+  /* bars */
+  .barrow{margin-bottom:10px;}
+  .barrow .toprow{display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px;}
+  .barrow .toprow .lab{color:var(--text);} .barrow .toprow .val{color:var(--text-dim);}
+  .bartrack{background:var(--surface2); border-radius:3px; height:10px; overflow:hidden;}
+  .barfill{height:100%; background:var(--gold-dim);}
+  .barfill.dev{background:var(--gold);}
+  .barfill.cash{background:var(--coverage);}
+  .barfill.ambiguous{background:repeating-linear-gradient(135deg, var(--text-dimmer), var(--text-dimmer) 3px, transparent 3px, transparent 7px);}
+
+  /* three-way split (A7/MDSD) */
+  .threeway{display:flex; gap:2px; border-radius:var(--radius); overflow:hidden; margin:14px 0;}
+  .threeway > div{padding:14px; text-align:center;}
+  .threeway .a7only{background:var(--surface2); flex:1;}
+  .threeway .overlap{background:var(--gold-faint); flex:1.2; border-left:1px dashed var(--gold-dim); border-right:1px dashed var(--gold-dim);}
+  .threeway .mdsdonly{background:var(--surface2); flex:1;}
+  .threeway .big{font-family:'Barlow Condensed',sans-serif; font-size:28px; color:var(--gold);}
+  .threeway .lbl{font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.4px; margin-top:4px;}
+
+  .collision-btn{background:none; border:1px solid var(--gold-dim); color:var(--gold-dim); border-radius:3px;
+    font-size:12px; padding:6px 12px; cursor:pointer; margin-top:8px;}
+  .collision-btn:hover{color:var(--gold); border-color:var(--gold);}
+  .collision-detail{display:none; margin-top:10px; padding:12px; background:var(--surface2); border-radius:var(--radius); font-size:12.5px;}
+  .collision-detail.show{display:block;}
+  .collision-detail .cand{padding:6px 0; border-top:1px dashed var(--line);}
+  .collision-detail .cand:first-of-type{border-top:none;}
+
+  /* athlete profiles */
+  .profile-tabs{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;}
+  .profile-tab{background:var(--surface2); border:1px solid var(--line); color:var(--text-dim); font-size:12.5px;
+    padding:7px 12px; border-radius:14px; cursor:pointer;}
+  .profile-tab.active{color:var(--gold); border-color:var(--gold-dim); background:var(--gold-faint);}
+  .profile-detail{display:none;}
+  .profile-detail.show{display:block;}
+  .profile-fields{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;}
+  @media (max-width:700px){ .profile-fields{grid-template-columns:1fr;} }
+  .pf{background:var(--surface2); border-radius:var(--radius); padding:10px 12px;}
+  .pf .k{font-size:10.5px; text-transform:uppercase; letter-spacing:0.4px; color:var(--gold-dim); margin-bottom:4px;}
+  .pf .v{font-size:13px; color:var(--text);}
+  .lane{margin-top:10px;}
+  .lane .lanelabel{font-size:11px; color:var(--text-dimmer); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:4px;}
+  .lane.dated .lanelabel{color:var(--gold-dim);}
+  .datebadge{display:inline-block; background:var(--gold-faint); color:var(--gold); border-radius:3px; padding:3px 8px; font-size:11.5px; margin:2px 4px 2px 0;}
+  .undatedbadge{display:inline-block; background:var(--surface); border:1px dashed var(--line); color:var(--text-dimmer); border-radius:3px; padding:3px 8px; font-size:11.5px; margin:2px 4px 2px 0;}
+
+  /* policy question interactive */
+  .pq{border:1px solid var(--line); border-radius:var(--radius); margin-bottom:14px; overflow:hidden;}
+  .pq-q{padding:16px 18px; background:var(--surface); cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:12px;}
+  .pq-q .qtext{font-size:16px; color:var(--text); font-weight:600;}
+  .pq-arrow{color:var(--gold-dim); font-size:13px;}
+  .pq-body{display:none; padding:0 18px 18px; background:var(--surface2);}
+  .pq-body.show{display:block;}
+  .pq-stage{margin-top:14px;}
+  .pq-stage .stagelabel{font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:var(--gold-dim); margin-bottom:8px;}
+  .ing{display:flex; justify-content:space-between; padding:6px 0; border-top:1px dashed var(--line); font-size:13px;}
+  .ing:first-of-type{border-top:none;}
+  .ing .status{font-size:11.5px; padding:2px 8px; border-radius:10px;}
+  .status.substantial{color:var(--gold); border:1px solid var(--gold-dim);}
+  .status.partial{color:var(--coverage); border:1px solid var(--coverage-dim);}
+  .status.inadequate{color:var(--text-dimmer); border:1px dashed var(--line);}
+  .pq-verdict{margin-top:14px; padding:12px 14px; background:var(--bg); border-left:3px solid var(--gold); font-size:14px;}
+  .pq-verdict .vlabel{font-size:10.5px; text-transform:uppercase; color:var(--gold-dim); letter-spacing:0.5px; margin-bottom:4px;}
+  .pq-reveal-btn{font-size:12px; color:var(--gold-dim); background:none; border:none; cursor:pointer; padding:4px 0; text-decoration:underline;}
+
+  /* system map (static diagram) */
+  .sysmap{display:flex; flex-direction:column; gap:8px;}
+  .sysrow{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .sysnode{background:var(--surface2); border:1px solid var(--line); border-radius:3px; padding:8px 12px; font-size:12.5px; color:var(--text);}
+  .sysnode.root{border-color:var(--gold-dim); color:var(--gold);}
+  .sysarrow{color:var(--text-dimmer); font-size:14px;}
+  .sysbranch{border-top:1px dashed var(--line); margin-top:14px; padding-top:14px;}
+  .sysbranch .branchlabel{font-size:11px; color:var(--text-dimmer); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:8px;}
+
+  details.methlink{margin-top:8px;}
+  details.methlink summary{cursor:pointer; color:var(--gold-dim); font-size:13px; padding:6px 0;}
+  .methlist a{display:block; padding:6px 0; border-top:1px dashed var(--line); font-size:13.5px;}
+  .methlist a:first-of-type{border-top:none;}
+
+  footer.note{padding:32px 0 8px; color:var(--text-dimmer); font-size:11px; text-align:center; border-top:1px solid var(--line); margin-top:48px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="backlink" href="../index.html">&larr; SAI Assistant Director — Interview Preparation</a>
+    <h1>Evidence Architecture</h1>
+    <div class="sub">What India's public sports-development records can, and cannot, establish about
+      the relationship between government support and international competitive outcomes — a
+      source-disciplined analytical record, presented for review.</div>
+    <div class="tension">India runs one of the world's largest public athlete-support systems. This
+      is what its public records can establish — and, with equal rigor, what they currently cannot.</div>
+    <hr class="rule">
+  </header>
+
+  <nav class="sections"><div class="navwrap" id="navwrap"></div></nav>
+
+  <!-- ============ 0. FRAME ============ -->
+  <section class="beat" id="s0">
+    <div class="kicker">00 — The Question</div>
+    <h2>What does India's sports-development system need to know about itself?</h2>
+    <div class="lede">Public expenditure, infrastructure sanctions, athlete-support records, and
+      competitive results are all published, separately, by different parts of the system. This
+      project assembled them into one evidence base, under strict source-tier and provenance
+      discipline, and asked one question: how far can that evidence be pushed before it stops being
+      able to answer the question it was built to answer?</div>
+  </section>
+
+  <!-- ============ 1. THE SYSTEM ============ -->
+  <section class="beat" id="s1">
+    <div class="kicker">01 — The System</div>
+    <h2>The institutional architecture</h2>
+    <div class="lede">An orienting diagram, not a data visualization — it has no row-level source
+      file. It exists to let a reader understand the system before seeing any number.</div>
+    <div class="card">
+      <div class="sysmap">
+        <div class="sysrow">
+          <div class="sysnode root">MYAS</div><div class="sysarrow">→</div>
+          <div class="sysnode root">SAI</div><div class="sysarrow">→</div>
+          <div class="sysnode">NCOE / STC / KIC / KISCE</div>
+          <div class="sysnode">TOPS</div>
+          <div class="sysnode">Sports Science</div>
+          <div class="sysnode">IT / Operations</div>
+        </div>
+        <div class="sysrow"><div class="sysarrow" style="margin-left:0;">↓</div></div>
+        <div class="sysrow">
+          <div class="sysnode">Athletes</div><div class="sysarrow">→</div>
+          <div class="sysnode">Competitions</div><div class="sysarrow">→</div>
+          <div class="sysnode">Outcomes</div>
+        </div>
+        <div class="sysbranch">
+          <div class="branchlabel">A separate causal story — not merged with the chain above</div>
+          <div class="sysrow">
+            <div class="sysnode root">State governments</div><div class="sysarrow">→</div>
+            <div class="sysnode">Infrastructure (A7 / MDSD)</div><div class="sysarrow">→</div>
+            <div class="sysnode">Access / environment</div><div class="sysarrow">→</div>
+            <div class="sysnode">Athlete development</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. THE EVIDENCE BASE ============ -->
+  <section class="beat" id="s2">
+    <div class="kicker">02 — The Evidence Base</div>
+    <h2>What was assembled, and how much of it can be analyzed</h2>
+    <div class="lede">The population construction, made visible instead of hidden behind
+      impressive-looking totals. Every number below carries the population it belongs to.</div>
+    <div class="card">
+      <div id="funnel-root"></div>
+      <div class="est"><span class="yes">how many athletes and records exist at each stage of
+        analysis-readiness, and why the analyzable population is much smaller than the full
+        register.</span>
+      <span class="no">that the smaller populations are unrepresentative or low-quality — they are
+        the athletes for whom identity and outcome evidence could be independently checked.</span></div>
+    </div>
+  </section>
+
+  <!-- ============ 3. GOVERNMENT SUPPORT ECOSYSTEM ============ -->
+  <section class="beat" id="s3">
+    <div class="kicker">03 — Government Support Ecosystem</div>
+    <h2>What the 1,108-record support register contains</h2>
+    <div class="lede">Programme composition, and — kept structurally separate — the distinction
+      between developmental support and an outcome-linked cash award for an already-achieved
+      result.</div>
+    <div class="grid2">
+      <div class="card">
+        <h3 style="margin-top:0;font-size:15px;">Programme composition (by record)</h3>
+        <div id="programme-bars"></div>
+        <div class="est"><span class="yes">which programmes generated how many records in the register.</span>
+        <span class="no">nothing about programme effectiveness — record count is not a success signal.</span></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0;font-size:15px;">Accounting stage of every support record</h3>
+        <div id="accounting-bars"></div>
+        <div class="est"><span class="yes">how many records are confirmed sanctioned/released vs. an
+          outcome-linked cash award vs. undetermined.</span>
+        <span class="no">a total "support received" figure — the 386 AMBIGUOUS-stage records are
+          shown, not summed into anything.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. INFRASTRUCTURE ============ -->
+  <section class="beat" id="s4">
+    <div class="kicker">04 — The Infrastructure Record</div>
+    <h2>A7 and MDSD: two overlapping, non-identical registers</h2>
+    <div class="lede">Not one merged historical database. A7 (146 Parliament-reply projects,
+      2015-16 to 2018-19) and MDSD (349 projects, current register from 2017 onward) are bridged by
+      a disclosed heuristic match — never a confirmed one.</div>
+    <div class="card">
+      <div id="a7mdsd-threeway"></div>
+      <div id="collision-demo"></div>
+      <div class="est"><span class="yes">where public infrastructure sanction records exist, and
+        roughly how many overlap across the two registers.</span>
+      <span class="no">which state has "better" infrastructure — raw counts are not normalized for
+        population, need, or existing baseline.</span></div>
+    </div>
+    <h3 style="font-size:16px;margin:24px 0 10px;">State Evidence Ledger</h3>
+    <div class="lede" style="margin-bottom:10px;">Alphabetical by default. Sorting is an exploration
+      tool, not a ranking — re-sorting by count is a deliberate click, never the opening view.</div>
+    <div class="card">
+      <div class="tablewrap">
+        <table id="state-table" class="desktop-only">
+          <thead><tr>
+            <th data-key="state">State / UT</th>
+            <th data-key="support_records">Support records</th>
+            <th data-key="distinct_athletes">Athletes</th>
+            <th data-key="a7_projects_2015_19">A7 projects</th>
+            <th data-key="mdsd_only_projects">MDSD-only</th>
+          </tr></thead>
+          <tbody id="state-tbody"></tbody>
+        </table>
+      </div>
+      <div id="state-cards"></div>
+    </div>
+  </section>
+
+  <!-- ============ 5. ATHLETE EVIDENCE ============ -->
+  <section class="beat" id="s5">
+    <div class="kicker">05 — Athlete Evidence</div>
+    <h2>Six evidence situations, not six success stories</h2>
+    <div class="lede">Curated, not representative — chosen specifically to show the range of
+      evidence quality in the research cohort. Dated evidence and undated evidence are kept in
+      visually separate lanes; an undated support record is never placed on a timeline, even greyed
+      out, because any position on a timeline asserts a date that doesn't exist.</div>
+    <div class="card">
+      <div class="profile-tabs" id="profile-tabs"></div>
+      <div id="profile-details"></div>
+      <div class="est"><span class="yes">the specific, checkable evidence that exists for each
+        athlete, and exactly where it stops.</span>
+      <span class="no">an athlete's full career or an assessment of achievement — six curated cases
+        cannot represent the other 65 cohort athletes, and were not chosen to.</span></div>
+    </div>
+  </section>
+
+  <!-- ============ 6. THE EVIDENCE GAP ============ -->
+  <section class="beat" id="s6">
+    <div class="kicker">06 — The Evidence Gap</div>
+    <h2>Where the chain breaks, and why</h2>
+    <div class="lede">Tap or hover each step for the reason evidence narrows at that point. This
+      diagram carries the module's central argument — every figure traces to a frozen file.</div>
+    <div class="card">
+      <div id="staircase-root"></div>
+      <div class="est"><span class="yes">exactly which population and evidence type narrows at each
+        step, sourced to a specific frozen file.</span>
+      <span class="no">that the system "fails" at any step — each narrowing is a description of
+        current public-data coverage, not a judgment on institutional performance.</span></div>
+    </div>
+  </section>
+
+  <!-- ============ 7. FINDINGS ============ -->
+  <section class="beat" id="s7">
+    <div class="kicker">07 — The Analytical Test</div>
+    <h2>What happened when the frozen rules were actually applied</h2>
+    <div class="card" id="finding-b"></div>
+    <div class="card" id="finding-c"></div>
+    <div class="card">
+      <div class="pullquote">Even where a co-occurrence had been confirmed, it would be confounded:
+        athletes already on a medal-contending track are more likely to receive TOPS-family support
+        in the first place. Nothing in this evidence base can separate "support contributed to the
+        outcome" from "the athlete was already on a trajectory that attracted both."</div>
+    </div>
+  </section>
+
+  <!-- ============ 8. POLICY QUESTION → EVIDENCE → ANSWERABILITY ============ -->
+  <section class="beat" id="s8">
+    <div class="kicker">08 — The Answerability Matrix</div>
+    <h2>Policy question → evidence available → answerability</h2>
+    <div class="lede">Click a question to see what it would need, what the evidence base actually
+      has, and the resulting verdict — the same reasoning this whole project used, made
+      interactive.</div>
+    <div id="pq-root"></div>
+  </section>
+
+  <!-- ============ 9. EVIDENCE ARCHITECTURE RECOMMENDATIONS ============ -->
+  <section class="beat" id="s9">
+    <div class="kicker">09 — The Data Architecture Insight</div>
+    <h2>What would make the next question answerable</h2>
+    <div class="lede">General data-design principles only — never a claim about what SAI's or
+      MYAS's actual internal (non-public) systems contain, since no authoritative source in this
+      evidence base establishes that.</div>
+    <div class="grid2">
+      <div class="card">
+        <h3 style="margin-top:0;font-size:15px;">A record that captured…</h3>
+        <ul style="font-size:13.5px; color:var(--text-dim); padding-left:18px; line-height:1.8;">
+          <li>An actual disbursement <b style="color:var(--text)">date</b>, not only a snapshot-export
+            date, would make timing analysis possible.</li>
+          <li>A <b style="color:var(--text)">shared identifier</b> across infrastructure registers
+            would remove the need for heuristic text-matching.</li>
+          <li>A consistent <b style="color:var(--text)">accounting stage</b> field at the point of
+            data publication would remove the 35% currently left AMBIGUOUS.</li>
+          <li>A <b style="color:var(--text)">common event-level key</b> linking a support record, its
+            financial stage, and a competitive outcome for the same intervention would make
+            longitudinal analysis possible for the first time.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0;font-size:15px;">Current vs. desired architecture</h3>
+        <div class="stepbox" style="margin-bottom:8px;"><h4>Current public evidence</h4>
+          <div class="figs dim">Fragmented, cross-sectional, snapshot-dated records across
+            independently-published sources.</div></div>
+        <div class="connector">↓</div>
+        <div class="stepbox"><h4>Desired analytical architecture</h4>
+          <div class="figs dim">Longitudinal, linked records with persistent identifiers and
+            provenance preserved at every stage: enrolment → support → financial stage → training/
+            competition exposure → outcome.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10. METHODOLOGY / EVIDENCE LEDGER ============ -->
+  <section class="beat" id="s10">
+    <div class="kicker">10 — Evidence Ledger</div>
+    <h2>Full methodology, provenance, and known limitations</h2>
+    <div class="lede">For a reviewer who wants to go deep. Every document below is the frozen
+      analytical record this presentation is built from — reproduced here, not paraphrased.</div>
+    <div class="card">
+      <div class="methlist">
+        <a href="methodology/STAGE6_3_6A_ANALYTICAL_DESIGN_SPEC.md">Analytical Design Specification — populations, variables, exclusions, denominators</a>
+        <a href="methodology/TEMPORAL_MODEL.md">Temporal Model — lag rules, and the corrected inequality direction</a>
+        <a href="methodology/STAGE6_3_NORMALIZATION_REPORT.md">Normalization Report — state crosswalk, accounting stages, A7/MDSD reconciliation</a>
+        <a href="methodology/STAGE6_2_DESCRIPTIVE_REPORT.md">Descriptive Evidence Audit — full population/outcome/chronology tables</a>
+        <a href="methodology/6B6_ANALYTICAL_VALIDITY_AUDIT.md">Analytical Validity Audit — coverage limits, corrections, confounds</a>
+        <a href="methodology/6B_ACCEPTANCE_AND_PERMANENT_CAVEATS.md">Permanent Caveats — required framing for every headline finding</a>
+        <a href="methodology/STAGE7_FINAL_ARCHITECTURE.md">This presentation's own frozen design architecture</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="note">
+    Evidence-architecture presentation module · part of the SAI Assistant Director
+    interview-preparation project · independently compiled, not an official SAI/MYAS publication ·
+    every figure traces to a frozen file under <code>methodology/</code>.
+  </footer>
+
+</div>
+
+<script>
+const SECTIONS = [
+  ["s0","The Question"],["s1","The System"],["s2","The Evidence"],["s3","Support"],
+  ["s4","Infrastructure"],["s5","Athletes"],["s6","The Gap"],["s7","Findings"],
+  ["s8","Answerability"],["s9","Architecture"],["s10","Ledger"],
+];
+document.getElementById("navwrap").innerHTML = SECTIONS.map(([id,label]) =>
+  `<a href="#${id}" data-id="${id}">${label}</a>`).join("");
+
+async function loadJSON(name){
+  const res = await fetch(`data/${name}`);
+  return res.json();
+}
+
+function fmt(n){ return n.toLocaleString("en-IN"); }
+
+// ---------------- §2 / §6 : funnel + staircase (share evidence_gap.json) ----------------
+function renderFunnel(d){
+  const el = document.getElementById("funnel-root");
+  const rows = [
+    ["Government support register", d.register.n, null, d.register.source],
+    ["Support records", d.support_records.n, null, d.support_records.source],
+    ["Deduplicated major-games outcome rows", d.outcome_rows.n, null, d.outcome_rows.source],
+    ["Research cohort", d.research_cohort.n, 638, d.research_cohort.source],
+    ["Primary cohort (analysis-eligible)", d.primary_cohort.n, 638, d.primary_cohort.source],
+    ["Lag-eligible population (Pop-C)", d.lag_eligible_pop_c.n, d.lag_eligible_pop_c.of, d.lag_eligible_pop_c.source],
+    ["…with an actual-date anchor", d.actual_date_anchor.n, d.actual_date_anchor.of, d.actual_date_anchor.source],
+  ];
+  el.innerHTML = rows.map(([label,n,of,src]) => `
+    <div class="stat">
+      <span class="n">${fmt(n)}</span>${of ? `<span class="of">of ${fmt(of)}</span>` : ""}
+      <span class="label">${label}${of ? `<span class="denomtag">${((n/of)*100).toFixed(1)}%</span>` : ""}</span>
+    </div>
+    <div class="src">${src}</div><div style="height:14px"></div>
+  `).join("");
+}
+
+function renderStaircase(d){
+  const el = document.getElementById("staircase-root");
+  el.innerHTML = `
+    <div class="staircase-branch">
+      <div class="stepbox" data-why="Full register. Every one of these 638 athletes has at least one government support record.">
+        <h4>Government support</h4>
+        <div class="figs">${fmt(d.support_records.n)} records <span class="dim">· ${fmt(d.register.n)} athletes</span></div>
+        <div class="hint">tap for why ▾</div><div class="why"></div>
+      </div>
+      <div class="stepbox" data-why="Deduplicated, source-tiered outcome records. Only 60 of the 75 cohort athletes have at least one recovered outcome row — the other 15 are missing data, never coded as 'no medal'.">
+        <h4>Competition outcomes</h4>
+        <div class="figs">${fmt(d.outcome_rows.n)} rows <span class="dim">· ${d.cohort_outcome_coverage.n}/${d.cohort_outcome_coverage.of} cohort athletes with ≥1</span></div>
+        <div class="hint">tap for why ▾</div><div class="why"></div>
+      </div>
+    </div>
+    <div class="connector">↓</div>
+    <div class="stepbox" data-why="Only the 75-athlete cohort has any Stage 3-5 identity/outcome work at all; 71 remain after excluding REJECTED and NEEDS_REVIEW identity matches. 0 of 75 are VERIFIED, because no government DOB exists to independently cross-check against — 60 are PROBABLE, a lower but stated confidence.">
+      <h4>Research / identity evidence</h4>
+      <div class="figs">${d.research_cohort.n}-person research cohort <span class="dim">→ ${d.primary_cohort.n}-person primary cohort</span></div>
+      <div class="figs dim">${d.identity_status.VERIFIED}/75 VERIFIED · ${d.identity_status.PROBABLE}/75 PROBABLE</div>
+      <div class="hint">tap for why ▾</div><div class="why"></div>
+    </div>
+    <div class="connector">↓</div>
+    <div class="stepbox" data-why="A dated anchor confirms support existed on a real date, but 56 of 75 cohort athletes have only a dataset publication (snapshot) date, which is never treated as an intervention date. 0 of 75 have a documented first-ever support date.">
+      <h4>Support timing</h4>
+      <div class="figs">${d.dated_support_anchor.n}/75 have any dated support anchor <span class="dim">· 0/75 have a first-ever-support date</span></div>
+      <div class="hint">tap for why ▾</div><div class="why"></div>
+    </div>
+    <div class="connector">↓</div>
+    <div class="stepbox" data-why="Pop-C: primary-cohort athletes with both a lag-eligible dated support anchor and a major-games outcome. This is the entire population any lagged-association test can run on.">
+      <h4>Lag-eligible population</h4>
+      <div class="figs">${d.lag_eligible_pop_c.n}/${d.lag_eligible_pop_c.of}</div>
+      <div class="hint">tap for why ▾</div><div class="why"></div>
+    </div>
+    <div class="connector">↓</div>
+    <div class="stepbox" data-why="Of the 16 lag-eligible athletes, only 2 have a genuine dated anchor (not just an upper bound) — and for both, the dated anchor is a later re-addition event that postdates their major-games results.">
+      <h4>Actual-date anchors</h4>
+      <div class="figs">${d.actual_date_anchor.n}/${d.actual_date_anchor.of}</div>
+      <div class="hint">tap for why ▾</div><div class="why"></div>
+    </div>
+    <div class="connector">↓</div>
+    <div class="stepbox" data-why="${d.financial_staged_in_lag_eligible.n} of ${d.financial_staged_in_lag_eligible.of} lag-eligible athletes' dated support anchors carry a determined financial stage (SANCTIONED/RELEASED_PAID) — all 16 are NOT_FINANCIAL administrative/induction events instead.">
+      <h4>Financial timing</h4>
+      <div class="figs">${d.financial_staged_in_lag_eligible.n}/${d.financial_staged_in_lag_eligible.of} lag-eligible athletes have a financially-staged dated anchor</div>
+      <div class="hint">tap for why ▾</div><div class="why"></div>
+    </div>
+    <div class="connector">↓</div>
+    <div class="stepbox" data-why="${d.linkage_statement}">
+      <h4>Longitudinal / financial linkage</h4>
+      <div class="figs dim">Not established from the assembled evidence</div>
+      <div class="hint">tap for why ▾</div><div class="why"></div>
+    </div>
+    <div class="connector">↓</div>
+    <div class="stepbox" data-why="No design in this project claims to estimate a causal effect. This step is included to show where the chain would need to continue, not because any attempt was made.">
+      <h4>Causal estimation</h4>
+      <div class="figs dim">Not attempted</div>
+      <div class="hint">tap for why ▾</div><div class="why"></div>
+    </div>
+  `;
+  el.querySelectorAll(".stepbox").forEach(box => {
+    box.addEventListener("click", () => {
+      const open = box.classList.contains("open");
+      el.querySelectorAll(".stepbox").forEach(b => { b.classList.remove("open"); b.querySelector(".why").textContent = ""; });
+      if(!open){ box.classList.add("open"); box.querySelector(".why").textContent = box.dataset.why; }
+    });
+  });
+}
+
+// ---------------- §3 : support ecosystem ----------------
+function renderSupportEcosystem(d){
+  const progEl = document.getElementById("programme-bars");
+  const maxRec = Math.max(...d.programme_by_record.map(r=>r.n_records));
+  progEl.innerHTML = d.programme_by_record.map(r => `
+    <div class="barrow">
+      <div class="toprow"><span class="lab">${r.programme_category}</span><span class="val">${fmt(r.n_records)}</span></div>
+      <div class="bartrack"><div class="barfill" style="width:${(r.n_records/maxRec*100).toFixed(1)}%"></div></div>
+    </div>`).join("");
+
+  const acEl = document.getElementById("accounting-bars");
+  const stages = [
+    ["RELEASED_PAID","dev"], ["SANCTIONED","dev"], ["CASH_AWARD_OUTCOME_LINKED","cash"],
+    ["AMBIGUOUS","ambiguous"], ["NOT_FINANCIAL","ambiguous"], ["NO_AMOUNT","ambiguous"],
+  ];
+  const total = d.n_total_support_records;
+  acEl.innerHTML = stages.map(([k,cls]) => {
+    const n = d.accounting_stage_counts[k] || 0;
+    return `<div class="barrow">
+      <div class="toprow"><span class="lab">${k.replace(/_/g," ")}</span><span class="val">${fmt(n)} / ${fmt(total)}</span></div>
+      <div class="bartrack"><div class="barfill ${cls}" style="width:${(n/total*100).toFixed(1)}%"></div></div>
+    </div>`;
+  }).join("") + `<div class="src" style="margin-top:8px;">${d.outcome_linked_cash_award_rows} rows are outcome-linked cash awards — structurally isolated, never counted as developmental support. · ${d.source}</div>`;
+}
+
+// ---------------- §4 : infrastructure ----------------
+function renderA7Mdsd(d){
+  const c = d.match_confidence_counts;
+  document.getElementById("a7mdsd-threeway").innerHTML = `
+    <div class="threeway">
+      <div class="a7only"><div class="big">${d.n_a7_total - c.HIGH - c.MEDIUM - c.LOW}</div><div class="lbl">A7-only (no match found)</div></div>
+      <div class="overlap"><div class="big">${c.HIGH}</div><div class="lbl">HIGH-confidence heuristic match</div>
+        <div style="font-size:10.5px;color:var(--text-dimmer);margin-top:2px;">+ ${c.MEDIUM} MEDIUM, ${c.LOW} LOW candidate(s) — not treated as confirmed</div></div>
+      <div class="mdsdonly"><div class="big">${d.n_mdsd_total_from_infra_access - c.HIGH}</div><div class="lbl">MDSD-only / candidate</div></div>
+    </div>
+    <button class="collision-btn" id="collision-toggle">Why isn't a HIGH match "confirmed"? — see a real case</button>
+    <div class="collision-detail" id="collision-body"></div>
+  `;
+  const collision = d.collision_cases[0];
+  document.getElementById("collision-body").innerHTML = `
+    <div style="color:var(--text);margin-bottom:6px;">MDSD project #${collision.mdsd_serial_number}: <i>${collision.mdsd_project}</i></div>
+    <div style="color:var(--text-dim);margin-bottom:8px;">Two different A7 rows both scored a HIGH match against this same MDSD project — the matching algorithm scores each A7 row independently and does not enforce a one-to-one constraint.</div>
+    ${collision.candidates.map(c => `<div class="cand"><b style="color:var(--text)">A7 #${c.a7_sl_no}</b> (${c.a7_year}, score ${c.match_score}): ${c.a7_project}</div>`).join("")}
+    <div class="src" style="margin-top:8px;">The higher-scoring candidate is very likely correct; the lower-scoring one is very likely a false match reusing the same target. Neither is treated as confirmed without this check.</div>
+  `;
+  document.getElementById("collision-toggle").addEventListener("click", () => {
+    document.getElementById("collision-body").classList.toggle("show");
+  });
+}
+
+function renderStateLedger(d){
+  let states = d.states.slice();
+  let sortKey = "state", sortDir = 1;
+  function draw(){
+    const tbody = document.getElementById("state-tbody");
+    tbody.innerHTML = states.map(s => `<tr>
+      <td>${s.state}</td><td class="num">${fmt(s.support_records)}</td><td class="num">${fmt(s.distinct_athletes)}</td>
+      <td class="num">${fmt(s.a7_projects_2015_19)}</td><td class="num">${fmt(s.mdsd_only_projects)}</td></tr>`).join("");
+    const cardsEl = document.getElementById("state-cards");
+    cardsEl.innerHTML = states.map(s => `<div class="statecard">
+      <div class="name">${s.state}</div>
+      <div class="row"><span>Support records</span><span>${fmt(s.support_records)}</span></div>
+      <div class="row"><span>Athletes</span><span>${fmt(s.distinct_athletes)}</span></div>
+      <div class="row"><span>A7 projects</span><span>${fmt(s.a7_projects_2015_19)}</span></div>
+      <div class="row"><span>MDSD-only</span><span>${fmt(s.mdsd_only_projects)}</span></div>
+    </div>`).join("");
+  }
+  draw();
+  document.getElementById("state-table").classList.add("desktop-only");
+  document.querySelectorAll("#state-table th").forEach(th => {
+    th.addEventListener("click", () => {
+      const key = th.dataset.key;
+      sortDir = (sortKey === key) ? -sortDir : 1;
+      sortKey = key;
+      states.sort((a,b) => {
+        const av = a[key], bv = b[key];
+        if(typeof av === "string") return av.localeCompare(bv) * sortDir;
+        return (av - bv) * sortDir;
+      });
+      draw();
+    });
+  });
+}
+
+// ---------------- §5 : athlete profiles ----------------
+function renderProfiles(d){
+  const tabsEl = document.getElementById("profile-tabs");
+  const detailEl = document.getElementById("profile-details");
+  tabsEl.innerHTML = d.profiles.map((p,i) => `<div class="profile-tab${i===0?" active":""}" data-i="${i}">${p.canonical_name}</div>`).join("");
+  function draw(i){
+    const p = d.profiles[i];
+    const datedHtml = p.dated_support_records.length
+      ? p.dated_support_records.map(r => `<span class="datebadge">${r.record_date} · ${r.programme_source_id.replace(/_/g," ")}</span>`).join("")
+      : `<span class="undatedbadge">no genuinely dated support record</span>`;
+    detailEl.innerHTML = `
+      <div class="profile-detail show">
+        <div style="font-size:13px;color:var(--gold-dim);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.4px;">${p.evidence_situation}</div>
+        <div class="profile-fields">
+          <div class="pf"><div class="k">Identity</div><div class="v">${p.identity_match_status_stage4} — ${p.identity_verification_basis}</div></div>
+          <div class="pf"><div class="k">Government evidence</div><div class="v">${p.n_government_support_records} support record(s)</div></div>
+          <div class="pf"><div class="k">Outcome evidence</div><div class="v">${p.n_major_games_outcome_rows} major-games row(s) of ${p.n_total_outcome_rows_all_tiers} total outcome row(s)${p.n_tier1_corroborated_rows ? `, ${p.n_tier1_corroborated_rows} independently Tier-1 corroborated` : ""}</div></div>
+          <div class="pf"><div class="k">Chronology status</div><div class="v">${p.chronology_status.replace(/_/g," ")}</div></div>
+        </div>
+        <div class="lane dated"><div class="lanelabel">Dated evidence (genuine date only)</div>${datedHtml}</div>
+        <div class="lane"><div class="lanelabel">Undated evidence shelf (${p.n_undated_support_records} record(s) — snapshot-dated, no position implied)</div>
+          ${p.n_undated_support_records ? `<span class="undatedbadge">${p.n_undated_support_records} snapshot-only record(s)</span>` : "none"}</div>
+        ${p.sample_outcomes.length ? `<div class="lane"><div class="lanelabel">Sample outcomes</div>${p.sample_outcomes.map(o=>`<span class="datebadge">${o.outcome_year} · ${o.competition_type}${o.medal?" · "+o.medal:""}</span>`).join("")}</div>` : ""}
+      </div>`;
+  }
+  draw(0);
+  tabsEl.querySelectorAll(".profile-tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabsEl.querySelectorAll(".profile-tab").forEach(t=>t.classList.remove("active"));
+      tab.classList.add("active");
+      draw(+tab.dataset.i);
+    });
+  });
+}
+
+// ---------------- §7 : findings ----------------
+function renderFindings(d){
+  const b = d.lag_result, c = d.financial_relationship;
+  document.getElementById("finding-b").innerHTML = `
+    <div class="kicker" style="margin-bottom:4px;">Finding B</div>
+    <div class="pullquote">0 / ${b.of_pop_c} confirmed within-window co-occurrences, at +1, +3, and +5 years.</div>
+    <p style="font-size:14px;color:var(--text-dim);">${b.required_framing}</p>
+    <div class="est"><span class="yes">that only ${b.mechanism.n_with_actual_date_anchor} of ${b.of_pop_c} lag-eligible athletes have a genuine dated
+      anchor at all — and for both, that anchor is a later re-addition event postdating their
+      results, not a first-support date.</span>
+    <span class="no">that government support was followed by no outcomes.</span></div>
+    <div class="src">${b.source}</div>`;
+  document.getElementById("finding-c").innerHTML = `
+    <div class="kicker" style="margin-bottom:4px;">Finding C</div>
+    <div class="pullquote">${c.n_eligible_financial_rows_in_pop_c} of ${c.of_pop_c_dated_rows} lag-eligible athletes' dated support anchors carry a
+      financial stage.</div>
+    <p style="font-size:14px;color:var(--text-dim);"><b style="color:var(--text)">${c.verdict}</b><br>${c.reason}</p>
+    <div class="est"><span class="yes">that the athletes for whom this project has a genuine timing record are,
+      in this dataset, never the same athletes for whom it has a determined financial stage.</span>
+    <span class="no">that government support has no financial effect — this is a data-linkage
+      finding, not a null-effect finding.</span></div>
+    <div class="src">${c.source}</div>`;
+}
+
+// ---------------- §8 : policy questions ----------------
+const POLICY_QUESTIONS = [
+  { q: "What can the available evidence tell us about the relationship between government sports support and international competitive outcomes?",
+    need: ["Athlete identity linkage","Support timing","Outcome timing","Comparable population"],
+    have: [["substantial","Descriptive evidence: 1,108 records, 638 athletes"], ["inadequate","Only 19/75 cohort athletes have any dated anchor"],
+           ["substantial","368 deduplicated major-games outcome rows"], ["partial","11.1% of the register is cohort-linked"]],
+    verdict: "Descriptive evidence exists; temporal/causal answerability is severely constrained." },
+  { q: "Does earlier athlete support precede competitive outcomes?",
+    need: ["A genuine support start date","A genuine outcome date","A population where both exist"],
+    have: [["inadequate","0/75 have a documented first-ever support date"], ["substantial","368 deduplicated, source-tiered outcome rows"],
+           ["inadequate","Only 2/16 lag-eligible athletes have an actual-date anchor"]],
+    verdict: "Not currently estimable in a generalizable way." },
+  { q: "Does financially-timed support associate with outcome timing?",
+    need: ["A dated support record","...that also carries a determined financial stage","An outcome to compare against"],
+    have: [["inadequate","19/75 have any dated anchor"], ["inadequate","0/16 lag-eligible athletes' dated anchors are financially staged"],
+           ["substantial","Outcome data exists"]],
+    verdict: "Not currently estimable." },
+  { q: "Is infrastructure investment associated with where athletes originate?",
+    need: ["Reconciled infrastructure locations","Athlete origin/state data","A defensible comparison, not just two charts side by side"],
+    have: [["partial","A7/MDSD reconciled, heuristic matching, disclosed limitations"], ["substantial","582 CANONICAL-state support records, 341 athletes"],
+           ["inadequate","No normalization for population, need, or baseline exists in this evidence base"]],
+    verdict: "Answerable only as a purely descriptive juxtaposition — not as an association claim." },
+];
+function renderPolicyQuestions(){
+  const root = document.getElementById("pq-root");
+  root.innerHTML = POLICY_QUESTIONS.map((pq,i) => `
+    <div class="pq" id="pq-${i}">
+      <div class="pq-q" data-i="${i}"><span class="qtext">${pq.q}</span><span class="pq-arrow">▾</span></div>
+      <div class="pq-body">
+        <button class="pq-reveal-btn" data-step="need" data-i="${i}">What do we need to answer this? →</button>
+        <div class="pq-stage" data-stage="need" data-i="${i}" style="display:none;">
+          <div class="stagelabel">What we need</div>
+          ${pq.need.map(n => `<div class="ing">${n}</div>`).join("")}
+          <button class="pq-reveal-btn" data-step="have" data-i="${i}">What do we actually have? →</button>
+        </div>
+        <div class="pq-stage" data-stage="have" data-i="${i}" style="display:none;">
+          <div class="stagelabel">What we have</div>
+          ${pq.have.map(([status,text]) => `<div class="ing"><span>${text}</span><span class="status ${status}">${status}</span></div>`).join("")}
+        </div>
+        <div class="pq-verdict" data-stage="verdict" data-i="${i}" style="display:none;">
+          <div class="vlabel">Answerability</div>${pq.verdict}
+        </div>
+      </div>
+    </div>`).join("");
+
+  root.querySelectorAll(".pq-q").forEach(el => el.addEventListener("click", () => {
+    const body = el.nextElementSibling;
+    body.classList.toggle("show");
+  }));
+  root.querySelectorAll(".pq-reveal-btn").forEach(btn => btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const i = btn.dataset.i, step = btn.dataset.step;
+    document.querySelector(`.pq-stage[data-stage="${step}"][data-i="${i}"]`).style.display = "block";
+    btn.style.display = "none";
+    if(step === "have"){
+      setTimeout(() => { document.querySelector(`.pq-verdict[data-i="${i}"]`).style.display = "block"; }, 150);
+    }
+  }));
+}
+
+// ---------------- boot ----------------
+(async function(){
+  const [gap, support, states, a7mdsd, findings, profiles] = await Promise.all([
+    loadJSON("evidence_gap.json"), loadJSON("support_ecosystem.json"), loadJSON("state_ledger.json"),
+    loadJSON("a7_mdsd.json"), loadJSON("findings.json"), loadJSON("athlete_profiles.json"),
+  ]);
+  renderFunnel(gap);
+  renderStaircase(gap);
+  renderSupportEcosystem(support);
+  renderA7Mdsd(a7mdsd);
+  renderStateLedger(states);
+  renderProfiles(profiles);
+  renderFindings(findings);
+  renderPolicyQuestions();
+
+  // scroll-spy nav
+  const links = document.querySelectorAll("nav.sections a");
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        links.forEach(l => l.classList.remove("active"));
+        document.querySelector(`nav.sections a[data-id="${e.target.id}"]`)?.classList.add("active");
+      }
+    });
+  }, {rootMargin: "-20% 0px -70% 0px"});
+  document.querySelectorAll("section.beat").forEach(s => obs.observe(s));
+})();
+</script>
+</body>
+</html>

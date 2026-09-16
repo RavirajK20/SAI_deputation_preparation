@@ -1,0 +1,220 @@
+{
+  "profiles": [
+    {
+      "athlete_id": "ATH-0330",
+      "canonical_name": "Rubina Francis",
+      "evidence_situation": "Strong multi-source (independent Tier-1 corroboration)",
+      "identity_match_status_stage4": "PROBABLE",
+      "identity_verification_basis": "UPDATED via Stage 5B (Wikipedia cross-check, not Olympedia): Para Shooting (10m air pistol SH1) -- discipline matches government record exactly; includes a 2024 Paris PARALYMPIC GAMES BRONZE medal plu",
+      "chronology_status": "SNAPSHOT_ONLY_NO_GENUINE_DATE",
+      "n_government_support_records": 2,
+      "dated_support_records": [],
+      "n_undated_support_records": 2,
+      "n_major_games_outcome_rows": 2,
+      "n_total_outcome_rows_all_tiers": 2,
+      "n_tier1_corroborated_rows": 1,
+      "sample_outcomes": [
+        {
+          "outcome_year": "2024",
+          "competition_type": "Paralympics",
+          "medal": "Bronze"
+        },
+        {
+          "outcome_year": "2022",
+          "competition_type": "Asian Para Games",
+          "medal": "Bronze"
+        }
+      ]
+    },
+    {
+      "athlete_id": "ATH-0227",
+      "canonical_name": "Atanu Das",
+      "evidence_situation": "Dated support anchor, but not a first-support date",
+      "identity_match_status_stage4": "PROBABLE",
+      "identity_verification_basis": "DRAFT: discipline agrees (government: Archery; Olympedia: Archery; Individual, Recurve, Boys (YOG); Team, Recurve, Mixed Youth (YOG); Archery; Individual, Rec) but no government DOB available to indep",
+      "chronology_status": "DATED_ANCHOR",
+      "n_government_support_records": 4,
+      "dated_support_records": [
+        {
+          "programme_source_id": "pib_batch_release",
+          "date_type": "EXPLICIT_ADDITION",
+          "record_date": "2023-05-11",
+          "accounting_stage": "NOT_FINANCIAL"
+        }
+      ],
+      "n_undated_support_records": 3,
+      "n_major_games_outcome_rows": 9,
+      "n_total_outcome_rows_all_tiers": 25,
+      "n_tier1_corroborated_rows": 0,
+      "sample_outcomes": [
+        {
+          "outcome_year": "2010",
+          "competition_type": "Youth Olympics",
+          "medal": ""
+        },
+        {
+          "outcome_year": "2010",
+          "competition_type": "Youth Olympics",
+          "medal": ""
+        },
+        {
+          "outcome_year": "2010",
+          "competition_type": "Youth Olympics",
+          "medal": ""
+        },
+        {
+          "outcome_year": "2016",
+          "competition_type": "Olympics",
+          "medal": ""
+        },
+        {
+          "outcome_year": "2016",
+          "competition_type": "Olympics",
+          "medal": ""
+        },
+        {
+          "outcome_year": "2020",
+          "competition_type": "Olympics",
+          "medal": ""
+        }
+      ]
+    },
+    {
+      "athlete_id": "ATH-0228",
+      "canonical_name": "Deepika Kumari",
+      "evidence_situation": "Outcome-rich, chronology weak",
+      "identity_match_status_stage4": "PROBABLE",
+      "identity_verification_basis": "DRAFT: discipline agrees (government: Archery; Olympedia: Archery; Individual, Recurve, Women (Olympic); Team, Recurve, Women (Olympic); Archery; Individual, ) but no government DOB available to indep",
+      "chronology_status": "SNAPSHOT_ONLY_NO_GENUINE_DATE",
+      "n_government_support_records": 3,
+      "dated_support_records": [],
+      "n_undated_support_records": 3,
+      "n_major_games_outcome_rows": 12,
+      "n_total_outcome_rows_all_tiers": 70,
+      "n_tier1_corroborated_rows": 0,
+      "sample_outcomes": [
+        {
+          "outcome_year": "2012",
+          "competition_type": "Olympics",
+          "medal": ""
+        },
+        {
+          "outcome_year": "2012",
+          "competition_type": "Olympics",
+          "medal": ""
+        },
+        {
+          "outcome_year": "2012",
+          "competition_type": "Olympics",
+          "medal": ""
+        },
+        {
+          "outcome_year": "2016",
+          "competition_type": "Olympics",
+          "medal": ""
+        },
+        {
+          "outcome_year": "2016",
+          "competition_type": "Olympics",
+          "medal": ""
+        },
+        {
+          "outcome_year": "2016",
+          "competition_type": "Olympics",
+          "medal": ""
+        }
+      ]
+    },
+    {
+      "athlete_id": "ATH-0326",
+      "canonical_name": "Ajeet Singh",
+      "evidence_situation": "Paralympic/para-sport coverage limitation",
+      "identity_match_status_stage4": "PROBABLE",
+      "identity_verification_basis": "UPDATED via Stage 5B (Wikipedia cross-check, not Olympedia): Para Athletics (Javelin throw F46) -- discipline matches government record exactly; includes a 2024 Paris PARALYMPIC GAMES SILVER medal plu",
+      "chronology_status": "SNAPSHOT_ONLY_NO_GENUINE_DATE",
+      "n_government_support_records": 2,
+      "dated_support_records": [],
+      "n_undated_support_records": 2,
+      "n_major_games_outcome_rows": 2,
+      "n_total_outcome_rows_all_tiers": 7,
+      "n_tier1_corroborated_rows": 0,
+      "sample_outcomes": [
+        {
+          "outcome_year": "2024",
+          "competition_type": "Paralympics",
+          "medal": "Silver"
+        },
+        {
+          "outcome_year": "2022",
+          "competition_type": "Asian Para Games",
+          "medal": "Bronze"
+        }
+      ]
+    },
+    {
+      "athlete_id": "ATH-0205",
+      "canonical_name": "PV Sindhu",
+      "evidence_situation": "Identity/source limitation",
+      "identity_match_status_stage4": "NO_OLYMPEDIA_COVERAGE",
+      "identity_verification_basis": "DRAFT: zero Olympedia search results for this name at all -- likely a genuine source-coverage gap (e.g. Paralympic-only athlete, or recent/lower-profile athlete not yet indexed), not an identity failu",
+      "chronology_status": "SNAPSHOT_ONLY_NO_GENUINE_DATE",
+      "n_government_support_records": 6,
+      "dated_support_records": [],
+      "n_undated_support_records": 6,
+      "n_major_games_outcome_rows": 0,
+      "n_total_outcome_rows_all_tiers": 0,
+      "n_tier1_corroborated_rows": 0,
+      "sample_outcomes": []
+    },
+    {
+      "athlete_id": "ATH-0230",
+      "canonical_name": "Mehuli Ghosh",
+      "evidence_situation": "Government support appears after an established achievement",
+      "identity_match_status_stage4": "PROBABLE",
+      "identity_verification_basis": "DRAFT: discipline agrees (government: Shooting; Olympedia: Shooting; Air Rifle, Team, Mixed Youth (YOG); Air Rifle, Girls (YOG)) but no government DOB available to independently confirm -- one materia",
+      "chronology_status": "DATED_ANCHOR",
+      "n_government_support_records": 5,
+      "dated_support_records": [
+        {
+          "programme_source_id": "pib_batch_release",
+          "date_type": "EXPLICIT_ADDITION",
+          "record_date": "2023-05-11",
+          "accounting_stage": "NOT_FINANCIAL"
+        }
+      ],
+      "n_undated_support_records": 4,
+      "n_major_games_outcome_rows": 5,
+      "n_total_outcome_rows_all_tiers": 17,
+      "n_tier1_corroborated_rows": 0,
+      "sample_outcomes": [
+        {
+          "outcome_year": "2018",
+          "competition_type": "Youth Olympics",
+          "medal": ""
+        },
+        {
+          "outcome_year": "2018",
+          "competition_type": "Youth Olympics",
+          "medal": ""
+        },
+        {
+          "outcome_year": "2018",
+          "competition_type": "Youth Olympics",
+          "medal": "Silver"
+        },
+        {
+          "outcome_year": "2018",
+          "competition_type": "Commonwealth Games",
+          "medal": "Silver"
+        },
+        {
+          "outcome_year": "2022",
+          "competition_type": "Asian Games",
+          "medal": "Silver"
+        }
+      ]
+    }
+  ],
+  "note": "Curated, not representative -- selected to illustrate the range of evidence quality in the research cohort, per STAGE7_FINAL_ARCHITECTURE.md.",
+  "source": "identity_evidence.csv, government_support_accounting_normalized.csv, outcomes.csv, stage6_2_major_games_outcomes.csv"
+}

@@ -1,0 +1,230 @@
+{
+  "states": [
+    {
+      "state": "Andaman and Nicobar Islands",
+      "support_records": 4,
+      "distinct_athletes": 2,
+      "a7_projects_2015_19": 0,
+      "mdsd_only_projects": 0,
+      "total_deduplicated_infrastructure_projects": 0
+    },
+    {
+      "state": "Andhra Pradesh",
+      "support_records": 10,
+      "distinct_athletes": 7,
+      "a7_projects_2015_19": 5,
+      "mdsd_only_projects": 17,
+      "total_deduplicated_infrastructure_projects": 22
+    },
+    {
+      "state": "Assam",
+      "support_records": 18,
+      "distinct_athletes": 12,
+      "a7_projects_2015_19": 6,
+      "mdsd_only_projects": 5,
+      "total_deduplicated_infrastructure_projects": 11
+    },
+    {
+      "state": "Bihar",
+      "support_records": 1,
+      "distinct_athletes": 1,
+      "a7_projects_2015_19": 0,
+      "mdsd_only_projects": 8,
+      "total_deduplicated_infrastructure_projects": 8
+    },
+    {
+      "state": "Chandigarh",
+      "support_records": 7,
+      "distinct_athletes": 4,
+      "a7_projects_2015_19": 0,
+      "mdsd_only_projects": 0,
+      "total_deduplicated_infrastructure_projects": 0
+    },
+    {
+      "state": "Chhattisgarh",
+      "support_records": 5,
+      "distinct_athletes": 3,
+      "a7_projects_2015_19": 1,
+      "mdsd_only_projects": 7,
+      "total_deduplicated_infrastructure_projects": 8
+    },
+    {
+      "state": "Delhi",
+      "support_records": 30,
+      "distinct_athletes": 21,
+      "a7_projects_2015_19": 4,
+      "mdsd_only_projects": 11,
+      "total_deduplicated_infrastructure_projects": 15
+    },
+    {
+      "state": "Goa",
+      "support_records": 2,
+      "distinct_athletes": 1,
+      "a7_projects_2015_19": 0,
+      "mdsd_only_projects": 1,
+      "total_deduplicated_infrastructure_projects": 1
+    },
+    {
+      "state": "Gujarat",
+      "support_records": 12,
+      "distinct_athletes": 6,
+      "a7_projects_2015_19": 4,
+      "mdsd_only_projects": 1,
+      "total_deduplicated_infrastructure_projects": 5
+    },
+    {
+      "state": "Haryana",
+      "support_records": 148,
+      "distinct_athletes": 77,
+      "a7_projects_2015_19": 3,
+      "mdsd_only_projects": 8,
+      "total_deduplicated_infrastructure_projects": 11
+    },
+    {
+      "state": "Himachal Pradesh",
+      "support_records": 1,
+      "distinct_athletes": 1,
+      "a7_projects_2015_19": 1,
+      "mdsd_only_projects": 6,
+      "total_deduplicated_infrastructure_projects": 7
+    },
+    {
+      "state": "Jammu and Kashmir",
+      "support_records": 3,
+      "distinct_athletes": 2,
+      "a7_projects_2015_19": 1,
+      "mdsd_only_projects": 4,
+      "total_deduplicated_infrastructure_projects": 5
+    },
+    {
+      "state": "Jharkhand",
+      "support_records": 8,
+      "distinct_athletes": 6,
+      "a7_projects_2015_19": 1,
+      "mdsd_only_projects": 4,
+      "total_deduplicated_infrastructure_projects": 5
+    },
+    {
+      "state": "Karnataka",
+      "support_records": 35,
+      "distinct_athletes": 19,
+      "a7_projects_2015_19": 7,
+      "mdsd_only_projects": 14,
+      "total_deduplicated_infrastructure_projects": 21
+    },
+    {
+      "state": "Kerala",
+      "support_records": 26,
+      "distinct_athletes": 16,
+      "a7_projects_2015_19": 3,
+      "mdsd_only_projects": 7,
+      "total_deduplicated_infrastructure_projects": 10
+    },
+    {
+      "state": "Madhya Pradesh",
+      "support_records": 23,
+      "distinct_athletes": 13,
+      "a7_projects_2015_19": 6,
+      "mdsd_only_projects": 13,
+      "total_deduplicated_infrastructure_projects": 19
+    },
+    {
+      "state": "Maharashtra",
+      "support_records": 39,
+      "distinct_athletes": 22,
+      "a7_projects_2015_19": 7,
+      "mdsd_only_projects": 10,
+      "total_deduplicated_infrastructure_projects": 17
+    },
+    {
+      "state": "Manipur",
+      "support_records": 20,
+      "distinct_athletes": 11,
+      "a7_projects_2015_19": 5,
+      "mdsd_only_projects": 3,
+      "total_deduplicated_infrastructure_projects": 8
+    },
+    {
+      "state": "Mizoram",
+      "support_records": 2,
+      "distinct_athletes": 1,
+      "a7_projects_2015_19": 2,
+      "mdsd_only_projects": 8,
+      "total_deduplicated_infrastructure_projects": 10
+    },
+    {
+      "state": "Odisha",
+      "support_records": 4,
+      "distinct_athletes": 2,
+      "a7_projects_2015_19": 6,
+      "mdsd_only_projects": 1,
+      "total_deduplicated_infrastructure_projects": 7
+    },
+    {
+      "state": "Punjab",
+      "support_records": 37,
+      "distinct_athletes": 25,
+      "a7_projects_2015_19": 2,
+      "mdsd_only_projects": 11,
+      "total_deduplicated_infrastructure_projects": 13
+    },
+    {
+      "state": "Rajasthan",
+      "support_records": 22,
+      "distinct_athletes": 13,
+      "a7_projects_2015_19": 20,
+      "mdsd_only_projects": 32,
+      "total_deduplicated_infrastructure_projects": 52
+    },
+    {
+      "state": "Sikkim",
+      "support_records": 2,
+      "distinct_athletes": 1,
+      "a7_projects_2015_19": 1,
+      "mdsd_only_projects": 6,
+      "total_deduplicated_infrastructure_projects": 7
+    },
+    {
+      "state": "Tamil Nadu",
+      "support_records": 34,
+      "distinct_athletes": 18,
+      "a7_projects_2015_19": 4,
+      "mdsd_only_projects": 4,
+      "total_deduplicated_infrastructure_projects": 8
+    },
+    {
+      "state": "Telangana",
+      "support_records": 26,
+      "distinct_athletes": 17,
+      "a7_projects_2015_19": 3,
+      "mdsd_only_projects": 5,
+      "total_deduplicated_infrastructure_projects": 8
+    },
+    {
+      "state": "Uttar Pradesh",
+      "support_records": 35,
+      "distinct_athletes": 23,
+      "a7_projects_2015_19": 23,
+      "mdsd_only_projects": 9,
+      "total_deduplicated_infrastructure_projects": 32
+    },
+    {
+      "state": "Uttarakhand",
+      "support_records": 10,
+      "distinct_athletes": 6,
+      "a7_projects_2015_19": 3,
+      "mdsd_only_projects": 3,
+      "total_deduplicated_infrastructure_projects": 6
+    },
+    {
+      "state": "West Bengal",
+      "support_records": 18,
+      "distinct_athletes": 11,
+      "a7_projects_2015_19": 2,
+      "mdsd_only_projects": 4,
+      "total_deduplicated_infrastructure_projects": 6
+    }
+  ],
+  "default_sort": "alphabetical",
+  "source": "6B2_state_descriptive.csv, 6B3_infrastructure_access.csv"
+}

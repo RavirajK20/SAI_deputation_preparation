@@ -1,0 +1,68 @@
+{
+  "match_confidence_counts": {
+    "NO_MATCH": 16,
+    "LOW": 1,
+    "HIGH": 120,
+    "MEDIUM": 6
+  },
+  "n_a7_total": 143,
+  "n_mdsd_total_from_infra_access": 349,
+  "collision_cases": [
+    {
+      "mdsd_serial_number": "290",
+      "mdsd_project": "Laying of Synthetic Athletic Track at Tamil Nadu Physical Education and Sports University, Vandalur,",
+      "candidates": [
+        {
+          "a7_sl_no": "12",
+          "a7_project": "Laying of Synthetic Athletic Track at Tamil Nadu Physical Education and Sports University, Vandalur,",
+          "a7_year": "2017-18",
+          "match_score": "1.36"
+        },
+        {
+          "a7_sl_no": "23",
+          "a7_project": "Laying of Synthetic Athletic Track at District Sports Complex, Thanjavur",
+          "a7_year": "2017-18",
+          "match_score": "1.1"
+        }
+      ]
+    },
+    {
+      "mdsd_serial_number": "320",
+      "mdsd_project": "Construction  Multi-Purpose Hall with Athletic Track at Village Mudgaon, Block Mohammadabad, Distric",
+      "candidates": [
+        {
+          "a7_sl_no": "20",
+          "a7_project": "Construction of Multi-purpose Hall with Athletic Track at Village Mudgaon, Block, Mohammadabad, Dist",
+          "a7_year": "2018-19",
+          "match_score": "1.41"
+        },
+        {
+          "a7_sl_no": "64",
+          "a7_project": "Construction of multi-purpose indoor hall at Village -Haliya Block-Haliya District Mirzapur.",
+          "a7_year": "2017-18",
+          "match_score": "1.12"
+        }
+      ]
+    },
+    {
+      "mdsd_serial_number": "24",
+      "mdsd_project": "Construction of Multi-Purpose Hall at Kiojoring, Nacho, District Upper Subansiri",
+      "candidates": [
+        {
+          "a7_sl_no": "70",
+          "a7_project": "Construction of multi-purpose indoor hall at Kiojoring, Nacho under Upper Subansiri.",
+          "a7_year": "2017-18",
+          "match_score": "1.38"
+        },
+        {
+          "a7_sl_no": "42",
+          "a7_project": "Construction of Multi-Purpose Hall at Manpolyang, Ziro, Lower, Subansiri District.",
+          "a7_year": "2018-19",
+          "match_score": "1.07"
+        }
+      ]
+    }
+  ],
+  "source": "a7_mdsd_reconciliation.csv, 6B3_QA_LOG.txt",
+  "label_rule": "Every match_confidence == HIGH pair must be labeled 'HIGH-confidence heuristic match', never 'confirmed match'."
+}

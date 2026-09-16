@@ -1,0 +1,38 @@
+{
+  "lag_result": {
+    "confirmed_within_window": {
+      "1y": 0,
+      "3y": 0,
+      "5y": 0
+    },
+    "of_pop_c": 16,
+    "required_framing": "No qualifying within-window co-occurrences were confirmed in the lag-eligible population under the project's strict dating rules. This should not be interpreted as evidence that government support was followed by no outcomes; the available dates generally cannot establish when support began.",
+    "mechanism": {
+      "n_with_actual_date_anchor": 2,
+      "of_pop_c": 16,
+      "examples": [
+        {
+          "athlete_id": "ATH-0227",
+          "canonical_name": "Atanu Das",
+          "anchor_year": "2023",
+          "support_date_type": "EXPLICIT_ADDITION"
+        },
+        {
+          "athlete_id": "ATH-0230",
+          "canonical_name": "Mehuli Ghosh",
+          "anchor_year": "2023",
+          "support_date_type": "EXPLICIT_ADDITION"
+        }
+      ],
+      "note": "Both actual-date anchors are EXPLICIT_ADDITION events dated after the athlete's major-games outcomes -- a later re-addition event, not a first-support date."
+    },
+    "source": "6B4_lagged_association_pairs.csv, 6B4_QA_LOG.txt"
+  },
+  "financial_relationship": {
+    "n_eligible_financial_rows_in_pop_c": 0,
+    "of_pop_c_dated_rows": 16,
+    "verdict": "Cannot currently be estimated from available public evidence.",
+    "reason": "All genuinely-dated support rows in the lag-eligible population are accounting_stage == NOT_FINANCIAL (PIB batch-release/induction events); none carry a SANCTIONED or RELEASED_PAID stage.",
+    "source": "6B5_QA_LOG.txt, 6B5_eligible_support_rows.csv"
+  }
+}
