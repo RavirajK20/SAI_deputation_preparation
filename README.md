@@ -61,3 +61,10 @@ inference or an illustrative scenario as settled fact, and the story does not in
 relationships that aren't documented.
 
 This is independently compiled study material, not an official SAI/MYAS publication.
+
+## Notice
+
+This repository is shared publicly so it can be read and viewed at the live site above — it is not
+open for reuse. See [`LICENSE`](LICENSE): no part of this repository (code, analysis, narrative,
+audio, video, or data) is licensed for cloning, forking, or republishing elsewhere without the
+owner's permission.
